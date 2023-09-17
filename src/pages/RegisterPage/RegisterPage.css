@@ -1,0 +1,267 @@
+registerContainer {
+    font-family: 'Nunito Sans', sans-serif;
+    background-color: #FEFEFE;
+}
+
+header {
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    justify-content: space-between;
+}
+
+.hamburguer {
+    height: 20rem;
+}
+
+.prato {
+    height: 15rem;
+}
+
+
+main {
+    width: 100%;
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 90vw;
+    height: 85vh;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    background-color: #F6F8F4;
+    border-radius: 10px;
+    box-shadow: 4px 4px 2rem #AFACAB;
+    z-index: 1;
+}
+
+.container-left {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px #AFACAB solid;
+    gap: 1.5rem;
+}
+
+.family {
+    height: 28rem;
+}
+
+.title {
+    width: 40rem;
+    text-align: center;
+    font-weight: 100;
+    font-size: 2rem;
+    color: #3F3F3F;
+}
+
+.subtitle {
+    width: 34rem;
+    text-align: center;
+    font-weight: 600;
+    font-size: 2rem;
+    color: #1B470F;
+}
+
+.container-rigth {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #295F1B;
+}
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: 400;
+}
+
+.inputs {
+    width: 100%;
+    height: 40vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    margin-top: 1rem;
+    gap: .5rem;
+}
+
+.span-input {
+    width: 22rem;
+}
+
+.inputDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+}
+
+input {
+    width: 22rem;
+    height: 3rem;
+    padding: 1rem;
+    border: 1px solid #143A0B;
+    border-radius: 10px;
+    font-size: 1.2rem;
+}
+
+.container-button {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button {
+    width: 12rem;
+    height: 4rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    color: #fff;
+    background-color: #FF8D06;
+}
+
+
+footer {
+    width: 100%;
+    height: 30vh;
+    display: flex;
+    align-items: end;
+}
+
+.pao {
+    height: 20rem;
+}
+
+@media (max-width: 1700px) {
+
+    .container {
+        height: 55rem;
+        display: flex;
+    }
+
+    .container-rigth {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+}
+
+@media (max-width: 910px) {
+
+    registerContent {
+        height: 220vh;
+    }
+
+    .hamburguer {
+        height: 10rem;
+    }
+
+    .prato {
+        height: 8rem;
+    }
+
+    main {
+        height: 180vh;
+    }
+
+    .container {
+        height: 200vh;
+    }
+
+    .container-rigth {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .logo {
+        height: 10rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1rem;
+    }
+
+    .inputs {
+        height: 180vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    input {
+        width: 18rem;
+    }
+
+    .pao {
+        height: 12rem;
+    }
+    
+}
+
+@media (max-width: 1500px) {
+
+    .container-left {
+        display: none;
+    }
+
+    .family {
+        display: none;
+    }
+
+    .title {
+        display: none;
+    }
+
+    .subtitle {
+        display: none;
+    }
+
+}
+
+
+.span-input {
+    font-size: 1.5rem;
+    font-weight: 200;
+}
+
+input {
+    width: 22rem;
+    height: 3rem;
+    padding: 1rem;
+    border: 1px solid #143A0B;
+    border-radius: 10px;
+    font-size: 1.2rem;
+}
+
+@media(max-width: 580px) {
+    .span-input {
+        font-size: 1rem;
+    }
+
+    input {
+        width: 15rem;
+        height: 2rem;
+    }
+}
