@@ -18,6 +18,11 @@ header {
     height: 15rem;
 }
 
+.error{
+    color: red;
+    font-size: 20px;
+}
+
 
 main {
     width: 100%;
@@ -96,7 +101,18 @@ h2 {
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
     margin-top: 1rem;
     gap: .5rem;
+    overflow-y: scroll;
 }
+
+.inputs::-webkit-scrollbar {
+    background-color: #ececeb;
+}
+
+.inputs::-webkit-scrollbar-thumb {
+    background-color: #e0e0df;
+    
+}
+
 
 .span-input {
     width: 22rem;
@@ -191,7 +207,7 @@ footer {
         justify-content: center;
         align-items: center;
     }
-
+    
     .logo {
         height: 10rem;
     }
@@ -199,23 +215,27 @@ footer {
     h1 {
         font-size: 1.5rem;
     }
-
+    
     h2 {
         font-size: 1rem;
     }
-
+    
     .inputs {
         height: 180vh;
         display: flex;
         flex-direction: column;
     }
-
+    
     input {
         width: 18rem;
     }
-
+    
     .pao {
         height: 12rem;
+    }
+    
+    .error{
+        font-size: 14px;
     }
     
 }
@@ -225,7 +245,7 @@ footer {
     .container-left {
         display: none;
     }
-
+    
     .family {
         display: none;
     }
@@ -233,13 +253,12 @@ footer {
     .title {
         display: none;
     }
-
+    
     .subtitle {
         display: none;
     }
-
+    
 }
-
 
 .span-input {
     font-size: 1.5rem;
@@ -255,13 +274,15 @@ input {
     font-size: 1.2rem;
 }
 
+
 @media(max-width: 580px) {
     .span-input {
         font-size: 1rem;
     }
-
+    
     input {
         width: 15rem;
         height: 2rem;
     }
+    
 }

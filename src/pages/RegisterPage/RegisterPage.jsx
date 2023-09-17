@@ -1,13 +1,17 @@
 //Imports React
 import React from 'react'
-import { useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
+import { useState, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
+
+//Import Axios e Yup
 import axios from 'axios'
+import * as yup from "yup";
 import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup';
 
 //Import Components
 import { ContainerLeft } from '../../components/ContainerLeft/ContainerLeft'
-import { TextField } from '../../components/TextField/TextField'
 
 //Import imagens
 import hamburger from './img/hamburguer.png'
@@ -18,40 +22,37 @@ import './RegisterPage.css'
 
 export function RegisterPage() {
 
-    // const [email, setEmail] = useState(' ')
-    // const [password, setPassword] = useState(' ')
-    // const [proprietario, setProprietario] = useState(' ')
-    // const [categoriaRestaurante, setCategoriaRestaurante] = useState(' ')
-    // const [razaoSocial, setRazaoSocial] = useState(' ')
-    // const [nomeFantasia, setNomeFantasia] = useState(' ')
-    // const [CNPJ, setCNPJ] = useState(' ')
-    // const [telefone, setTelefone] = useState(' ')
-    // const [estado, setEstado] = useState(' ')
-    // const [cidade, setCidade] = useState(' ')
-    // const [bairro, setBairro] = useState(' ')
-    // const [rua, setRua] = useState(' ')
-    // const [numero, setNumero] = useState(' ')
-    // const [complemento, setComplemento] = useState(' ')
-    // const [statusInput, setStatusInput] = useState(' ')
+    let navigate = useNavigate()
 
-    // const onChangeValueEmail = (e) => {
-    //     const { value } = e.target
-    //     setEmail(value)
-    // }
-
-    // const isValidEmail = (value) => {
-    //     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-    // };
+    const validationPost = yup.object().shape({
+        nome_categoria: yup.string().required("Preencha o campo de Categoria").max(45, "A Categoria deve ter até 45 caracteres"),
+        nome_estado: yup.string().required("Preencha o campo de Estado").max(45, "O Estado deve ter até 45 caracteres"),
+        nome_cidade: yup.string().required("Preencha o campo de Cidade").max(45, "O Cidade deve ter até 45 caracteres"),
+        rua: yup.string().required("Preencha o campo Rua").max(100, "O nome da rua deve ter até 100 caracteres"),
+        cep: yup.string().required("Preencha o campo de Cep").max(10, "O Cep deve ter até 10 caracteres"),
+        bairro: yup.string().required("Preencha o campo Bairro").max(45, "O nome do bairro deve ter até 45 caracteres"),
+        numero: yup.string().required("Preencha o campo de Número").max(10, "O número deve ter até 10 caracteres"),
+        complemento: yup.string().max(150, "O complemento deve ter até 150 caracteres"),
+        nome_proprietario: yup.string().required("Preencha o Nome do proprietário").max(150, "O Nome do proprietário deve ter até 150 caracteres"),
+        nome_fantasia: yup.string().required("Preencha o Nome fantasia").max(150, "O nome fantasia deve ter até 150 caracteres"),
+        razao_social: yup.string().required("Preencha o campo de razão social").max(45, "A razão social deve ter até 45 caracteres"),
+        email: yup.string().required("Preencha o campo de Email").max(255, "O Email deve ter até 255 caracteres").email("Email inválido"),
+        senha: yup.string().required("Preencha o campo de Senha").max(150, "A senha precisa ter até 150 caracteres").min(8, "A senha tem que ter mais de 8 caracteres"),
+        cnpj: yup.string().required("Preencha o CNPJ").max(20, "O CNPJ deve ter até 20 caracteres"),
+        numero_telefone: yup.string().required("Preencha o número do telefone").max(45, "O número de telefone deve ter até 45 caracteres"),
+    })
 
 
     const { register, handleSubmit, formState: { errors } } = useForm({
+        resolver: yupResolver(validationPost)
     })
 
     const addPost = data => axios.post('https://save-eats.cyclic.cloud/v1/saveeats/restaurante/procedore', data)
         .then(() => {
+            navigate("/home")
             console.log(data);
             console.log("Deu tudo certo")
-            // history.push("/")
+
         })
         .catch(() => {
             console.log(data);
@@ -79,75 +80,89 @@ export function RegisterPage() {
                         <form className="inputs" onSubmit={handleSubmit(addPost)}>
 
                             <div className='inputDiv'>
-                                <span className="span-input">Categoria Restaurante</span>
+                                <span className="span-input">Categoria Estabelecimento</span>
                                 <input type="text" name="nome_categoria" {...register("nome_categoria")} />
+                                <p className="error">{errors.nome_categoria?.message}</p>
                             </div>
 
                             <div className='inputDiv'>
                                 <span className="span-input">Estado</span>
                                 <input type="text" name="nome_estado" {...register("nome_estado")} />
+                                <p className="error">{errors.nome_estado?.message}</p>
                             </div>
 
                             <div className='inputDiv'>
                                 <span className="span-input">Cidade</span>
                                 <input type="text" name="nome_cidade" {...register("nome_cidade")} />
+                                <p className="error">{errors.nome_cidade?.message}</p>
                             </div>
 
-                             <div className='inputDiv'>
+                            <div className='inputDiv'>
                                 <span className="span-input">Rua</span>
                                 <input type="text" name="rua" {...register("rua")} />
+                                <p className="error">{errors.rua?.message}</p>
                             </div>
 
                             <div className='inputDiv'>
                                 <span className="span-input">CEP</span>
                                 <input type="text" name="cep" {...register("cep")} />
+                                <p className="error">{errors.cep?.message}</p>
                             </div>
 
                             <div className='inputDiv'>
                                 <span className="span-input">Bairro</span>
                                 <input type="text" name="bairro" {...register("bairro")} />
+                                <p className="error">{errors.bairro?.message}</p>
                             </div>
 
                             <div className='inputDiv'>
                                 <span className="span-input">Numero</span>
                                 <input type="number" name="numero" {...register("numero")} />
+                                <p className="error">{errors.numero?.message}</p>
                             </div>
 
                             <div className='inputDiv'>
                                 <span className="span-input">Complemento</span>
                                 <input type="text" name="complemento" {...register("complemento")} />
+                                <p className="error">{errors.complemento?.message}</p>
                             </div>
 
                             <div className='inputDiv'>
                                 <span className="span-input">Nome Proprietario</span>
                                 <input type="text" name="nome_proprietario" {...register("nome_proprietario")} />
+                                <p className="error">{errors.nome_proprietario?.message}</p>
                             </div>
 
                             <div className='inputDiv'>
                                 <span className="span-input">Nome Fantasia</span>
                                 <input type="text" name="nome_fantasia" {...register("nome_fantasia")} />
+                                <p className="error">{errors.nome_fantasia?.message}</p>
                             </div>
 
                             <div className='inputDiv'>
                                 <span className="span-input">Razão Social</span>
                                 <input type="text" name="razao_social" {...register("razao_social")} />
+                                <p className="error">{errors.razao_social?.message}</p>
                             </div>
 
 
                             <div className='inputDiv'>
                                 <span className="span-input">Email</span>
                                 <input type="email" name="email" {...register("email")} />
+                                <p className="error">{errors.email?.message}</p>
                             </div>
 
 
                             <div className='inputDiv'>
-                                <span className="span-input">senha</span>
+                                <span className="span-input">Senha</span>
                                 <input type="password" name="senha" {...register("senha")} />
+                                <p className="error">{errors.senha?.message}</p>
                             </div>
 
                             <div className='inputDiv'>
                                 <span className="span-input">CNPJ</span>
                                 <input type="text" name="cnpj" {...register("cnpj")} />
+                                <p className="error">{errors.cnpj?.message}</p>
                             </div>
 
                             <div className='inputDiv'>
@@ -158,122 +173,8 @@ export function RegisterPage() {
                             <div className='inputDiv'>
                                 <span className="span-input">Telefone</span>
                                 <input type="text" name="numero_telefone" {...register("numero_telefone")} />
-                            </div>  
-
-
-
-
-
-
-                            {/* <div className="inputDiv">
-                                <TextField spanInput="Nome Proprietário" type="text" name="nomeProprietario" {...register("nomeProprietario")}></TextField>
+                                <p className="error">{errors.numero_telefone?.message}</p>
                             </div>
-
-                            <div className="inputDiv">
-                                <TextField spanInput="Razão Social" type="text" name="razaoSocial" {...register("razaoSocial")}></TextField>
-                            </div>
-
-                            <div className="inputDiv">
-                                <TextField spanInput="Nome Fantasia" type="text" name="nomeFantasia" {...register("nomeFantasia")}></TextField>
-                            </div>
-
-                            <div className="inputDiv">
-                                <TextField spanInput="CNPJ" type="text" name="cnpj" {...register("cnpj")}></TextField>
-                            </div>
-
-                            <div className="inputDiv">
-                                <TextField spanInput="Telefone" type="text" name="telefone" {...register("telefone")}></TextField>
-                            </div>
-
-                            <div className="inputDiv">
-                                <TextField spanInput="Categoria Restaurante" type="text" name="categoriaRestaurante"  {...register("categoriaRestaurante")}></TextField>
-                            </div>
-
-                            <div className="inputDiv">
-                                <TextField spanInput="Estado" type="text" name="estado" {...register("estado")}></TextField>
-                            </div>
-
-                            <div className="inputDiv">
-                                <TextField spanInput="Cidade" type="text" name="cidade" {...register("cidade")}></TextField>
-                            </div>
-
-                            <div className="inputDiv">
-                                <TextField spanInput="Bairro" type="text" name="bairro" {...register("bairro")}></TextField>
-                            </div>
-
-                            <div className="inputDiv">
-                                <TextField spanInput="Rua" type="text" name="rua" {...register("rua")}></TextField>
-                            </div>
-
-                            <div className="inputDiv">
-                                <TextField spanInput="Email" type="text" name="email" {...register("email")}></TextField>
-                            </div>
-                            <div className="inputDiv">
-                                <TextField spanInput="Numero" type="number" name="numero" {...register("numero")}></TextField>
-                            </div>
-
-                            <div className="inputDiv">
-                                <TextField spanInput="Senha" type="password" name="senha" {...register("senha")}></TextField>
-                            </div>
-
-                            <div className="inputDiv">
-                                <TextField spanInput="Complemento" type="text" name="complemento" {...register("complemento")}></TextField>
-                            </div> */}
-
-                            {/* <div className="inputDiv">
-                                <TextField spanInput="Nome Proprietário" type="text" value={proprietario} status={statusInput} onChangeValue={e => setProprietario(e.target.value)} onChange={handleInput}></TextField>
-                            </div>
-
-                            <div className="inputDiv">
-                                <TextField spanInput="Razão Social" type="text" value={razaoSocial} status={statusInput} onChangeValue={e => setRazaoSocial(e.target.value)} onChange={handleInput}></TextField>
-                            </div>
-
-                            <div className="inputDiv">
-                                <TextField spanInput="Nome Fantasia" type="text" value={nomeFantasia} status={statusInput} onChangeValue={e => setNomeFantasia(e.target.value)} onChange={handleInput}></TextField>
-                            </div>
-
-                            <div className="inputDiv">
-                                <TextField spanInput="CNPJ" type="text" value={CNPJ} status={statusInput} onChangeValue={e => setCNPJ(e.target.value)} onChange={handleInput}></TextField>
-                            </div>
-
-                            <div className="inputDiv">
-                                <TextField spanInput="Telefone" type="text" value={telefone} status={statusInput} onChangeValue={e => setTelefone(e.target.value)} onChange={handleInput}></TextField>
-                            </div>
-
-                            <div className="inputDiv">
-                                <TextField spanInput="Categoria Restaurante" type="text" value={categoriaRestaurante} status={statusInput} onChangeValue={e => setCategoriaRestaurante(e.target.value)} onChange={handleInput}></TextField>
-                            </div>
-
-                            <div className="inputDiv">
-                                <TextField spanInput="Estado" type="text" value={estado} status={statusInput} onChangeValue={e => setEstado(e.target.value)} onChange={handleInput}></TextField>
-                            </div>
-
-                            <div className="inputDiv">
-                                <TextField spanInput="Cidade" type="text" value={cidade} status={statusInput} onChangeValue={e => setCidade(e.target.value)} onChange={handleInput}></TextField>
-                            </div>
-
-                            <div className="inputDiv">
-                                <TextField spanInput="Bairro" type="text" value={bairro} status={statusInput} onChangeValue={e => setBairro(e.target.value)} onChange={handleInput}></TextField>
-                            </div>
-
-                            <div className="inputDiv">
-                                <TextField spanInput="Rua" type="text" value={rua} status={statusInput} onChangeValue={e => setRua(e.target.value)} onChange={handleInput}></TextField>
-                            </div>
-
-                            <div className="inputDiv">
-                                <TextField spanInput="Email" type="text" value={email} status={statusInput} onChangeValue={onChangeValueEmail} onChange={handleInput}></TextField>
-                            </div>
-                            <div className="inputDiv">
-                                <TextField spanInput="Numero" type="number" value={numero} status={statusInput} onChangeValue={e => setNumero(e.target.value)} onChange={handleInput}></TextField>
-                            </div>
-
-                            <div className="inputDiv">
-                                <TextField spanInput="Senha" type="password" value={password} status={statusInput} onChangeValue={e => setPassword(e.target.value)} onChange={handleInput}></TextField>
-                            </div>
-
-                            <div className="inputDiv">
-                                <TextField spanInput="Complemento" type="text" value={complemento} status={statusInput} onChangeValue={e => setComplemento(e.target.value)} onChange={handleInput}></TextField>
-                            </div> */}
 
                             <div className="container-button">
                                 <button type='submit'>Criar conta</button>
