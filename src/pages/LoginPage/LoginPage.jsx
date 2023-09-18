@@ -34,7 +34,8 @@ export function LoginPage() {
         resolver: yupResolver(validationPost)
     })
 
-    const addPost = data => axios.post('https://save-eats.cyclic.cloud/v1/saveeats/restaurante/login/autenticar', data)
+    // const addPost = data => axios.post('https://save-eats.cyclic.cloud/v1/saveeats/restaurante/login/autenticar', data)
+    const addPost = data => axios.post('http://localhost:8080/v1/saveeats/restaurante/login/autenticar', data)
         .then(() => {
             navigate("/home")
             console.log(data);

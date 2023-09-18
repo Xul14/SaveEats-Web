@@ -1,0 +1,18 @@
+.option {
+    width: 20rem;
+    height: 9rem;
+    border-radius: 10px;
+    box-shadow: 2px 2px 8px#AFACAB;
+}
+
+.cardapio {
+    background-color: #B7CB9F;
+}
+
+.calendario {
+    background-color: #F5E4B8;
+}
+
+.formas-de-pagamento {
+    background-color: #C8BFDC;
+}

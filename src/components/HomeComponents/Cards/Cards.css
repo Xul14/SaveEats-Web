@@ -1,0 +1,30 @@
+.containers {
+    border-radius: 10px;
+    box-shadow: 2px 2px 8px#AFACAB;
+    background-color: #FAFAFA;
+}
+
+.itens {
+    width: 32rem;
+    height: 12rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+}
+
+.itens-pausado {
+    font-size: 1.5rem;
+}
+
+.title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #295F1B;
+}
+
+.number {
+    font-size: 3.5rem;
+    font-weight: 600;
+}

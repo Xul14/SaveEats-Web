@@ -65,7 +65,7 @@ export function RegisterPage() {
                 <img src={hamburger} alt="Hamburguer" className="hamburguer" />
                 <img src={prato} alt="Prato feito" className="prato" />
             </header>
-            <main>
+            <main className="main-cadastro">
                 <div className="container">
 
                     <ContainerLeft></ContainerLeft>
@@ -177,7 +177,7 @@ export function RegisterPage() {
                             </div>
 
                             <div className="container-button">
-                                <button type='submit'>Criar conta</button>
+                                <button type='submit' className='btnCadastro'>Criar conta</button>
                             </div>
                         </form>
 
