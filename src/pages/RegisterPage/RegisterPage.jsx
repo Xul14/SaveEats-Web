@@ -18,7 +18,7 @@ import hamburger from './img/hamburguer.png'
 import prato from './img/prato.png'
 import logo from './img/logo.png'
 import pao from './img/pao.png'
-import './RegisterPage.css'
+import "./RegisterPage.css"
 
 export function RegisterPage() {
 
@@ -74,7 +74,7 @@ export function RegisterPage() {
 
                         <img className="logo" src={logo} alt="Logo" />
 
-                        <h1>cadastro</h1>
+                        <h1 className='cadastro'>cadastro</h1>
                         <h2>Crie sua conta</h2>
 
                         <form className="inputs" onSubmit={handleSubmit(addPost)}>

@@ -19,7 +19,7 @@ import hamburger from './img/hamburguer.png'
 import prato from './img/prato.png'
 import logo from './img/logo.png'
 import pao from './img/pao.png'
-import './LoginPage.css'
+import "./LoginPage.css"
 
 export function LoginPage() {
 
@@ -44,6 +44,7 @@ export function LoginPage() {
 
             console.log(data);
             console.log("Deu errado")
+            alert('Usuário ou senha incorretos')
         })
 
     return (
@@ -60,7 +61,7 @@ export function LoginPage() {
 
                     <div className="container-rigth-login">
                         <img src={logo} alt="Logo" />
-                        <h1>bem vindo</h1>
+                        <h1 className='bem-vindo'>bem vindo</h1>
                         <h2>Entre em sua conta</h2>
 
                         <form className="inputs-login">

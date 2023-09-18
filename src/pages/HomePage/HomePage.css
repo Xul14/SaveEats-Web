@@ -1,6 +1,20 @@
-.spanHome{
-    display: flex;
+main {
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 20% 80%;
+}
+
+.container-left-home {
+    display: grid;
+    grid-template-rows: 15% 85%;
+    background-color: #F6F8F4;
+}
+
+.container-rigth-home {
+    display: grid;
+    grid-template-rows: 15% 15% 23.3% 23.3% 23.3%;
+    background-color: #FFF;
     justify-content: center;
-    color: red;
-    font-size: 2rem;
+    align-items: center;
 }
