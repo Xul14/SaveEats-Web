@@ -17,3 +17,16 @@ body{
   height: 100vh;
   font-family: 'Nunito Sans', sans-serif;
 }
+
+.container {
+  width: 90vw;
+  height: 85vh;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  background-color: #F6F8F4;
+  border-radius: 10px;
+  box-shadow: 4px 4px 2rem #AFACAB;
+  z-index: 1;
+  background-color: red;
+}
+

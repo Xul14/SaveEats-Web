@@ -66,6 +66,7 @@ export function RegisterPage() {
                 <img src={prato} alt="Prato feito" className="prato" />
             </header>
             <main className="main-cadastro">
+
                 <div className="container">
 
                     <ContainerLeft></ContainerLeft>
