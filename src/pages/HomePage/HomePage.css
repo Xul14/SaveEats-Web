@@ -1,17 +1,17 @@
-.main-home {
+.main-menu {
     width: 100%;
     height: 100vh;
     display: grid;
     grid-template-columns: 20% 80%;
 }
 
-.container-left-home {
+.container-left-menu {
     display: grid;
     grid-template-rows: 15% 85%;
     background-color: #F6F8F4;
 }
 
-.container-rigth-home {
+.container-rigth-menu {
     display: grid;
     width: 100%;
     grid-template-rows: 15% 15% 23.3% 23.3% 23.3%;
@@ -30,11 +30,12 @@
     font-size: 20px;
 }
 
-h2 {
+.nome-estabelecimento {
     padding-top: 2rem;
     padding-left: 2rem;
     padding-bottom: .5rem;
     font-size: 2rem;
+    font-weight: 600;
     text-transform: uppercase;
     color: #143A0B;
 }
@@ -50,8 +51,8 @@ h2 {
     color: #143A0B;
 }
 
-img {
-    height: 1.5rem;
+.img-state-open {
+    height: 1.25rem;
 }
 
 .container-button {
@@ -79,8 +80,9 @@ img {
     height: 15vh;
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 14.8rem;
+    align-items: end;
+    justify-content: space-around;
+    /* gap: 14.8rem; */
 } 
 
 .container-horario-itens {
@@ -89,5 +91,48 @@ img {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    /* gap: 10rem; */
+    margin-top: 10px;
+}
+
+
+.horario-funcionamento {
+    width: 44rem;
+    height: 12rem;
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    padding: 1.5rem;
+}
+
+.horario {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+}
+
+.text {
+    font-weight: 200;
+    font-size: 1.25rem;
+}
+
+.title-funcionamento{
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #295F1B;
+}
+
+.container-atrasos-pedidos{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 11rem;
+}
+
+.container-desempenho {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: end;
 }

@@ -1,0 +1,48 @@
+
+.desempenho {
+    width: 95rem;
+    height: 15rem;
+    display: grid;
+    grid-template-rows: 30% 70%;
+}
+
+.container-title {
+    display: flex;
+    padding-left: 2rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.pedidos-vendidos-concluidos {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.container-desempenho {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-pedidos-atrasos-concluidos {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pedido{
+    width: 82rem;
+    height: 90%;
+}
+
+.data-desempenho{
+    font-size: 2rem;
+    font-weight: 600;
+}

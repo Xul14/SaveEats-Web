@@ -11,6 +11,7 @@ export function CardsInformativos() {
             <div className="option cardapio"></div>
             <div className="option calendario"></div>
             <div className="option formas-de-pagamento"></div>
+            <div className="option formas-de-pagamento"></div>
 
         </>
     )

@@ -7,23 +7,24 @@ import stateOpen from "./img/verde.png"
 import { MenuNavigation } from "../../components/MenuNavigation/MenuNavigation";
 import { CardsInformativos } from "../../components/HomeComponents/CardsInformativos/CardsInformativos";
 import { Cards } from "../../components/HomeComponents/Cards/Cards";
+import { CardsDesempenho } from "../../components/CardsDesempenho/CardsDesempenho";
 
 export function HomePage() {
     return (
-        <main className="main-home">
+        <main className="main-menu">
 
-            <div className="container-left-home">
+            <div className="container-left-menu">
                 <MenuNavigation></MenuNavigation>
             </div>
 
-            <div className="container-rigth-home">
+            <div className="container-rigth-menu">
                 <div className="header">
 
                     <div>
-                        <h2>padaria dois irmãos</h2>
+                        <h2 className="nome-estabelecimento">padaria dois irmãos</h2>
 
                         <div className="loja">
-                            <img src={stateOpen} alt="Circulo verde" />
+                            <img className="img-state-open" src={stateOpen} alt="Circulo verde" />
                             <span className="statusAbertura">Loja aberta</span>
                         </div>
                     </div>
@@ -40,8 +41,32 @@ export function HomePage() {
 
                 <div className="container-horario-itens">
 
+                    <div className="containers horario-funcionamento">
+
+                        <div className="horario">
+
+                            <span className="title-funcionamento">Horário de funcionamento</span>
+                            <span className="text">Hoje, 10 de agosto</span>
+                            <span className="text">18:00 - 23:00</span>
+
+                        </div>
+
+                        <span className="text">Alterar horário</span>
+
+                    </div>
+
                     <Cards titleCard="Itens pausados no cardápio" numberCard="2"></Cards>
-                    <Cards titleCard="Itens pausados no cardápio" numberCard="2"></Cards>
+
+                </div>
+
+                <div className="container-desempenho">
+                    {/* <CardsDesempenho></CardsDesempenho> */}
+                </div>
+
+                <div className="container-atrasos-pedidos">
+
+                    <Cards titleCard="Pedidos cancelados" numberCard="0"></Cards>
+                    <Cards titleCard="Pedidos em atraso" numberCard="0"></Cards>
 
                 </div>
 
