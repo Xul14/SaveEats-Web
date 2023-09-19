@@ -60,7 +60,7 @@ export function HomePage() {
                 </div>
 
                 <div className="container-desempenho">
-                    {/* <CardsDesempenho></CardsDesempenho> */}
+                    <CardsDesempenho titleCard="Acompanhamento de desempenho" firstColumn="Pedidos hoje" firstData="5" secondColumn="Valor vendido" secondData="R$ 211,12" thirdColumn="Pedidos concluídos" thirdData="3"></CardsDesempenho>
                 </div>
 
                 <div className="container-atrasos-pedidos">

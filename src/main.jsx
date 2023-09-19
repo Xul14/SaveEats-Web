@@ -87,7 +87,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path='/cadastro' element={<RegisterPage />} />
         <Route path='/menu' element={<Menu />} />
         <Route path='/home' element={<HomePage />} />
-        {/* <RouterProvider router = {routers} />  */}
+        <Route path='/menu/cardapio' element={<CardapioPage />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

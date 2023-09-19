@@ -34,8 +34,8 @@ export function LoginPage() {
         resolver: yupResolver(validationPost)
     })
 
-    const addPost = data => axios.post('https://save-eats.cyclic.cloud/v1/saveeats/restaurante/login/autenticar', data)
-    // const addPost = data => axios.post('http://localhost:8080/v1/saveeats/restaurante/login/autenticar', data)
+    // const addPost = data => axios.post('https://save-eats.cyclic.cloud/v1/saveeats/restaurante/login/autenticar', data)
+    const addPost = data => axios.post('http://localhost:8080/v1/saveeats/restaurante/login/autenticar', data)
         .then(() => {
             navigate("/home")
             console.log(data);
@@ -62,12 +62,12 @@ export function LoginPage() {
 
                     <div className="container-rigth-login">
                         <img src={logo} alt="Logo" />
-                        <h1 className='bem-vindo'>bem vindo</h1>
+                        <h1 className='bem-vindo'>bem-vindo</h1>
                         <h2>Entre em sua conta</h2>
 
                         <form className="inputs-login">
 
-                            <span className="span-input">Email</span>
+                            <span className="span-input">E-mail</span>
                             <input type="email" name="email" {...register("email")} />
                             <p className="error">{errors.email?.message}</p>
 

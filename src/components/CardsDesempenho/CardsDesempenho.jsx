@@ -4,7 +4,7 @@ import React from "react";
 //Import css
 import "./CardsDesempenho.css"
 
-export function CardsDesempenho(titleCard, firstColumn, firstData, secondColumn, secondData, thirdColumn, thirdData,){
+export function CardsDesempenho({titleCard, firstColumn, firstData, secondColumn, secondData, thirdColumn, thirdData}){
     return(
                 <div className="containers desempenho">
 
