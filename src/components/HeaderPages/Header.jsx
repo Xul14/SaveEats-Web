@@ -2,15 +2,15 @@ import React from "react";
 
 import "./Header.css"
 
-export function HeaderPages () {
+export function HeaderPages ({title,text}) {
     return (
         <>
         
         <div className="container-header">
 
-            <h1 className="title-header">Cardápio</h1>
+            <h1 className="title-header">{title}</h1>
 
-            <span className="text-header">Este é o seu cardápio. Aqui você define quais itens os clientes poderão pedir</span>
+            <span className="text-header">{text}</span>
 
         </div>
         
