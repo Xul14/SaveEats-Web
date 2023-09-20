@@ -3,11 +3,12 @@ import React from "react";
 
 //Import css e components
 import "./HomePage.css"
-import stateOpen from "./img/verde.png"
+import greenImg from "./img/verde.png"
 import { MenuNavigation } from "../../components/MenuNavigation/MenuNavigation";
 import { CardsInformativos } from "../../components/HomeComponents/CardsInformativos/CardsInformativos";
 import { Cards } from "../../components/HomeComponents/Cards/Cards";
 import { CardsDesempenho } from "../../components/CardsDesempenho/CardsDesempenho";
+import { Link } from "react-router-dom";
 
 export function HomePage() {
     return (
@@ -24,7 +25,7 @@ export function HomePage() {
                         <h2 className="nome-estabelecimento">padaria dois irmãos</h2>
 
                         <div className="loja">
-                            <img className="img-state-open" src={stateOpen} alt="Circulo verde" />
+                            <img className="img-state-open" src={greenImg} alt="Circulo verde" />
                             <span className="statusAbertura">Loja aberta</span>
                         </div>
                     </div>
@@ -51,7 +52,7 @@ export function HomePage() {
 
                         </div>
 
-                        <span className="text">Alterar horário</span>
+                        <Link className="text-alterar-horario" to='/menu/horario-funcionamento'>Alterar horário</Link>
 
                     </div>
 

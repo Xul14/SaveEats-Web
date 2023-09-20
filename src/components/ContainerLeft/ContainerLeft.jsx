@@ -7,7 +7,7 @@ export function ContainerLeft() {
         <div className="container-left">
 
             <img src={family} alt="Família" className="family" />
-            <span className="title">Junte-se a nós como parceiro e ajude a combater o desperdício de alimentos.</span>
+            <span className="title-left">Junte-se a nós como parceiro e ajude a combater o desperdício de alimentos.</span>
             <span className="subtitle">Rentabilize seu prejuízo e o  transforme em lucro!</span>
 
         </div>

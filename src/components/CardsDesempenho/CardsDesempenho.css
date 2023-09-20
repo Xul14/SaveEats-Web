@@ -1,6 +1,6 @@
 
 .desempenho {
-    width: 95rem;
+    width: 92rem;
     height: 15rem;
     display: grid;
     grid-template-rows: 30% 70%;
@@ -42,7 +42,11 @@
     height: 90%;
 }
 
+.text-column{
+    font-size: 26px;
+}
+
 .data-desempenho{
-    font-size: 2rem;
+    font-size: 2.75rem;
     font-weight: 600;
 }

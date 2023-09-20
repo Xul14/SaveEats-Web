@@ -1,7 +1,10 @@
 .option {
-    width: 20rem;
-    height: 9rem;
+    display: grid;
+    width: 25rem;
+    height: 9.5rem;
     border-radius: 10px;
+    align-items: center;
+    grid-template-columns: 2fr 1fr;
     box-shadow: 2px 2px 8px#AFACAB;
 }
 
@@ -10,9 +13,22 @@
 }
 
 .calendario {
-    background-color: #F5E4B8;
+    background-color: #a8bdcd;
 }
 
 .formas-de-pagamento {
     background-color: #C8BFDC;
+}
+
+.text-card-informativo {
+    font-size: 22px;
+    padding-left: 20px;
+    text-align: center;
+    font-weight: 600;
+    color: #FFF;
+}
+
+.img-cards-informativos {
+    height: 9rem;
+    border-radius: 0px 10px 0px 0px;
 }

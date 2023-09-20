@@ -5,7 +5,6 @@ import React from "react";
 //Import css e components
 import "./Menu.css"
 import { MenuNavigation } from "../../components/MenuNavigation/MenuNavigation";
-import { Outlet } from "react-router-dom";
 
 export function Menu() {
     return (
@@ -16,8 +15,8 @@ export function Menu() {
                 <MenuNavigation></MenuNavigation>
             </div>
 
-            <div className="container-rigth-menu">
-                {/* </Outlet> */}
+            <div className="container-rigth-menu" id="container-rigth-menu">
+            <script type="module" src="/src/menuRouter.jsx"></script>
             </div>
 
         </main>

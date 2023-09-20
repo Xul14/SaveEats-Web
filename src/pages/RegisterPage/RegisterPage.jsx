@@ -49,14 +49,17 @@ export function RegisterPage() {
 
     const addPost = data => axios.post('https://save-eats.cyclic.cloud/v1/saveeats/restaurante/procedore', data)
         .then(() => {
-            navigate("/home")
+            navigate("/menu/home")
             console.log(data);
             console.log("Deu tudo certo")
 
         })
         .catch(() => {
-            console.log(data);
+            console.log(data.status);
             console.log("DEU ERRADO")
+            if( data.status === 401){
+                alert("Email já cadastrado")
+            }
         })
 
     return (
@@ -77,7 +80,7 @@ export function RegisterPage() {
                         <h1 className='cadastro'>cadastro</h1>
                         <h2>Crie sua conta</h2>
 
-                        <form className="inputs" onSubmit={handleSubmit(addPost)}>
+                        <div className="inputs">
 
                             <div className='inputDiv'>
                                 <span className="span-input">Categoria Estabelecimento</span>
@@ -176,10 +179,10 @@ export function RegisterPage() {
                                 <p className="error">{errors.numero_telefone?.message}</p>
                             </div>
 
+                        </div>
                             <div className="container-button">
-                                <button type='submit' className='btnCadastro'>Criar conta</button>
+                                <button className='btnCadastro'  onClick={handleSubmit(addPost)}>Criar conta</button>
                             </div>
-                        </form>
 
                     </div>
                 </div>
