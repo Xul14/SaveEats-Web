@@ -34,16 +34,24 @@ export function LoginPage() {
         resolver: yupResolver(validationPost)
     })
 
-    const addPost = data => axios.post('https://save-eats.cyclic.cloud/v1/saveeats/restaurante/login/autenticar', data)
-    // const addPost = data => axios.post('http://localhost:3000/v1/saveeats/restaurante/login/autenticar', data)
-        .then(() => {
-            console.log(data);
+    // const addPost = data => axios.post('https://save-eats.cyclic.cloud/v1/saveeats/restaurante/login/autenticar', data)
+    const addPost = data => axios.post('http://localhost:8080/v1/saveeats/restaurante/login/autenticar', data)
+        .then(Response => {
+
+            const responseData = Response.data;
+            const restaurante = responseData.restaurante[0];
+            console.log(restaurante);
             console.log("DEU CERTO")
-            navigate("/menu/home")
+            navigate("/menu/home", { state: { restaurante } })
+
+            
         })
         .catch(() => {
-
-            console.log(data.status);
+            
+            const responseData = Response.data;
+            const restauranteStatus = responseData.status;
+            console.log(responseData);
+            console.log(restauranteStatus);
             console.log("Deu errado")
             alert('Usuário ou senha incorretos')
         })

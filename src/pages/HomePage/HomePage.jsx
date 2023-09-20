@@ -1,5 +1,7 @@
 //Import dependências React
-import React from "react";
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 //Import css e components
 import "./HomePage.css"
@@ -8,9 +10,13 @@ import { MenuNavigation } from "../../components/MenuNavigation/MenuNavigation";
 import { CardsInformativos } from "../../components/HomeComponents/CardsInformativos/CardsInformativos";
 import { Cards } from "../../components/HomeComponents/Cards/Cards";
 import { CardsDesempenho } from "../../components/CardsDesempenho/CardsDesempenho";
-import { Link } from "react-router-dom";
+import { CurrentDate } from '../../components/CurrentDate/CurrentDate';
 
 export function HomePage() {
+
+    const location = useLocation();
+    const restaurante = location.state?.restaurante;
+
     return (
         <main className="main-menu">
 
@@ -22,7 +28,7 @@ export function HomePage() {
                 <div className="header">
 
                     <div>
-                        <h2 className="nome-estabelecimento">padaria dois irmãos</h2>
+                        <h2 className="nome-estabelecimento">{restaurante?.nome_fantasia}</h2>
 
                         <div className="loja">
                             <img className="img-state-open" src={greenImg} alt="Circulo verde" />
@@ -47,7 +53,8 @@ export function HomePage() {
                         <div className="horario">
 
                             <span className="title-funcionamento">Horário de funcionamento</span>
-                            <span className="text">Hoje, 10 de agosto</span>
+                            {/* <span className="text">Hoje,</span> */}
+                            <CurrentDate></CurrentDate>
                             <span className="text">18:00 - 23:00</span>
 
                         </div>
