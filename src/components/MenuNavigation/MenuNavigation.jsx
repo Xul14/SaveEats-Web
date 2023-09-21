@@ -2,6 +2,7 @@
 import React from "react";
 import { Link } from 'react-router-dom'
 
+
 //Import imagens e css
 import "./MenuNavigation.css"
 import horarioFuncionamento from '../../pages/HomePage/img/horario-de-funcionamento.png'
@@ -14,7 +15,7 @@ import pedido from '../../pages/HomePage/img/pedido.png'
 import perfil from '../../pages/HomePage/img/perfil.png'
 import home from '../../pages/HomePage/img/home.png'
 
-export function MenuNavigation(){
+export function MenuNavigation() {
     return (
         <>
 
@@ -46,7 +47,7 @@ export function MenuNavigation(){
                     <img className="imgMenuNav" src={financeiro} alt="" />
                     <Link className="linkPage" to="/menu/financeiro">Financeiro</Link>
                 </div>
-                
+
                 <div className="menus">
                     <img className="imgMenuNav" src={areaEntrega} alt="" />
                     <Link className="linkPage" to="/menu/areas-entrega">Área de Entrega</Link>

@@ -48,19 +48,38 @@ export function RegisterPage() {
     })
 
     const addPost = data => axios.post('https://save-eats.cyclic.cloud/v1/saveeats/restaurante/procedore', data)
-        .then(() => {
-            navigate("/menu/home")
-            console.log(data);
-            console.log("Deu tudo certo")
+    .then(Response => {
 
-        })
-        .catch(() => {
-            console.log(data.status);
-            console.log("DEU ERRADO")
-            if( data.status === 401){
-                alert("Email já cadastrado")
+        const responseData = Response.data;
+        const restaurante = responseData.restaurante[0];
+        navigate("/menu/home", { state: { restaurante } })
+        console.log(responseData);
+
+
+    })
+    .catch(error => {
+
+        if (error.response) {
+
+            if (error.response.status === 401) {
+                alert('Esse e-mail já está vinculado a uma conta.');
+
+            }else if(error.response.status === 400) {
+                alert('Campos obrigatórios não foram preenchidos');
+
+            } 
+            else if(error.response.status === 500) {
+                alert('Devido a um erro interno do servidor, não foi possivel processar a requisição.');
             }
-        })
+
+        } else {
+            console.error(error);
+            alert('Ocorreu um erro inesperado. Tente novamente mais tarde.');
+        }
+
+        console.log("Deu errado");
+        console.log(data);
+    })
 
     return (
         <div className='registerContent'>
