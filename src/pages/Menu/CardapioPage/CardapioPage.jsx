@@ -9,6 +9,11 @@ import { ButtonAdicionar } from "../../../components/ButtonAdicionar/ButtonAdici
 import { ButtonPausadoAtivo } from "../../../components/ButtonPausadoAtivo/ButtonPausadoAtivo";
 import { TresPontos } from "../../../components/TresPontos/TresPontos"
 
+import primeiroProduto from "./img/bolo-branco.jpg"
+import segundoProduto from "./img/bolo-frutas-vermelhas.jpg"
+import terceiroProduto from "./img/bolo-chocolate.jpg"
+import quartoProduto from "./img/bolo-frutas.jpg"
+
 export function CardapioPage() {
     return (
         <div>
@@ -68,6 +73,95 @@ export function CardapioPage() {
                                 </div>
 
                                 <TresPontos></TresPontos>
+
+                            </div>
+
+                            <div className="container-produtos-preco-status">
+
+                                <h3>Produtos</h3>
+
+                                <span className="text-preco">Preço</span>
+
+                                <span className="text-status">Status</span>
+
+                            </div>
+
+                            <div className="container-produtos-preco-status-options">
+
+                                <div className="container-imagem-produto">
+
+                                    <img src={primeiroProduto} alt="" className="imagem-produto" />
+                                    <img src={segundoProduto} alt="" className="imagem-produto" />
+                                    <img src={terceiroProduto} alt="" className="imagem-produto" />
+                                    <img src={quartoProduto} alt="" className="imagem-produto" />
+
+                                </div>
+
+                                <div className="container-nome-produto">
+
+                                    <span className="nome-produto">Bolo de Chocolate Branco</span>
+                                    <span className="nome-produto">Bolo de Frutas Vermelhas</span>
+                                    <span className="nome-produto">Bolo de Chocolate</span>
+                                    <span className="nome-produto">Bolo de Frutas Vermelhas</span>
+
+                                </div>
+
+                                <div className="container-preco-produto">
+
+                                    <span className="preco-produto">R$ 34,99 </span>
+                                    <span className="preco-produto">R$ 49,99 </span>
+                                    <span className="preco-produto">R$ 7,80 </span>
+                                    <span className="preco-produto">R$ 82,75</span>
+
+                                </div>
+
+                                <div className="container-status-produto">
+
+                                    <div className="container-button-ativo-pausado">
+
+                                        <ButtonPausadoAtivo background="#E3E9DD" text="Pausado"></ButtonPausadoAtivo>
+
+                                        <ButtonPausadoAtivo background="#90AE6E" text="Ativo"></ButtonPausadoAtivo>
+
+                                    </div>
+
+                                    <div className="container-button-ativo-pausado">
+
+                                        <ButtonPausadoAtivo background="#E3E9DD" text="Pausado"></ButtonPausadoAtivo>
+
+                                        <ButtonPausadoAtivo background="#90AE6E" text="Ativo"></ButtonPausadoAtivo>
+
+                                    </div>
+
+                                    <div className="container-button-ativo-pausado">
+
+                                        <ButtonPausadoAtivo background="#E3E9DD" text="Pausado"></ButtonPausadoAtivo>
+
+                                        <ButtonPausadoAtivo background="#90AE6E" text="Ativo"></ButtonPausadoAtivo>
+
+                                    </div>
+
+                                    <div className="container-button-ativo-pausado">
+
+                                        <ButtonPausadoAtivo background="#E3E9DD" text="Pausado"></ButtonPausadoAtivo>
+
+                                        <ButtonPausadoAtivo background="#90AE6E" text="Ativo"></ButtonPausadoAtivo>
+
+                                    </div>
+
+                                </div>
+
+                                <div className="container-options">
+
+                                    <TresPontos></TresPontos>
+
+                                    <TresPontos></TresPontos>
+
+                                    <TresPontos></TresPontos>
+
+                                    <TresPontos></TresPontos>
+
+                                </div>
 
                             </div>
 
