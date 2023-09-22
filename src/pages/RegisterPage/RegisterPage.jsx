@@ -48,16 +48,38 @@ export function RegisterPage() {
     })
 
     const addPost = data => axios.post('https://save-eats.cyclic.cloud/v1/saveeats/restaurante/procedore', data)
-        .then(() => {
-            navigate("/home")
-            console.log(data);
-            console.log("Deu tudo certo")
+    .then(Response => {
 
-        })
-        .catch(() => {
-            console.log(data);
-            console.log("DEU ERRADO")
-        })
+        const responseData = Response.data;
+        const restaurante = responseData.restaurante[0];
+        navigate("/menu/home", { state: { restaurante } })
+        console.log(responseData);
+
+
+    })
+    .catch(error => {
+
+        if (error.response) {
+
+            if (error.response.status === 401) {
+                alert('Esse e-mail já está vinculado a uma conta.');
+
+            }else if(error.response.status === 400) {
+                alert('Campos obrigatórios não foram preenchidos');
+
+            } 
+            else if(error.response.status === 500) {
+                alert('Devido a um erro interno do servidor, não foi possivel processar a requisição.');
+            }
+
+        } else {
+            console.error(error);
+            alert('Ocorreu um erro inesperado. Tente novamente mais tarde.');
+        }
+
+        console.log("Deu errado");
+        console.log(data);
+    })
 
     return (
         <div className='registerContent'>
@@ -78,7 +100,7 @@ export function RegisterPage() {
                         <h1 className='cadastro'>cadastro</h1>
                         <h2>Crie sua conta</h2>
 
-                        <form className="inputs" onSubmit={handleSubmit(addPost)}>
+                        <div className="inputs">
 
                             <div className='inputDiv'>
                                 <span className="span-input">Categoria Estabelecimento</span>
@@ -177,10 +199,10 @@ export function RegisterPage() {
                                 <p className="error">{errors.numero_telefone?.message}</p>
                             </div>
 
+                        </div>
                             <div className="container-button">
-                                <button type='submit' className='btnCadastro'>Criar conta</button>
+                                <button className='btnCadastro'  onClick={handleSubmit(addPost)}>Criar conta</button>
                             </div>
-                        </form>
 
                     </div>
                 </div>

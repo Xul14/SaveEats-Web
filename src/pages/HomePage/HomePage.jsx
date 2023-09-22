@@ -1,15 +1,22 @@
 //Import dependências React
-import React from "react";
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 //Import css e components
 import "./HomePage.css"
-import stateOpen from "./img/verde.png"
+import greenImg from "./img/verde.png"
 import { MenuNavigation } from "../../components/MenuNavigation/MenuNavigation";
 import { CardsInformativos } from "../../components/HomeComponents/CardsInformativos/CardsInformativos";
 import { Cards } from "../../components/HomeComponents/Cards/Cards";
 import { CardsDesempenho } from "../../components/CardsDesempenho/CardsDesempenho";
+import { CurrentDate } from '../../components/CurrentDate/CurrentDate';
 
 export function HomePage() {
+
+    const location = useLocation();
+    const restaurante = location.state?.restaurante;
+
     return (
         <main className="main-menu">
 
@@ -21,10 +28,10 @@ export function HomePage() {
                 <div className="header">
 
                     <div>
-                        <h2 className="nome-estabelecimento">padaria dois irmãos</h2>
+                        <h2 className="nome-estabelecimento">{restaurante?.nome_fantasia}</h2>
 
                         <div className="loja">
-                            <img className="img-state-open" src={stateOpen} alt="Circulo verde" />
+                            <img className="img-state-open" src={greenImg} alt="Circulo verde" />
                             <span className="statusAbertura">Loja aberta</span>
                         </div>
                     </div>
@@ -46,12 +53,13 @@ export function HomePage() {
                         <div className="horario">
 
                             <span className="title-funcionamento">Horário de funcionamento</span>
-                            <span className="text">Hoje, 10 de agosto</span>
+                            {/* <span className="text">Hoje,</span> */}
+                            <CurrentDate></CurrentDate>
                             <span className="text">18:00 - 23:00</span>
 
                         </div>
 
-                        <span className="text">Alterar horário</span>
+                        <Link className="text-alterar-horario" to='/menu/horario-funcionamento'>Alterar horário</Link>
 
                     </div>
 
@@ -60,7 +68,7 @@ export function HomePage() {
                 </div>
 
                 <div className="container-desempenho">
-                    {/* <CardsDesempenho></CardsDesempenho> */}
+                    <CardsDesempenho titleCard="Acompanhamento de desempenho" firstColumn="Pedidos hoje" firstData="5" secondColumn="Valor vendido" secondData="R$ 211,12" thirdColumn="Pedidos concluídos" thirdData="3"></CardsDesempenho>
                 </div>
 
                 <div className="container-atrasos-pedidos">

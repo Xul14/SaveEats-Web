@@ -35,17 +35,38 @@ export function LoginPage() {
     })
 
     const addPost = data => axios.post('https://save-eats.cyclic.cloud/v1/saveeats/restaurante/login/autenticar', data)
-    // const addPost = data => axios.post('http://localhost:8080/v1/saveeats/restaurante/login/autenticar', data)
-        .then(() => {
-            navigate("/home")
-            console.log(data);
-            console.log("DEU CERTO")
-        })
-        .catch(() => {
+        // const addPost = data => axios.post('http://localhost:8080/v1/saveeats/restaurante/login/autenticar', data)
+        .then(Response => {
 
+            const responseData = Response.data;
+            const restaurante = responseData.restaurante[0];
+            navigate("/menu/home", { state: { restaurante } })
+            console.log(responseData);
+
+
+        })
+        .catch(error => {
+
+            if (error.response) {
+
+                if (error.response.status === 404) {
+                    alert('Usuário não encontrado. Verifique o email e a senha.');
+
+                }else if(error.response.status === 400) {
+                    alert('Campos obrigatórios não foram preenchidos');
+
+                } 
+                else if(error.response.status === 500) {
+                    alert('Devido a um erro interno do servidor, não foi possivel processar a requisição.');
+                }
+
+            } else {
+                console.error(error);
+                alert('Ocorreu um erro inesperado. Tente novamente mais tarde.');
+            }
+
+            console.log("Deu errado");
             console.log(data);
-            console.log("Deu errado")
-            alert('Usuário ou senha incorretos')
         })
 
     return (
@@ -62,12 +83,12 @@ export function LoginPage() {
 
                     <div className="container-rigth-login">
                         <img src={logo} alt="Logo" />
-                        <h1 className='bem-vindo'>bem vindo</h1>
+                        <h1 className='bem-vindo'>bem-vindo</h1>
                         <h2>Entre em sua conta</h2>
 
                         <form className="inputs-login">
 
-                            <span className="span-input">Email</span>
+                            <span className="span-input">E-mail</span>
                             <input type="email" name="email" {...register("email")} />
                             <p className="error">{errors.email?.message}</p>
 

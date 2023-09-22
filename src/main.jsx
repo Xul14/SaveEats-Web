@@ -21,64 +21,6 @@ import { FormasPagamentoPage } from './pages/Menu/FormasPagamentoPage/FormasPaga
 import { HorarioFuncionamentoPage } from './pages/Menu/HorarioFuncionamentoPage/HorarioFuncionamentoPage'
 import { PerfilPage } from './pages/Menu/PerfilPage/PerfilPage'
 
-
-
-const routers = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />
-  },
-  {
-    path: "/cadastro",
-    element: <RegisterPage />
-  },
-  {
-    path: "/home",
-    element: <HomePage />
-  },
-  {
-    path: "/menu",
-    element: <MenuPageEmpty />
-  },
-  {
-    element: <Menu />,
-    children: [
-      {
-        path: "/menu/cardapio",
-        element: <CardapioPage />
-      },
-      {
-        path: "/menu/pedidos",
-        element: <PedidosPage />
-      },
-      {
-        path: "/menu/avaliacao",
-        element: <AvaliacaoPage />
-      },
-      {
-        path: "/menu/financeiro",
-        element: <FinanceiroPage />
-      },
-      {
-        path: "/menu/areas-entrega",
-        element: <AreasEntregaPage />
-      },
-      {
-        path: "/menu/formas-pagamento",
-        element: <FormasPagamentoPage />
-      },
-      {
-        path: "/menu/horario-funcionamento",
-        element: <HorarioFuncionamentoPage />
-      },
-      {
-        path: "/menu/perfil",
-        element: <PerfilPage />
-      }
-    ]
-  }
-])
-
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
@@ -86,9 +28,16 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path='/' element={<App />} />
         <Route path='/cadastro' element={<RegisterPage />} />
         <Route path='/menu' element={<Menu />} />
-        <Route path='/home' element={<HomePage />} />
         <Route path='/menu/cardapio' element={<CardapioPage />} />
-        {/* <RouterProvider router = {routers} />  */}
+        <Route path='/menu/home' element={<HomePage />} />
+        <Route path='/menu/cardapio' element={<CardapioPage />} />
+        <Route path='/menu/pedidos' element={<PedidosPage />} />
+        <Route path='/menu/avaliacao' element={<AvaliacaoPage />} />
+        <Route path='/menu/financeiro' element={<FinanceiroPage />} />
+        <Route path='/menu/areas-entrega' element={<AreasEntregaPage />} />
+        <Route path='/menu/formas-pagamento' element={<FormasPagamentoPage />} />
+        <Route path='/menu/horario-funcionamento' element={<HorarioFuncionamentoPage />} />
+        <Route path='/menu/perfil' element={<PerfilPage />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,
