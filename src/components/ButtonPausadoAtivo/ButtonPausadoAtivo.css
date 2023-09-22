@@ -1,0 +1,9 @@
+.button-pausado-ativo {
+    width: 10vh;
+    height: 4vh;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #143A0B;
+}

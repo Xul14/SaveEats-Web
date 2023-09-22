@@ -11,8 +11,8 @@ import App from './App.jsx'
 import { RegisterPage } from './pages/RegisterPage/RegisterPage.jsx'
 import { HomePage } from './pages/HomePage/HomePage.jsx'
 import { MenuPageEmpty } from './pages/MenuPageEmpty/MenuPageEmpty'
-import { Menu } from './pages/Menu/Menu'
-import { CardapioPage } from './pages/Menu/CardapioPage/CardapioPage'
+import { Menu } from './pages/Menu/Menu.jsx'
+import { CardapioPage } from './pages/Menu/CardapioPage/CardapioPage.jsx'
 import { PedidosPage } from './pages/Menu/PedidosPage/PedidoPage'
 import { AvaliacaoPage } from './pages/Menu/AvaliacaoPage/AvaliacaoPage'
 import { FinanceiroPage } from './pages/Menu/FinanceiroPage/FinanceiroPage'
@@ -27,7 +27,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path='/' element={<App />} />
         <Route path='/cadastro' element={<RegisterPage />} />
-        <Route path='/menu' element={<MenuPageEmpty />} />
+        <Route path='/menu' element={<Menu />} />
+        <Route path='/menu/cardapio' element={<CardapioPage />} />
         <Route path='/menu/home' element={<HomePage />} />
         <Route path='/menu/cardapio' element={<CardapioPage />} />
         <Route path='/menu/pedidos' element={<PedidosPage />} />

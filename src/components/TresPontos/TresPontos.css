@@ -1,0 +1,40 @@
+.container-tres-pontos {
+    position: relative;
+    display: inline-block;
+}
+
+.botao {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 0;
+    margin: 0;
+}
+
+.lista {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    list-style: none;
+    padding: 8px 0;
+    margin: 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: none;
+    z-index: 1;
+}
+
+.lista li {
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.botao:hover+.lista {
+    display: block;
+}
+
+.tres-pontos {
+    height: 2vh;
+}

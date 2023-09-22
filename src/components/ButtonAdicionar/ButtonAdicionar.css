@@ -1,0 +1,16 @@
+.button-adicionar {
+    width: 20vh;
+    height: 5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    border: 1px solid #90AE6E;
+    border-radius: 10px;
+    font-size: 1rem;
+    color: #143A0B;
+}
+
+.fa-plus {
+    color: #143A0B;
+}
