@@ -11,7 +11,6 @@ import { ButtonPausadoAtivo } from "../../../components/ButtonPausadoAtivo/Butto
 import { TresPontos } from "../../../components/TresPontos/TresPontos"
 import { CardapioItem } from "../../../components/CardapioItem/CardapioItem";
 import { ModalCardapio } from "../../../components/ModalCardapio/ModalCardapio";
-import { ModalDelete } from "../../../components/ModalDelete/ModalDelete";
 
 //Images
 import primeiroProduto from "./img/bolo-branco.jpg"
@@ -19,10 +18,30 @@ import segundoProduto from "./img/bolo-frutas-vermelhas.jpg"
 import terceiroProduto from "./img/bolo-chocolate.jpg"
 import quartoProduto from "./img/bolo-frutas.jpg"
 
+
+//Import Axios para integração
+import axios from 'axios'
+
 export function CardapioPage() {
 
+    //Modal para adicionar um produto
     const [openModal, setOpenModal] = useState(false)
-    const [openModalDelete, setOpenModalDelete] = useState(false)
+
+    //Pegando dados do restaurante
+    const nomeRestaurante = localStorage.getItem("nome_fantasia");
+
+    const selectCategoria = axios.get('http://localhost:8080/v1/saveeats/categoria/produto')
+    .then(Response => {
+        const responseData = Response.data;
+        const responseCategoria = responseData.categoria_produto;
+        console.log(responseCategoria);
+    })
+    .catch(error => {
+        console.log(error.response);
+        console.log('deu ruim');
+    })
+ 
+
 
     return (
         <div>
@@ -45,7 +64,7 @@ export function CardapioPage() {
 
                         <select name="Categoria" className="input-categoria">
                             <option>Categoria</option>
-                            <option>teste</option>
+                            <option>Bolos</option>
                             <option>teste</option>
                         </select>
 
@@ -53,8 +72,7 @@ export function CardapioPage() {
 
                     <div className="container-adicionar">
 
-                        <ButtonAdicionar background='#90AE6E' text="Adicionar categoria" onClick={() => setOpenModalDelete(true)}></ButtonAdicionar>
-                        <ModalDelete isOpenModal={openModalDelete} setModalOpenDelete={() => setOpenModalDelete(!openModalDelete)}></ModalDelete>
+                        <ButtonAdicionar background='#90AE6E' text="Adicionar categoria"></ButtonAdicionar>
 
                         <ButtonAdicionar background='#E3E9DD' text="Adicionar produto" onClick={() => setOpenModal(true)}></ButtonAdicionar>
                         <ModalCardapio isOpen={openModal} setModalOpen={() => setOpenModal(!openModal)}></ModalCardapio>
