@@ -1,0 +1,19 @@
+.container-tipos-formas-pagamento {
+    width: 10rem;
+    height: 10rem;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.checkbox-tipo-pagamento {
+    height: 2rem;
+}
+
+.tipo-pagamento {
+    height: 4rem;
+}
+
+.text-forma-pagamento {
+    font-size: 1.5rem;
+}
