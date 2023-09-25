@@ -1,0 +1,105 @@
+.modal-delete {
+  bottom: 0;
+  left: 45%;
+  opacity: 0;
+  opacity: 1;
+  z-index: 1;
+  z-index: -1;
+  bottom: 50%;
+  width: 450px;
+  height: 400px;
+  position: absolute;
+  border-radius: 20px;
+  animation-name: slide;
+  transform: translateY(50%);
+  background-color: #fff;
+  animation-duration: 0.5s;
+}
+
+.delete-item {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-areas: 'header' 'bodyModal';
+  grid-template-rows: 70px 1fr;
+}
+
+.header-delete {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  background-color: #90AE6E;
+  grid-area: header;
+  display: flex;
+  width: 100%;
+}
+
+
+.closeModal {
+  color: #FFF;
+  font-size: 2rem;
+  font-weight: 600;
+  padding-right: 15px;
+}
+
+.title-container-delete {
+  flex-grow: 1;
+  text-align: center;
+  padding-top: 15px;
+}
+
+.title-modal-delete {
+  color: #FFF;
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+
+.body-delete-modal {
+  grid-area: bodyModal;
+  width: 100%;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.message-delete {
+  font-size: 2rem;
+  text-align: center;
+}
+
+.btn-sim {
+  border: none;
+  height: 50px;
+  width: 150px;
+  color: #FFF;
+  font-size: 1.5rem;
+  border-radius: 50px;
+  background-color: #295F1B;
+}
+
+.btn-nao {
+  border: none;
+  height: 50px;
+  width: 150px;
+  color: #FFF;
+  font-size: 1.5rem;
+  border-radius: 50px;
+  background-color: #143A0B;
+
+}
+
+@keyframes slide {
+  from {
+    bottom: 0%;
+    opacity: 0.1;
+  }
+
+  to {
+    bottom: 50%;
+    transform: translateY(50%);
+    opacity: 1;
+  }
+}

@@ -27,17 +27,17 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path='/' element={<App />} />
         <Route path='/cadastro' element={<RegisterPage />} />
-        <Route path='/menu' element={<Menu />} />
-        <Route path='/menu/cardapio' element={<CardapioPage />} />
-        <Route path='/menu/home' element={<HomePage />} />
-        <Route path='/menu/cardapio' element={<CardapioPage />} />
-        <Route path='/menu/pedidos' element={<PedidosPage />} />
-        <Route path='/menu/avaliacao' element={<AvaliacaoPage />} />
-        <Route path='/menu/financeiro' element={<FinanceiroPage />} />
-        <Route path='/menu/areas-entrega' element={<AreasEntregaPage />} />
-        <Route path='/menu/formas-pagamento' element={<FormasPagamentoPage />} />
-        <Route path='/menu/horario-funcionamento' element={<HorarioFuncionamentoPage />} />
-        <Route path='/menu/perfil' element={<PerfilPage />} />
+            <Route path='/menu' element={<Menu />} />
+            <Route path='/menu/cardapio' element={<CardapioPage />} />
+            <Route path='/menu/home' element={<HomePage />} />
+            <Route path='/menu/cardapio' element={<CardapioPage />} />
+            <Route path='/menu/pedidos' element={<PedidosPage />} />
+            <Route path='/menu/avaliacao' element={<AvaliacaoPage />} />
+            <Route path='/menu/financeiro' element={<FinanceiroPage />} />
+            <Route path='/menu/areas-entrega' element={<AreasEntregaPage />} />
+            <Route path='/menu/formas-pagamento' element={<FormasPagamentoPage />} />
+            <Route path='/menu/horario-funcionamento' element={<HorarioFuncionamentoPage />} />
+            <Route path='/menu/perfil' element={<PerfilPage />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

@@ -40,6 +40,7 @@ export function LoginPage() {
 
             const responseData = Response.data;
             const restaurante = responseData.restaurante[0];
+            localStorage.setItem("nome_fantasia", restaurante.nome_fantasia)
             navigate("/menu/home", { state: { restaurante } })
             console.log(responseData);
 
@@ -84,16 +85,16 @@ export function LoginPage() {
                     <div className="container-rigth-login">
                         <img src={logo} alt="Logo" />
                         <h1 className='bem-vindo'>bem-vindo</h1>
-                        <h2>Entre em sua conta</h2>
+                        <h2 className='subtitlee'>Entre em sua conta</h2>
 
                         <form className="inputs-login">
 
                             <span className="span-input">E-mail</span>
-                            <input type="email" name="email" {...register("email")} />
+                            <input className='input' type="email" name="email" {...register("email")} />
                             <p className="error">{errors.email?.message}</p>
 
                             <span className="span-input">Senha</span>
-                            <input type="password" name="senha" {...register("senha")} />
+                            <input className='input' type="password" name="senha" {...register("senha")} />
                             <p className="error">{errors.senha?.message}</p>
 
                             <span className="esqueceu-senha">Esqueceu sua senha?</span>

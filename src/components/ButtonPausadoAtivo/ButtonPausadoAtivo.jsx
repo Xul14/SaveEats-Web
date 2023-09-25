@@ -5,11 +5,7 @@ import "./ButtonPausadoAtivo.css"
 export function ButtonPausadoAtivo({ text, background }) {
     return (
         <>
-
-            <button style={{backgroundColor: background }}  className="button-pausado-ativo">
-                {text}
-            </button>
-
+            <button style={{backgroundColor: background }}  className="button-pausado-ativo">{text}</button>
         </>
     )
 }

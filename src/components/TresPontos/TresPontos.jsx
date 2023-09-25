@@ -9,8 +9,12 @@ export function TresPontos() {
         setMostrarLista(!mostrarLista);
     };
 
+    const handleMouseLeave = () => {
+        setTimeout(() => {setMostrarLista(false);}, 200000); 
+      };
+
     return (
-        <div className="container-tres-pontos">
+        <div className="container-tres-pontos" onMouseLeave={handleMouseLeave}>
             <button className="botao" onClick={toggleLista}>
                 <img src={tresPontos} alt="Três pontoa" className="tres-pontos"/>
             </button>

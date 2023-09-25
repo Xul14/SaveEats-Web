@@ -16,6 +16,7 @@ export function HomePage() {
 
     const location = useLocation();
     const restaurante = location.state?.restaurante;
+    const nomeRestaurante = localStorage.getItem("nome_fantasia");
 
     return (
         <main className="main-menu">
@@ -28,7 +29,7 @@ export function HomePage() {
                 <div className="header">
 
                     <div>
-                        <h2 className="nome-estabelecimento">{restaurante?.nome_fantasia}</h2>
+                        <h2 className="nome-estabelecimento">{nomeRestaurante}</h2>
 
                         <div className="loja">
                             <img className="img-state-open" src={greenImg} alt="Circulo verde" />
@@ -42,7 +43,7 @@ export function HomePage() {
 
                 </div>
 
-                <div className="container-options">
+                <div className="container-cards-infos">
                     <CardsInformativos></CardsInformativos>
                 </div>
 
@@ -53,7 +54,6 @@ export function HomePage() {
                         <div className="horario">
 
                             <span className="title-funcionamento">Horário de funcionamento</span>
-                            {/* <span className="text">Hoje,</span> */}
                             <CurrentDate></CurrentDate>
                             <span className="text">18:00 - 23:00</span>
 

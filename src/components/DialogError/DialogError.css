@@ -1,0 +1,102 @@
+
+.dialog-error {
+    position: absolute;
+    bottom:0;
+    left:40%;
+    opacity: 0;
+    z-index: -1;
+    background: var(--cor-branca);
+    height: fit-content;
+    width: fit-content;
+    border: 1px solid var(--cor-cinza-borda);
+    border-radius: 10px;
+    box-shadow: 1px 1px 20px var(--cor-preta-claro);
+    
+}
+
+.active {
+    opacity: 1;
+    z-index: 1;
+    bottom: 50%;
+    transform: translateY(50%);
+    animation-name: slide;
+    animation-duration: 0.5s;
+}
+
+@keyframes slide {
+    from { bottom: 0%; opacity: 0.1;}
+    to { bottom: 50%; transform: translateY(50%); opacity: 1;}
+}
+
+.card-dialog {
+    height: 100%;
+    min-width: 500px;
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.dialog-header {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 16px 16px 16px;
+    margin-bottom: 16px;
+    background-color: var(--cor-primaria-vinho);
+    border-radius: 10px 10px 0px 0px;
+}
+
+.dialog-title {
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--cor-branca);
+}
+
+.close-dialog {
+    border: 0;
+    background-color: transparent;
+}
+
+.card__dialog__header--btn-close img {
+    height: 16px;
+    width: 16px;
+}
+
+.card__dialog__header--btn-close img:hover {
+    cursor: pointer;
+}
+
+
+.dialog-message {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--cor-preta);
+    padding: 0px 16px 0px 16px;
+    margin-bottom: 50px;
+}
+
+.btn-close-modal {
+    height: fit-content;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 25px;
+}
+
+.btn-close {
+    display: grid;
+    place-items: center;
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 10px 12px;
+    color: var(--cor-branca);
+    border-radius: 4px;
+    margin-bottom: 16px;
+}
+

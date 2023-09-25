@@ -1,0 +1,175 @@
+.background-modal {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  position: fixed;
+  backdrop-filter: blur(2px);
+  background-color: rgb(0, 0, 0, 0.7);
+}
+
+.modal-cardapio {
+  top: 0;
+  display: flex;
+  right: -400px;
+  height: 100%;
+  width: 900px;
+  padding: 30px;
+  position: fixed;
+  border-radius: 10px;
+  background-color: #fff;
+  animation: openModal 0.3s ease forwards;
+}
+
+.addItem {
+  display: grid;
+  height: 100%;
+  width: 100%;
+  grid-template-areas: 'header' 'inputsItens' 'InputDescBtn';
+  grid-template-rows: 70px 1.5fr 1fr;
+}
+
+.header-modal {
+  grid-area: header;
+  display: flex;
+  width: 100%;
+}
+
+.arrow {
+  height: 30px;
+}
+
+.title-container{
+  flex-grow: 1;
+  text-align: center;
+  align-items: center;
+  border-bottom: 2px solid #295F1B;
+}
+
+.title-modal {
+  color: #295F1B;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.inputsModal {
+  grid-area: inputsItens;
+  flex-direction: column;
+  display: grid;
+  grid-template-areas: 'inputs img';
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  width: 100%;
+}
+
+.inputs-modal-right{
+  width: 100%;
+  margin-top: 10%;
+  display: flex;
+  grid-area: img;
+  justify-content: center;
+}
+
+.span-input-item-img{
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: #000; 
+}
+
+.input-modal-img{
+  height: 350px;
+  border-radius: 15px;
+  border: 3px dotted #b0aeae;
+  box-shadow: 2px 2px 8px#AFACAB;
+}
+
+.inputs-modal-left{
+  grid-area: inputs;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 30px;
+}
+
+.input-span{
+  gap: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.span-input-item {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: #000;
+}
+
+.input-modal {
+  width: 25rem;
+  height: 3.5rem;
+  padding: 1rem;
+  border: 1px solid #999999;
+  border-radius: 10px;
+  font-size: 1.2rem;
+}
+
+.input-modal-select{
+    width: 25rem;
+    height: 3.5rem;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    color: #757575;
+    padding-left: 1%;
+    border: 1px solid #999999;
+    background-color: transparent;
+}
+
+.input-modal-select option {
+  background-color: #ECECEC; 
+}
+
+.input-modal-select:focus, 
+.input-modal:focus,
+.input-modal-desc:focus{
+  border: 2px solid #295F1B;
+}
+
+
+.inputDesc-btn {
+  grid-area: InputDescBtn;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  display: flex;
+  width: 100%;
+  gap: 50px;
+}
+
+.input-modal-desc{
+  display: flex;
+  width: 800px;
+  padding: 5px;
+  height: 250px;
+  border: 1px solid #999999;
+}
+
+.btn-criarItem {
+  background-color: #295F1B;
+  border-radius: 50px;
+  font-size: 30px;
+  color: #FFF;
+  border: none;
+  height: 60px;
+  width: 250px;
+}
+
+@keyframes openModal {
+  from {
+    right: -400;
+  }
+
+  to {
+    right: 0;
+  }
+
+}

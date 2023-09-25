@@ -1,5 +1,6 @@
 //Import React
-import React from "react";
+import React, { useState } from "react";
+import { useLocation } from 'react-router-dom';
 
 //Import css e components
 import "./CardapioPage.css"
@@ -8,13 +9,21 @@ import { HeaderPages } from "../../../components/HeaderPages/Header";
 import { ButtonAdicionar } from "../../../components/ButtonAdicionar/ButtonAdicionar";
 import { ButtonPausadoAtivo } from "../../../components/ButtonPausadoAtivo/ButtonPausadoAtivo";
 import { TresPontos } from "../../../components/TresPontos/TresPontos"
+import { CardapioItem } from "../../../components/CardapioItem/CardapioItem";
+import { ModalCardapio } from "../../../components/ModalCardapio/ModalCardapio";
+import { ModalDelete } from "../../../components/ModalDelete/ModalDelete";
 
+//Images
 import primeiroProduto from "./img/bolo-branco.jpg"
 import segundoProduto from "./img/bolo-frutas-vermelhas.jpg"
 import terceiroProduto from "./img/bolo-chocolate.jpg"
 import quartoProduto from "./img/bolo-frutas.jpg"
 
 export function CardapioPage() {
+
+    const [openModal, setOpenModal] = useState(false)
+    const [openModalDelete, setOpenModalDelete] = useState(false)
+
     return (
         <div>
 
@@ -44,9 +53,11 @@ export function CardapioPage() {
 
                     <div className="container-adicionar">
 
-                        <ButtonAdicionar background='#90AE6E' text="Adicionar categoria"></ButtonAdicionar>
+                        <ButtonAdicionar background='#90AE6E' text="Adicionar categoria" onClick={() => setOpenModalDelete(true)}></ButtonAdicionar>
+                        <ModalDelete isOpenModal={openModalDelete} setModalOpenDelete={() => setOpenModalDelete(!openModalDelete)}></ModalDelete>
 
-                        <ButtonAdicionar background='#E3E9DD' text="Adicionar produto"></ButtonAdicionar>
+                        <ButtonAdicionar background='#E3E9DD' text="Adicionar produto" onClick={() => setOpenModal(true)}></ButtonAdicionar>
+                        <ModalCardapio isOpen={openModal} setModalOpen={() => setOpenModal(!openModal)}></ModalCardapio>
 
                     </div>
 
@@ -88,80 +99,10 @@ export function CardapioPage() {
 
                             <div className="container-produtos-preco-status-options">
 
-                                <div className="container-imagem-produto">
-
-                                    <img src={primeiroProduto} alt="" className="imagem-produto" />
-                                    <img src={segundoProduto} alt="" className="imagem-produto" />
-                                    <img src={terceiroProduto} alt="" className="imagem-produto" />
-                                    <img src={quartoProduto} alt="" className="imagem-produto" />
-
-                                </div>
-
-                                <div className="container-nome-produto">
-
-                                    <span className="nome-produto">Bolo de Chocolate Branco</span>
-                                    <span className="nome-produto">Bolo de Frutas Vermelhas</span>
-                                    <span className="nome-produto">Bolo de Chocolate</span>
-                                    <span className="nome-produto">Bolo de Frutas Vermelhas</span>
-
-                                </div>
-
-                                <div className="container-preco-produto">
-
-                                    <span className="preco-produto">R$ 34,99 </span>
-                                    <span className="preco-produto">R$ 49,99 </span>
-                                    <span className="preco-produto">R$ 7,80 </span>
-                                    <span className="preco-produto">R$ 82,75</span>
-
-                                </div>
-
-                                <div className="container-status-produto">
-
-                                    <div className="container-button-ativo-pausado">
-
-                                        <ButtonPausadoAtivo background="#E3E9DD" text="Pausado"></ButtonPausadoAtivo>
-
-                                        <ButtonPausadoAtivo background="#90AE6E" text="Ativo"></ButtonPausadoAtivo>
-
-                                    </div>
-
-                                    <div className="container-button-ativo-pausado">
-
-                                        <ButtonPausadoAtivo background="#E3E9DD" text="Pausado"></ButtonPausadoAtivo>
-
-                                        <ButtonPausadoAtivo background="#90AE6E" text="Ativo"></ButtonPausadoAtivo>
-
-                                    </div>
-
-                                    <div className="container-button-ativo-pausado">
-
-                                        <ButtonPausadoAtivo background="#E3E9DD" text="Pausado"></ButtonPausadoAtivo>
-
-                                        <ButtonPausadoAtivo background="#90AE6E" text="Ativo"></ButtonPausadoAtivo>
-
-                                    </div>
-
-                                    <div className="container-button-ativo-pausado">
-
-                                        <ButtonPausadoAtivo background="#E3E9DD" text="Pausado"></ButtonPausadoAtivo>
-
-                                        <ButtonPausadoAtivo background="#90AE6E" text="Ativo"></ButtonPausadoAtivo>
-
-                                    </div>
-
-                                </div>
-
-                                <div className="container-options">
-
-                                    <TresPontos></TresPontos>
-
-                                    <TresPontos></TresPontos>
-
-                                    <TresPontos></TresPontos>
-
-                                    <TresPontos></TresPontos>
-
-                                </div>
+                                <CardapioItem imgProduto={primeiroProduto} nomeProduto="Bolo de Chocolate Branco" precoProduto="29,90"></CardapioItem>
+                                <CardapioItem imgProduto={segundoProduto} nomeProduto="Bolo de Frutas Vermelhas" precoProduto="29,90"></CardapioItem>
+                                <CardapioItem imgProduto={terceiroProduto} nomeProduto="Bolo de Chocolate" precoProduto="29,90"></CardapioItem>
+                                <CardapioItem imgProduto={quartoProduto} nomeProduto="Bolo de Frutas Vermalhas" precoProduto="29,90"></CardapioItem>
 
                             </div>
 

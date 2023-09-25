@@ -98,7 +98,7 @@ export function RegisterPage() {
                         <img className="logo" src={logo} alt="Logo" />
 
                         <h1 className='cadastro'>cadastro</h1>
-                        <h2>Crie sua conta</h2>
+                        <h2 className='subtitlee'>Crie sua conta</h2>
 
                         <div className="inputs">
 
