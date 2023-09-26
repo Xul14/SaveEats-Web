@@ -10,6 +10,11 @@ import { TiposPagamento } from "../../../components/TiposPagamento/TiposPagament
 import imgMastercard from "./img/mastercard.png"
 import imgVisa from "./img/visa.png"
 import imgDinheiro from "./img/dinheiro.png"
+import imgPix from "./img/pix.png"
+import imgAlelo from "./img/alelo.png"
+import imgElo from "./img/elo.png"
+import imgVr from "./img/vr.png"
+import imgTicket from "./img/ticket.png"
 
 export function FormasPagamentoPage() {
     return (
@@ -42,15 +47,31 @@ export function FormasPagamentoPage() {
 
                             <div className="container-tipos-pagamento">
 
-                                <TiposPagamento nomeFormaPagamento="Mastercard" imgFormaPagamento={imgDinheiro}></TiposPagamento>
+                                <TiposPagamento nomeFormaPagamento="Dinheiro" imgFormaPagamento={imgDinheiro}></TiposPagamento>
+
+                                <TiposPagamento nomeFormaPagamento="Elo" imgFormaPagamento={imgElo}></TiposPagamento>
+
+                                <TiposPagamento nomeFormaPagamento="Pix" imgFormaPagamento={imgPix}></TiposPagamento>
+
+                                <TiposPagamento nomeFormaPagamento="Vr" imgFormaPagamento={imgVr}></TiposPagamento>
 
                                 <TiposPagamento nomeFormaPagamento="Mastercard" imgFormaPagamento={imgMastercard}></TiposPagamento>
 
+                                <TiposPagamento nomeFormaPagamento="Alelo" imgFormaPagamento={imgAlelo}></TiposPagamento>
+
                                 <TiposPagamento nomeFormaPagamento="Visa" imgFormaPagamento={imgVisa}></TiposPagamento>
+
+                                <TiposPagamento nomeFormaPagamento="Ticket" imgFormaPagamento={imgTicket}></TiposPagamento>
 
                             </div>
 
                         </div>
+
+                    </div>
+
+                    <div className="container-button-salvar-alteracoes">
+
+                        <button className="salvar-alteracoes">Salvar alterações</button>
 
                     </div>
 

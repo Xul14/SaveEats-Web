@@ -15,7 +15,7 @@
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-rows: 15% 45%;
+    grid-template-rows: 15% 75%;
 }
 
 .container-formas-pagamento {
@@ -30,7 +30,7 @@
     width: 72vw;
     height: 90%;
     display: grid;
-    grid-template-rows: 35% 65%;
+    grid-template-rows: 25% 75%;
     background-color: #F5F8F3;
 }
 
@@ -55,4 +55,25 @@
 .container-tipos-pagamento {
     width: 100%;
     height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+}
+
+.container-button-salvar-alteracoes {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: end;
+    padding-right: 6.5rem;
+}
+
+.salvar-alteracoes {
+    width: 15%;
+    height: 55%;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    background-color: #FE9112;
+    color: #FFF;
 }
