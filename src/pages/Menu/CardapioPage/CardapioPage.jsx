@@ -1,6 +1,5 @@
 //Import React
-import React, { useState } from "react";
-import { useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
 
 //Import css e components
 import "./CardapioPage.css"
@@ -12,15 +11,9 @@ import { TresPontos } from "../../../components/TresPontos/TresPontos"
 import { CardapioItem } from "../../../components/CardapioItem/CardapioItem";
 import { ModalCardapio } from "../../../components/ModalCardapio/ModalCardapio";
 
-//Images
-import primeiroProduto from "./img/bolo-branco.jpg"
-import segundoProduto from "./img/bolo-frutas-vermelhas.jpg"
-import terceiroProduto from "./img/bolo-chocolate.jpg"
-import quartoProduto from "./img/bolo-frutas.jpg"
-
-
 //Import Axios para integração
 import axios from 'axios'
+
 
 export function CardapioPage() {
 
@@ -29,19 +22,74 @@ export function CardapioPage() {
 
     //Pegando dados do restaurante
     const nomeRestaurante = localStorage.getItem("nome_fantasia");
+    const idRestaurante = localStorage.getItem("id");
 
-    const selectCategoria = axios.get('http://localhost:8080/v1/saveeats/categoria/produto')
-    .then(Response => {
-        const responseData = Response.data;
-        const responseCategoria = responseData.categoria_produto;
-        console.log(responseCategoria);
-    })
-    .catch(error => {
-        console.log(error.response);
-        console.log('deu ruim');
-    })
- 
 
+    //Consumo da API para o input de Categorias
+    const [categorias, setCategorias] = useState([])
+    const [categoriaSelecionada, setCategoriaSelecionada] = useState('')
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await axios.get('https://save-eats.cyclic.cloud/v1/saveeats/categoria/produto');
+                // const response = await axios.get('http://localhost:8080/v1/saveeats/categoria/produto');
+                const responseData = response.data.categoria_produto
+                setCategorias(responseData)
+            } catch (error) {
+                console.error('Erro ao obter dados da API:', error)
+            }
+        }
+
+        fetchData()
+    }, [])
+
+    //Consumo da API para listar os produtos do restaurante
+    const [produtos, setProdutos] = useState([]);
+
+    useEffect(() => {
+        async function produtoData() {
+            try {
+                const produto = await axios.get(`https://save-eats.cyclic.cloud/v1/saveeats/restaurante/produtos/nome-fantasia/${nomeRestaurante}`);
+                // const produto = await axios.get(`http://localhost:8080/v1/saveeats/restaurante/produtos/nome-fantasia/${nomeRestaurante}`);
+                const produtoData = produto.data.restaurante;
+                setProdutos(produtoData);
+            } catch (error) {
+                console.error('Erro ao obter dados da API:', error);
+            }
+        }
+
+        produtoData();
+    }, []);
+
+
+    // Consumo da API para buscar produtos com base no termo de pesquisa
+    const [termoPesquisa, setTermoPesquisa] = useState("");
+    const [produtosBuscar, setProdutosBuscar] = useState([]);
+
+    const buscarProdutos = async () => {
+        try {
+            const response = await axios.get(`http://localhost:8080/v1/saveeats/restaurante/produtos/id-restaurante/${îdRestaurante}/nome-produto/${termoPesquisa}`);
+            const data = response.data;
+            setProdutos(data);
+        } catch (error) {
+            console.error("Erro ao buscar produtos:", error);
+        }
+    };
+
+    useEffect(() => {
+        if (termoPesquisa.trim() !== "") {
+            buscarProdutos();
+        } else {
+            setProdutos([]);
+        }
+    }, [termoPesquisa]);
+
+    const handlePesquisaEnter = (e) => {
+        if (e.key === "Enter") {
+            buscarProdutos();
+        }
+    };
 
     return (
         <div>
@@ -60,12 +108,23 @@ export function CardapioPage() {
 
                     <div className="container-busca-categoria">
 
-                        <input className="input-busca" type="search" placeholder="Buscar produto" />
+                        {/* <input className="input-busca" type="search" placeholder="Buscar produto" /> */}
+                        <input
+                            className="input-busca"
+                            type="search"
+                            placeholder="Buscar produto"
+                            value={termoPesquisa}
+                            onChange={(e) => setTermoPesquisa(e.target.value)}
+                            onKeyPress={handlePesquisaEnter}
+                        />
 
-                        <select name="Categoria" className="input-categoria">
+                        <select name="Categoria" className="input-categoria" value={categoriaSelecionada} onChange={(e) => setCategoriaSelecionada(e.target.value)}>
                             <option>Categoria</option>
-                            <option>Bolos</option>
-                            <option>teste</option>
+                            {categorias.map((categoria, index) => (
+                                <option key={index} value={categoria.categoria_produto}>
+                                    {categoria.categoria_produto}
+                                </option>
+                            ))}
                         </select>
 
                     </div>
@@ -117,10 +176,14 @@ export function CardapioPage() {
 
                             <div className="container-produtos-preco-status-options">
 
-                                <CardapioItem imgProduto={primeiroProduto} nomeProduto="Bolo de Chocolate Branco" precoProduto="29,90"></CardapioItem>
-                                <CardapioItem imgProduto={segundoProduto} nomeProduto="Bolo de Frutas Vermelhas" precoProduto="29,90"></CardapioItem>
-                                <CardapioItem imgProduto={terceiroProduto} nomeProduto="Bolo de Chocolate" precoProduto="29,90"></CardapioItem>
-                                <CardapioItem imgProduto={quartoProduto} nomeProduto="Bolo de Frutas Vermalhas" precoProduto="29,90"></CardapioItem>
+                                {produtos.map((produto, index) => (
+                                    <CardapioItem
+                                        key={index}
+                                        imgProduto={produto.imagem}
+                                        nomeProduto={produto.nome}
+                                        precoProduto={produto.preco}
+                                    />
+                                ))}
 
                             </div>
 

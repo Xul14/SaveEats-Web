@@ -1,5 +1,8 @@
 //Import React
-import React from "react";
+import React, { useState, useEffect } from "react";
+
+//Import Axios para integração
+import axios from 'axios'
 
 //Import css
 import './ModalCardapio.css'
@@ -8,6 +11,45 @@ import imageAdd from './img/addImage.png'
 
 export function ModalCardapio({ isOpen, setModalOpen }) {
   if (isOpen) {
+
+    //Input option categoria
+    const [categorias, setCategorias] = useState([])
+    const [categoriaSelecionada, setCategoriaSelecionada] = useState('')
+
+    useEffect(() => {
+      async function fetchData() {
+        try {
+          const response = await axios.get('https://save-eats.cyclic.cloud/v1/saveeats/categoria/produto');
+          // const response = await axios.get('http://localhost:8080/v1/saveeats/categoria/produto');
+          const responseData = response.data.categoria_produto
+          setCategorias(responseData)
+        } catch (error) {
+          console.error('Erro ao obter dados da API:', error)
+        }
+      }
+
+      fetchData()
+    }, [])
+
+    //Input option status produto
+    const [status, setStatus] = useState([])
+    const [statuselecionado, setStatuselecionado] = useState('')
+
+    useEffect(() => {
+      async function fetchData() {
+        try {
+          const responseStatus = await axios.get('https://save-eats.cyclic.cloud/v1/saveeats/status/produto');
+          // const responseStatus = await axios.get('http://localhost:8080/v1/saveeats/status/produto');
+          const responseStatusData = responseStatus.data.status_produto
+          setStatus(responseStatusData)
+        } catch (error) {
+          console.error('Erro ao obter dados da API:', error)
+        }
+      }
+
+      fetchData()
+    }, [])
+
     return (
       <div className="background-modal">
         <div className="modal-cardapio">
@@ -33,11 +75,13 @@ export function ModalCardapio({ isOpen, setModalOpen }) {
 
                   <span className="span-input-item">Categoria</span>
 
-                  <select className="input-modal-select">
-
+                  <select name="Categoria" className="input-modal-select" value={categoriaSelecionada} onChange={(e) => setCategoriaSelecionada(e.target.value)}>
                     <option>Categoria</option>
-                    <option>teste</option>
-                    <option>teste</option>
+                    {categorias.map((categoria, index) => (
+                      <option key={index} value={categoria.categoria_produto}>
+                        {categoria.categoria_produto}
+                      </option>
+                    ))}
                   </select>
 
                 </div>
@@ -46,10 +90,13 @@ export function ModalCardapio({ isOpen, setModalOpen }) {
 
                   <span className="span-input-item">Status do Produto</span>
 
-                  <select className="input-modal-select">
-                    <option>Ativo</option>
-                    <option>teste</option>
-                    <option>teste</option>
+                  <select name="Status produto" className="input-modal-select" value={statuselecionado} onChange={(e) => setStatuselecionado(e.target.value)}>
+                    <option>Status</option>
+                    {status.map((status, index) => (
+                      <option key={index} value={status.status_produto}>
+                        {status.status_produto}
+                      </option>
+                    ))}
                   </select>
 
                 </div>
