@@ -24,6 +24,7 @@ export function CardapioPage() {
     const nomeRestaurante = localStorage.getItem("nome_fantasia");
     const idRestaurante = localStorage.getItem("id");
 
+    const [produtosAtualizados, setProdutosAtualizados] = useState([]);
 
     //Consumo da API para o input de Categorias
     const [categorias, setCategorias] = useState([])
@@ -69,11 +70,17 @@ export function CardapioPage() {
 
     const buscarProdutos = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/v1/saveeats/restaurante/produtos/id-restaurante/${îdRestaurante}/nome-produto/${termoPesquisa}`);
+            // const response = await axios.get(`http://localhost:8080/v1/saveeats/restaurante/produtos/id-restaurante/50/nome-produto/${termoPesquisa}`);
+            const response = await axios.get(`https://save-eats.cyclic.cloud/v1/saveeats/restaurante/produtos/id-restaurante/50/nome-produto/${termoPesquisa}`);
             const data = response.data;
             setProdutos(data);
         } catch (error) {
+            const response = await axios.get(`https://save-eats.cyclic.cloud/v1/saveeats/restaurante/produtos/id-restaurante/50/nome-produto/${termoPesquisa}`);
+            const data = response.data;
             console.error("Erro ao buscar produtos:", error);
+            console.log(data);
+            console.log(response.data);
+            console.log(setProdutos(data));
         }
     };
 
@@ -134,7 +141,7 @@ export function CardapioPage() {
                         <ButtonAdicionar background='#90AE6E' text="Adicionar categoria"></ButtonAdicionar>
 
                         <ButtonAdicionar background='#E3E9DD' text="Adicionar produto" onClick={() => setOpenModal(true)}></ButtonAdicionar>
-                        <ModalCardapio isOpen={openModal} setModalOpen={() => setOpenModal(!openModal)}></ModalCardapio>
+                        <ModalCardapio isOpen={openModal} setModalOpen={() => setOpenModal(!openModal)} onProdutoCriado={(novoProduto) => {setProdutos([...produtos, novoProduto]); setOpenModal(false)}}></ModalCardapio>
 
                     </div>
 
