@@ -14,7 +14,7 @@ export function TresPontos() {
     };
 
     const handleMouseLeave = () => {
-        setTimeout(() => { setMostrarLista(false); }, 200000);
+        setTimeout(() => { setMostrarLista(false); }, 3000);
     };
 
     //Modal para deletar um item

@@ -34,13 +34,14 @@ export function LoginPage() {
         resolver: yupResolver(validationPost)
     })
 
-    const addPost = data => axios.post('https://save-eats.cyclic.cloud/v1/saveeats/restaurante/login/autenticar', data)
-        // const addPost = data => axios.post('http://localhost:8080/v1/saveeats/restaurante/login/autenticar', data)
+    // const addPost = data => axios.post('https://save-eats.cyclic.cloud/v1/saveeats/restaurante/login/autenticar', data)
+        const addPost = data => axios.post('http://localhost:8080/v1/saveeats/restaurante/login/autenticar', data)
         .then(Response => {
 
             const responseData = Response.data;
             const restaurante = responseData.restaurante[0];
             localStorage.setItem("nome_fantasia", restaurante.nome_fantasia)
+            localStorage.setItem("id", restaurante.id)
             navigate("/menu/home", { state: { restaurante } })
             console.log(responseData);
 

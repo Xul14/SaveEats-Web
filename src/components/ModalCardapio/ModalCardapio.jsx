@@ -81,8 +81,8 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado }) {
     console.log(novoProduto);
 
     try {
-      // const response = await axios.post('http://localhost:3000/v1/saveeats/produto/', novoProduto);
-      const response = await axios.post('https://save-eats.cyclic.cloud/v1/saveeats/produto/', novoProduto);
+      const response = await axios.post('http://localhost:8080/v1/saveeats/produto/', novoProduto);
+      // const response = await axios.post('https://save-eats.cyclic.cloud/v1/saveeats/produto/', novoProduto);
 
       if (response.status === 201) {
         console.log("Produto criado com sucesso!");

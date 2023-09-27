@@ -23,6 +23,7 @@ export function CardapioPage() {
     //Pegando dados do restaurante
     const nomeRestaurante = localStorage.getItem("nome_fantasia");
     const idRestaurante = localStorage.getItem("id");
+    console.log(idRestaurante);
 
     const [produtosAtualizados, setProdutosAtualizados] = useState([]);
 
@@ -70,17 +71,12 @@ export function CardapioPage() {
 
     const buscarProdutos = async () => {
         try {
-            // const response = await axios.get(`http://localhost:8080/v1/saveeats/restaurante/produtos/id-restaurante/50/nome-produto/${termoPesquisa}`);
-            const response = await axios.get(`https://save-eats.cyclic.cloud/v1/saveeats/restaurante/produtos/id-restaurante/50/nome-produto/${termoPesquisa}`);
+            const response = await axios.get(`http://localhost:8080/v1/saveeats/restaurante/produtos/id-restaurante/${idRestaurante}/nome-produto/${termoPesquisa}`);
+            // const response = await axios.get(`https://save-eats.cyclic.cloud/v1/saveeats/restaurante/produtos/id-restaurante/${idRestaurante}/nome-produto/${termoPesquisa}`);
             const data = response.data;
             setProdutos(data);
         } catch (error) {
-            const response = await axios.get(`https://save-eats.cyclic.cloud/v1/saveeats/restaurante/produtos/id-restaurante/50/nome-produto/${termoPesquisa}`);
-            const data = response.data;
             console.error("Erro ao buscar produtos:", error);
-            console.log(data);
-            console.log(response.data);
-            console.log(setProdutos(data));
         }
     };
 
