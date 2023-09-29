@@ -8,6 +8,7 @@ import axios from 'axios'
 import './ModalCardapio.css'
 import arrow from './img/arrow.png'
 import imageAdd from './img/addImage.png'
+import { uploadImageToFirebase } from "../../firebase";
 
 export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado }) {
 
@@ -22,6 +23,18 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado }) {
   const [descricaoProduto, setDescricaoProduto] = useState('');
   const [imagemProduto, setImagemProduto] = useState('');
 
+  //Upload de imagem
+  const handleImageChange = async (e) => {
+    const imageFile = e.target.files[0];
+
+    try {
+      const downloadURL = await uploadImageToFirebase(imageFile);
+      setImagemProduto(downloadURL);
+    } catch (error) {
+      console.error('Erro ao fazer upload da imagem:', error);
+    }
+  };
+
   const [novoProduto, setNovoProduto] = useState({
     nome: "",
     descricao: "",
@@ -29,7 +42,7 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado }) {
     preco: "",
     status_produto: "",
     categoria_produto: "",
-    nome_fantasia: "Mercadão",
+    nome_fantasia: nomeRestaurante,
   });
 
   //Input option categoria
@@ -54,10 +67,10 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado }) {
       try {
         const responseStatus = await axios.get('https://save-eats.cyclic.cloud/v1/saveeats/status/produto');
         // const responseStatus = await axios.get('http://localhost:8080/v1/saveeats/status/produto');
-       
+
         const responseStatusData = responseStatus.data.status_produto
         setStatus(responseStatusData)
-        
+
       } catch (error) {
         console.error('Erro ao obter dados da API:', error)
       }
@@ -81,8 +94,8 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado }) {
     console.log(novoProduto);
 
     try {
-      const response = await axios.post('http://localhost:8080/v1/saveeats/produto/', novoProduto);
-      // const response = await axios.post('https://save-eats.cyclic.cloud/v1/saveeats/produto/', novoProduto);
+      // const response = await axios.post('http://localhost:8080/v1/saveeats/produto/', novoProduto);
+      const response = await axios.post('https://save-eats.cyclic.cloud/v1/saveeats/produto/', novoProduto);
 
       if (response.status === 201) {
         console.log("Produto criado com sucesso!");
@@ -94,7 +107,7 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado }) {
           preco: "",
           status_produto: "",
           categoria_produto: "",
-          nome_fantasia: "Mercadão",
+          nome_fantasia: nomeProduto,
         });
 
         onProdutoCriado(novoProduto);
@@ -176,13 +189,13 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado }) {
 
                 <div className="input-span">
                   <span className="span-input-item-img center">Imagem do Produto</span>
-
-                  <label>
-                    {/* <input type="image" src={imageAdd} className="input-modal-img"></input> */}
-                    {/* Escolher foto na galeria */}
-                    <input type="text" className="input-modal-img" value={imagemProduto} onChange={(e) => setImagemProduto(e.target.value)} />
-                  </label>
                 </div>
+
+                  <img src={imagemProduto} alt="Imagem do Produto" className="imagem-preview" />
+                  <label className="custom-file-input">
+                    <input type="file" className="input-modal-img center" accept="image/*" onChange={(e) => handleImageChange(e)} />
+                    Escolher Arquivo
+                  </label>
 
               </div>
 
