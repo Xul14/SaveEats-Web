@@ -4,7 +4,13 @@ import React from "react";
 //import css
 import './ModalDelete.css'
 
-export function ModalDelete({ isOpenModal, setModalOpenDelete }) {
+export function ModalDelete({ isOpenModal, setModalOpenDelete, onDelete }) {
+
+  const handleDeleteConfirm = () => {
+    onDelete()
+    setModalOpenDelete(false)
+  };
+
   if (isOpenModal) {
     return (
 
@@ -26,7 +32,7 @@ export function ModalDelete({ isOpenModal, setModalOpenDelete }) {
 
             <div className="body-delete-modal">
               <span className="message-delete">Tem certeza de que deseja excluir este item?</span>
-              <button className="btn-sim">Sim</button>
+              <button className="btn-sim" onClick={handleDeleteConfirm}>Sim</button>
               <button className="btn-nao" onClick={setModalOpenDelete}>Não</button>
             </div>
 

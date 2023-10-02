@@ -10,7 +10,7 @@ import arrow from './img/arrow.png'
 import imageAdd from './img/addImage.png'
 import { uploadImageToFirebase } from "../../firebase";
 
-export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado }) {
+export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado, produtoEmEdicao, produtos, onUpdateProduto }) {
 
   const nomeRestaurante = localStorage.getItem("nome_fantasia");
 
@@ -22,7 +22,44 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado }) {
   const [precoProduto, setPrecoProduto] = useState('');
   const [descricaoProduto, setDescricaoProduto] = useState('');
   const [imagemProduto, setImagemProduto] = useState('');
+  const [idProduto, setIdProduto] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
 
+  useEffect(() => {
+    if (produtoEmEdicao) {
+      setCategoriaSelecionada(produtoEmEdicao.id_categoria_produto);
+      setIdProduto(produtoEmEdicao.id);
+      setStatuselecionado(produtoEmEdicao.id_status_produto);
+      setNomeProduto(produtoEmEdicao.nome);
+      setPrecoProduto(produtoEmEdicao.preco);
+      setDescricaoProduto(produtoEmEdicao.descricao);
+      setImagemProduto(produtoEmEdicao.imagem);
+      setIsEditing(true);
+    }
+  }, [produtoEmEdicao]);
+
+  const resetForm = () => {
+    setCategoriaSelecionada('');
+    setStatuselecionado('');
+    setNomeProduto('');
+    setPrecoProduto('');
+    setDescricaoProduto('');
+    setImagemProduto('');
+    setIdProduto('');
+    setIsEditing(false);
+  };
+  
+  const novoProduto = {
+    id: idProduto,
+    nome: nomeProduto,
+    descricao: descricaoProduto,
+    imagem: imagemProduto,
+    preco: precoProduto,
+    status_produto: statuselecionado,
+    categoria_produto: categoriaSelecionada,
+    nome_fantasia: nomeRestaurante,
+  };
+  
   //Upload de imagem
   const handleImageChange = async (e) => {
     const imageFile = e.target.files[0];
@@ -34,16 +71,6 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado }) {
       console.error('Erro ao fazer upload da imagem:', error);
     }
   };
-
-  const [novoProduto, setNovoProduto] = useState({
-    nome: "",
-    descricao: "",
-    imagem: "",
-    preco: "",
-    status_produto: "",
-    categoria_produto: "",
-    nome_fantasia: nomeRestaurante,
-  });
 
   //Input option categoria
   useEffect(() => {
@@ -70,6 +97,7 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado }) {
 
         const responseStatusData = responseStatus.data.status_produto
         setStatus(responseStatusData)
+        console.log(responseStatus);
 
       } catch (error) {
         console.error('Erro ao obter dados da API:', error)
@@ -81,38 +109,14 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado }) {
 
   // Post de um novo produto
   const handleCreateProduto = async () => {
-    const novoProduto = {
-      nome: nomeProduto,
-      descricao: descricaoProduto,
-      imagem: imagemProduto,
-      preco: precoProduto,
-      status_produto: statuselecionado,
-      categoria_produto: categoriaSelecionada,
-      nome_fantasia: nomeRestaurante,
-    };
-
-    console.log(novoProduto);
-
+    resetForm()
     try {
-      // const response = await axios.post('http://localhost:8080/v1/saveeats/produto/', novoProduto);
       const response = await axios.post('https://save-eats.cyclic.cloud/v1/saveeats/produto/', novoProduto);
 
       if (response.status === 201) {
         console.log("Produto criado com sucesso!");
-
-        setNovoProduto({
-          nome: "",
-          descricao: "",
-          imagem: "",
-          preco: "",
-          status_produto: "",
-          categoria_produto: "",
-          nome_fantasia: nomeProduto,
-        });
-
         onProdutoCriado(novoProduto);
-        setModalOpen(false)
-
+        setModalOpen(false);
       } else {
         console.error("Falha ao criar o produto.");
         console.log(response);
@@ -122,6 +126,27 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado }) {
     }
   };
 
+  //Atualiza um produto
+  const handleUpdateProduto = async () => {
+    try {
+      const response = await axios.put(`https://save-eats.cyclic.cloud/v1/saveeats/produto/id/${idProduto}`, novoProduto);
+
+      if (response.status === 200) {
+        console.log("Produto editado com sucesso!");
+        console.log(novoProduto);
+
+        onUpdateProduto(novoProduto);
+        setModalOpen(false);
+        setIsEditing(false);
+        resetForm();
+      } else {
+        console.error("Falha ao editar o produto.");
+        console.log(response);
+      }
+    } catch (error) {
+      console.error("Erro ao editar o produto:", error);
+    }
+  };
 
   if (isOpen) {
     return (
@@ -135,7 +160,7 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado }) {
               <img src={arrow} className="arrow" style={{ cursor: 'pointer' }} onClick={setModalOpen} />
 
               <div className="title-container">
-                <span className="title-modal">Novo Item</span>
+                <span className="title-modal">  {isEditing ? "Atualizar Item" : "Criar Item"}</span>
               </div>
 
             </div>
@@ -149,12 +174,14 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado }) {
                   <span className="span-input-item">Categoria</span>
 
                   <select name="Categoria" className="input-modal-select" value={categoriaSelecionada} onChange={(e) => setCategoriaSelecionada(e.target.value)}>
-                    <option>Categoria</option>
-                    {categorias.map((categoria, index) => (
-                      <option key={index} value={categoria.categoria_produto}>
+
+                    <option value="">Categoria</option>
+                    {categorias.map((categoria) => (
+                      <option key={categoria.id} value={categoria.id} selected={categoria.id === produtoEmEdicao.id_categoria_produto}>
                         {categoria.categoria_produto}
                       </option>
                     ))}
+
                   </select>
 
                 </div>
@@ -164,12 +191,14 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado }) {
                   <span className="span-input-item">Status do Produto</span>
 
                   <select name="Status produto" className="input-modal-select" value={statuselecionado} onChange={(e) => setStatuselecionado(e.target.value)}>
-                    <option>Status</option>
-                    {status.map((status, index) => (
-                      <option key={index} value={status.status_produto}>
-                        {status.status_produto}
+
+                  <option value="">Status</option>
+                    {status.map((statusItem) => (
+                      <option key={statusItem.id} value={statusItem.id}  selected={statusItem.id === produtoEmEdicao.id_status_produto}>
+                        {statusItem.status_produto}
                       </option>
                     ))}
+
                   </select>
 
                 </div>
@@ -191,11 +220,11 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado }) {
                   <span className="span-input-item-img center">Imagem do Produto</span>
                 </div>
 
-                  <img src={imagemProduto} alt="Imagem do Produto" className="imagem-preview" />
-                  <label className="custom-file-input">
-                    <input type="file" className="input-modal-img center" accept="image/*" onChange={(e) => handleImageChange(e)} />
-                    Escolher Arquivo
-                  </label>
+                <img src={imagemProduto} alt="Imagem do Produto" className="imagem-preview" />
+                <label className="custom-file-input">
+                  <input type="file" className="input-modal-img center" accept="image/*" onChange={(e) => handleImageChange(e)} />
+                  Escolher Arquivo
+                </label>
 
               </div>
 
@@ -208,7 +237,9 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado }) {
                 <input type="text" className="input-modal-desc" value={descricaoProduto} onChange={(e) => setDescricaoProduto(e.target.value)} />
               </div>
 
-              <button className="btn-criarItem" onClick={handleCreateProduto}>Criar Item</button>
+              <button className="btn-criarItem" onClick={isEditing ? handleUpdateProduto : handleCreateProduto}>
+                {isEditing ? "Atualizar Item" : "Criar Item"}
+              </button>
             </div>
 
           </div>

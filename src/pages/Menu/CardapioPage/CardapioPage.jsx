@@ -23,9 +23,6 @@ export function CardapioPage() {
     //Pegando dados do restaurante
     const nomeRestaurante = localStorage.getItem("nome_fantasia");
     const idRestaurante = localStorage.getItem("id");
-    console.log(idRestaurante);
-
-    const [produtosAtualizados, setProdutosAtualizados] = useState([]);
 
     //Consumo da API para o input de Categorias
     const [categorias, setCategorias] = useState([])
@@ -46,6 +43,7 @@ export function CardapioPage() {
         fetchData()
     }, [])
 
+    
     //Consumo da API para listar os produtos do restaurante
     const [produtos, setProdutos] = useState([]);
 
@@ -54,8 +52,9 @@ export function CardapioPage() {
             try {
                 const produto = await axios.get(`https://save-eats.cyclic.cloud/v1/saveeats/restaurante/produtos/nome-fantasia/${nomeRestaurante}`);
                 // const produto = await axios.get(`http://localhost:8080/v1/saveeats/restaurante/produtos/nome-fantasia/${nomeRestaurante}`);
-                const produtoData = produto.data.restaurante;
+                const produtoData = produto.data.produtos_do_restaurante;
                 setProdutos(produtoData);
+                console.log(produtoData);
             } catch (error) {
                 console.error('Erro ao obter dados da API:', error);
             }
@@ -92,6 +91,41 @@ export function CardapioPage() {
         if (e.key === "Enter") {
             buscarProdutos();
         }
+    };
+
+    //Consumo da API para exclusão de um item do cardapio
+    const handleDeleteProduto = async (id) => {
+        try {
+            //   await axios.delete(`http://localhost:8080/v1/saveeats/produto/id/${id}`);
+            await axios.delete(`https://save-eats.cyclic.cloud/v1/saveeats/produto/id/${id}`);
+            const updatedProdutos = produtos.filter((produto) => produto.id !== id);
+            setProdutos(updatedProdutos)
+            console.log(id)
+        } catch (error) {
+            console.error("Erro ao excluir o produto:", error);
+        }
+    };
+
+    const [isEditing, setIsEditing] = useState(false);
+    const [produtoEmEdicao, setProdutoEmEdicao] = useState(null);
+
+    const handleEditProduto = (produto) => {
+        setIsEditing(true);
+        setProdutoEmEdicao(produto);
+        setOpenModal(true);
+    };
+
+    const handleUpdateProduto = (produtoAtualizado) => {
+        setProdutos((produtos) => {
+            const produtosAtualizados = produtos.map((produto) => {
+                if (produto.id === produtoAtualizado.id) {
+                    return produtoAtualizado;
+                }
+                return produto;
+            });
+            console.log(produtosAtualizados);
+            return produtosAtualizados;
+        });
     };
 
     return (
@@ -137,8 +171,15 @@ export function CardapioPage() {
                         <ButtonAdicionar background='#90AE6E' text="Adicionar categoria"></ButtonAdicionar>
 
                         <ButtonAdicionar background='#E3E9DD' text="Adicionar produto" onClick={() => setOpenModal(true)}></ButtonAdicionar>
-                        <ModalCardapio isOpen={openModal} setModalOpen={() => setOpenModal(!openModal)} onProdutoCriado={(novoProduto) => {setProdutos([...produtos, novoProduto]); setOpenModal(false)}}></ModalCardapio>
-
+                        <ModalCardapio
+                            isOpen={openModal}
+                            setModalOpen={() => setOpenModal(!openModal)}
+                            onProdutoCriado={(novoProduto) => { setProdutos([...produtos, novoProduto]) }}
+                            onUpdateProduto={(produtoAtualizado) => handleUpdateProduto(produtoAtualizado)} // Passa a função onUpdateProduto
+                            isEditing={isEditing}
+                            produtoEmEdicao={produtoEmEdicao}
+                            produtos={produtos}
+                        ></ModalCardapio>
                     </div>
 
                     <div className="container-produtos">
@@ -182,9 +223,15 @@ export function CardapioPage() {
                                 {produtos.map((produto, index) => (
                                     <CardapioItem
                                         key={index}
+                                        id={produto.id}
                                         imgProduto={produto.imagem}
                                         nomeProduto={produto.nome}
                                         precoProduto={produto.preco}
+                                        categoriaProduto={produto.id_categoria_produto}
+                                        statusProduto={produto.id_status_produto}
+                                        descricaoProduto={produto.descricao}
+                                        onDelete={handleDeleteProduto}
+                                        onEdit={() => handleEditProduto(produto)}
                                     />
                                 ))}
 
