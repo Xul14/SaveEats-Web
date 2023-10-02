@@ -14,7 +14,6 @@ export function CardapioItem({ id, imgProduto, nomeProduto, precoProduto, status
     const handleDeleteClick = () => {
         onDelete(id)
     };
-console.log(statusProduto);
     const handleEditClick = () => {
         onEdit({
             id,
@@ -27,39 +26,38 @@ console.log(statusProduto);
         });
     };
 
-    // const [buttonStyles, setButtonStyles] = useState({ ativo: '#E3E9DD', pausado: '#E3E9DD' });
+    const [buttonStyles, setButtonStyles] = useState({ ativo: '#E3E9DD', pausado: '#E3E9DD' });
+    const [statusId, setStatusId] = useState(statusProduto);
 
-    // const [statusId, setStatusId] = useState(statusProduto);
 
+    useEffect(() => {
+        async function fetchButtonStyles() {
+            try {
+                let pausadoColor, ativoColor;
 
-    // useEffect(() => {
-    //     async function fetchButtonStyles() {
-    //         try {
-    //             let pausadoColor, ativoColor;
+                if (statusId === 1) { 
+                    pausadoColor = '#90AE6E';
+                    ativoColor = '#E3E9DD';
+                } else if (statusId === 2) { 
+                    pausadoColor = '#E3E9DD';
+                    ativoColor = '#90AE6E';
+                } else {
+                    pausadoColor = '#E3E9DD';
+                    ativoColor = '#E3E9DD';
+                }
 
-    //             if (statusId === 1) { // ID para 'Pausado'
-    //                 pausadoColor = '#90AE6E';
-    //                 ativoColor = '#E3E9DD';
-    //             } else if (statusId === 2) { // ID para 'Ativo'
-    //                 pausadoColor = '#E3E9DD';
-    //                 ativoColor = '#90AE6E';
-    //             } else {
-    //                 pausadoColor = '#E3E9DD';
-    //                 ativoColor = '#E3E9DD';
-    //             }
+                const pausado = pausadoColor;
+                const ativo = ativoColor;
 
-    //             const pausado = pausadoColor;
-    //             const ativo = ativoColor;
+                setButtonStyles({ pausado, ativo });
+            } catch (error) {
+                console.error("Erro ao obter nome do status:", error);
+                setButtonStyles({ pausado: '#E3E9DD', ativo: '#E3E9DD' });
+            }
+        }
 
-    //             setButtonStyles({ pausado, ativo });
-    //         } catch (error) {
-    //             console.error("Erro ao obter nome do status:", error);
-    //             setButtonStyles({ pausado: '#E3E9DD', ativo: '#E3E9DD' });
-    //         }
-    //     }
-
-    //     fetchButtonStyles();
-    // }, [statusId]);
+        fetchButtonStyles();
+    }, [statusId]);
 
     return (
         <div className="container-produto-item">
@@ -78,10 +76,8 @@ console.log(statusProduto);
 
             <div className="container-status-produto">
                 <div className="container-button-ativo-pausado">
-                    <ButtonPausadoAtivo background="#E3E9DD" text="Pausado"></ButtonPausadoAtivo>
-                    <ButtonPausadoAtivo background="#90AE6E" text="Ativo"></ButtonPausadoAtivo>
-                    {/* <ButtonPausadoAtivo background={buttonStyles.pausado} text="Pausado"></ButtonPausadoAtivo>
-                    <ButtonPausadoAtivo background={buttonStyles.ativo} text="Ativo"></ButtonPausadoAtivo> */}
+                    <ButtonPausadoAtivo background={buttonStyles.pausado} text="Pausado"></ButtonPausadoAtivo>
+                    <ButtonPausadoAtivo background={buttonStyles.ativo} text="Ativo"></ButtonPausadoAtivo>
                 </div>
             </div>
 

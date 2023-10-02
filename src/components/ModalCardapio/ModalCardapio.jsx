@@ -59,7 +59,7 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado, produtoEm
     categoria_produto: categoriaSelecionada,
     nome_fantasia: nomeRestaurante,
   };
-  
+
   //Upload de imagem
   const handleImageChange = async (e) => {
     const imageFile = e.target.files[0];
@@ -76,8 +76,8 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado, produtoEm
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get('https://save-eats.cyclic.cloud/v1/saveeats/categoria/produto');
-        // const response = await axios.get('http://localhost:8080/v1/saveeats/categoria/produto');
+        // const response = await axios.get('https://save-eats.cyclic.cloud/v1/saveeats/categoria/produto');
+        const response = await axios.get('http://localhost:8080/v1/saveeats/categoria/produto');
         const responseData = response.data.categoria_produto
         setCategorias(responseData)
       } catch (error) {
@@ -92,8 +92,8 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado, produtoEm
   useEffect(() => {
     async function fetchData() {
       try {
-        const responseStatus = await axios.get('https://save-eats.cyclic.cloud/v1/saveeats/status/produto');
-        // const responseStatus = await axios.get('http://localhost:8080/v1/saveeats/status/produto');
+        // const responseStatus = await axios.get('https://save-eats.cyclic.cloud/v1/saveeats/status/produto');
+        const responseStatus = await axios.get('http://localhost:8080/v1/saveeats/status/produto');
 
         const responseStatusData = responseStatus.data.status_produto
         setStatus(responseStatusData)
@@ -111,7 +111,8 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado, produtoEm
   const handleCreateProduto = async () => {
     resetForm()
     try {
-      const response = await axios.post('https://save-eats.cyclic.cloud/v1/saveeats/produto/', novoProduto);
+      // const response = await axios.post('https://save-eats.cyclic.cloud/v1/saveeats/produto/', novoProduto);
+      const response = await axios.post('http://localhost:8080/v1/saveeats/produto/', novoProduto);
 
       if (response.status === 201) {
         console.log("Produto criado com sucesso!");
@@ -128,8 +129,10 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado, produtoEm
 
   //Atualiza um produto
   const handleUpdateProduto = async () => {
+    console.log(novoProduto);
     try {
-      const response = await axios.put(`https://save-eats.cyclic.cloud/v1/saveeats/produto/id/${idProduto}`, novoProduto);
+      // const response = await axios.put(`https://save-eats.cyclic.cloud/v1/saveeats/produto/id/${idProduto}`, novoProduto);
+      const response = await axios.put(`http://localhost:8080/v1/saveeats/produto/id/${idProduto}`, novoProduto);
 
       if (response.status === 200) {
         console.log("Produto editado com sucesso!");
@@ -177,7 +180,8 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado, produtoEm
 
                     <option value="">Categoria</option>
                     {categorias.map((categoria) => (
-                      <option key={categoria.id} value={categoria.id} selected={categoria.id === produtoEmEdicao.id_categoria_produto}>
+                      <option key={categoria.id} value={categoria.id}>
+                        {/* selected={categoria.id === produtoEmEdicao.id_categoria_produto} */}
                         {categoria.categoria_produto}
                       </option>
                     ))}
@@ -194,7 +198,8 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado, produtoEm
 
                   <option value="">Status</option>
                     {status.map((statusItem) => (
-                      <option key={statusItem.id} value={statusItem.id}  selected={statusItem.id === produtoEmEdicao.id_status_produto}>
+                      <option key={statusItem.id} value={statusItem.id}>
+                        {/* selected={statusItem.id === produtoEmEdicao.id_status_produto} */}
                         {statusItem.status_produto}
                       </option>
                     ))}

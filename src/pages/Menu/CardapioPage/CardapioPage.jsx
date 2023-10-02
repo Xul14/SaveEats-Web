@@ -31,8 +31,8 @@ export function CardapioPage() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await axios.get('https://save-eats.cyclic.cloud/v1/saveeats/categoria/produto');
-                // const response = await axios.get('http://localhost:8080/v1/saveeats/categoria/produto');
+                // const response = await axios.get('https://save-eats.cyclic.cloud/v1/saveeats/categoria/produto');
+                const response = await axios.get('http://localhost:8080/v1/saveeats/categoria/produto');
                 const responseData = response.data.categoria_produto
                 setCategorias(responseData)
             } catch (error) {
@@ -50,8 +50,8 @@ export function CardapioPage() {
     useEffect(() => {
         async function produtoData() {
             try {
-                const produto = await axios.get(`https://save-eats.cyclic.cloud/v1/saveeats/restaurante/produtos/nome-fantasia/${nomeRestaurante}`);
-                // const produto = await axios.get(`http://localhost:8080/v1/saveeats/restaurante/produtos/nome-fantasia/${nomeRestaurante}`);
+                // const produto = await axios.get(`https://save-eats.cyclic.cloud/v1/saveeats/restaurante/produtos/nome-fantasia/${nomeRestaurante}`);
+                const produto = await axios.get(`http://localhost:8080/v1/saveeats/restaurante/produtos/nome-fantasia/${nomeRestaurante}`);
                 const produtoData = produto.data.produtos_do_restaurante;
                 setProdutos(produtoData);
                 console.log(produtoData);
@@ -96,8 +96,8 @@ export function CardapioPage() {
     //Consumo da API para exclusão de um item do cardapio
     const handleDeleteProduto = async (id) => {
         try {
-            //   await axios.delete(`http://localhost:8080/v1/saveeats/produto/id/${id}`);
-            await axios.delete(`https://save-eats.cyclic.cloud/v1/saveeats/produto/id/${id}`);
+              await axios.delete(`http://localhost:8080/v1/saveeats/produto/id/${id}`);
+            // await axios.delete(`https://save-eats.cyclic.cloud/v1/saveeats/produto/id/${id}`);
             const updatedProdutos = produtos.filter((produto) => produto.id !== id);
             setProdutos(updatedProdutos)
             console.log(id)
@@ -168,7 +168,7 @@ export function CardapioPage() {
 
                     <div className="container-adicionar">
 
-                        <ButtonAdicionar background='#90AE6E' text="Adicionar categoria"></ButtonAdicionar>
+                        {/* <ButtonAdicionar background='#90AE6E' text="Adicionar categoria"></ButtonAdicionar> */}
 
                         <ButtonAdicionar background='#E3E9DD' text="Adicionar produto" onClick={() => setOpenModal(true)}></ButtonAdicionar>
                         <ModalCardapio
