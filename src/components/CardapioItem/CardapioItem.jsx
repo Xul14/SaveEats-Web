@@ -48,6 +48,7 @@ export function CardapioItem({ id, imgProduto, nomeProduto, precoProduto, status
 
                 const pausado = pausadoColor;
                 const ativo = ativoColor;
+                setStatusId(statusProduto);
 
                 setButtonStyles({ pausado, ativo });
             } catch (error) {
@@ -57,7 +58,7 @@ export function CardapioItem({ id, imgProduto, nomeProduto, precoProduto, status
         }
 
         fetchButtonStyles();
-    }, [statusId]);
+    }, [statusProduto]);
 
     return (
         <div className="container-produto-item">

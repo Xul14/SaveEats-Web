@@ -35,7 +35,7 @@ export function LoginPage() {
     })
 
     // const addPost = data => axios.post('https://save-eats.cyclic.cloud/v1/saveeats/restaurante/login/autenticar', data)
-        const addPost = data => axios.post('http://localhost:8080/v1/saveeats/restaurante/login/autenticar', data)
+        const addPost = data => axios.post('http://localhost:3000/v1/saveeats/restaurante/login/autenticar', data)
         .then(Response => {
 
             const responseData = Response.data;
