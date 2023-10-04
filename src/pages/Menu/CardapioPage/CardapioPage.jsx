@@ -1,6 +1,5 @@
 //Import React
-import React, { useState } from "react";
-import { useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
 
 //Import css e components
 import "./CardapioPage.css"
@@ -11,18 +10,135 @@ import { ButtonPausadoAtivo } from "../../../components/ButtonPausadoAtivo/Butto
 import { TresPontos } from "../../../components/TresPontos/TresPontos"
 import { CardapioItem } from "../../../components/CardapioItem/CardapioItem";
 import { ModalCardapio } from "../../../components/ModalCardapio/ModalCardapio";
-import { ModalDelete } from "../../../components/ModalDelete/ModalDelete";
 
-//Images
-import primeiroProduto from "./img/bolo-branco.jpg"
-import segundoProduto from "./img/bolo-frutas-vermelhas.jpg"
-import terceiroProduto from "./img/bolo-chocolate.jpg"
-import quartoProduto from "./img/bolo-frutas.jpg"
+//Import Axios para integração
+import axios from 'axios'
+
 
 export function CardapioPage() {
 
+    //Modal para adicionar um produto
     const [openModal, setOpenModal] = useState(false)
-    const [openModalDelete, setOpenModalDelete] = useState(false)
+
+    //Pegando dados do restaurante
+    const nomeRestaurante = localStorage.getItem("nome_fantasia");
+    const idRestaurante = localStorage.getItem("id");
+
+    //Consumo da API para o input de Categorias
+    const [categorias, setCategorias] = useState([])
+    const [categoriaSelecionada, setCategoriaSelecionada] = useState('')
+    const [termoPesquisa, setTermoPesquisa] = useState("");
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                // const response = await axios.get('https://save-eats.cyclic.cloud/v1/saveeats/categoria/produto');
+                const response = await axios.get('http://localhost:8080/v1/saveeats/categoria/produto');
+                const responseData = response.data.categoria_produto
+                setCategorias(responseData)
+            } catch (error) {
+                console.error('Erro ao obter dados da API:', error)
+            }
+        }
+
+        fetchData()
+    }, [])
+
+
+    //Consumo da API para listar os produtos do restaurante
+    const [produtos, setProdutos] = useState([]);
+
+    useEffect(() => {
+        async function produtoData() {
+            try {
+                // const produto = await axios.get(`https://save-eats.cyclic.cloud/v1/saveeats/restaurante/produtos/nome-fantasia/${nomeRestaurante}`);
+                const produto = await axios.get(`http://localhost:8080/v1/saveeats/restaurante/produtos/nome-fantasia/${nomeRestaurante}`);
+                const produtoData = produto.data.produtos_do_restaurante;
+                setProdutos(produtoData);
+                console.log(produtoData);
+            } catch (error) {
+                console.error('Erro ao obter dados da API:', error);
+            }
+        }
+
+        produtoData();
+    }, []);
+
+
+    // Consumo da API para buscar produtos com base no termo de pesquisa
+    const produtoData = async () => {
+        try {
+            // const produto = await axios.get(`https://save-eats.cyclic.cloud/v1/saveeats/restaurante/produtos/nome-fantasia/${nomeRestaurante}`);
+            const produto = await axios.get(`http://localhost:8080/v1/saveeats/restaurante/produtos/nome-fantasia/${nomeRestaurante}`);
+            const produtoData = produto.data.produtos_do_restaurante;
+            setProdutos(produtoData);
+            console.log(produtoData);
+        } catch (error) {
+            console.error('Erro ao obter dados da API:', error);
+        }
+    }
+
+    // Consumo da API para buscar produtos com base no termo de pesquisa
+    const buscarProdutos = async () => {
+        try {
+            const response = await axios.get(`http://localhost:8080/v1/saveeats/restaurante/produtos/id-restaurante/${idRestaurante}/nome-produto/${termoPesquisa}`);
+            const data = response.data.produtos_do_restaurante;
+            setProdutos(data);
+        } catch (error) {
+            console.error("Erro ao buscar produtos:", error);
+        }
+    };
+
+    useEffect(() => {
+        produtoData();
+    }, []);
+
+    const handlePesquisaChange = (e) => {
+        setTermoPesquisa(e.target.value);
+        buscarProdutos();
+    };
+
+    useEffect(() => {
+        if (termoPesquisa.trim() === "") {
+            produtoData();
+        }
+    }, [termoPesquisa]);
+
+
+    //Consumo da API para exclusão de um item do cardapio
+    const handleDeleteProduto = async (id) => {
+        try {
+            await axios.delete(`http://localhost:8080/v1/saveeats/produto/id/${id}`);
+            // await axios.delete(`https://save-eats.cyclic.cloud/v1/saveeats/produto/id/${id}`);
+            const updatedProdutos = produtos.filter((produto) => produto.id !== id);
+            setProdutos(updatedProdutos)
+            console.log(id)
+        } catch (error) {
+            console.error("Erro ao excluir o produto:", error);
+        }
+    };
+
+    const [isEditing, setIsEditing] = useState(false);
+    const [produtoEmEdicao, setProdutoEmEdicao] = useState(null);
+
+    const handleEditProduto = (produto) => {
+        setIsEditing(true);
+        setProdutoEmEdicao(produto);
+        setOpenModal(true);
+    };
+
+    const handleUpdateProduto = (produtoAtualizado) => {
+        setProdutos((produtos) => {
+            const produtosAtualizados = produtos.map((produto) => {
+                if (produto.id === produtoAtualizado.id) {
+                    return produtoAtualizado;
+                }
+                return produto;
+            });
+            console.log(produtosAtualizados);
+            return produtosAtualizados;
+        });
+    };
 
     return (
         <div>
@@ -41,55 +157,48 @@ export function CardapioPage() {
 
                     <div className="container-busca-categoria">
 
-                        <input className="input-busca" type="search" placeholder="Buscar produto" />
+                        <input
+                            className="input-busca"
+                            type="search"
+                            placeholder="Buscar produto"
+                            value={termoPesquisa}
+                            onChange={handlePesquisaChange}
+                        />
 
-                        <select name="Categoria" className="input-categoria">
+                        <select name="Categoria" className="input-categoria" value={categoriaSelecionada} onChange={(e) => setCategoriaSelecionada(e.target.value)}>
                             <option>Categoria</option>
-                            <option>teste</option>
-                            <option>teste</option>
+                            {categorias.map((categoria, index) => (
+                                <option key={index} value={categoria.categoria_produto}>
+                                    {categoria.categoria_produto}
+                                </option>
+                            ))}
                         </select>
 
                     </div>
 
                     <div className="container-adicionar">
 
-                        <ButtonAdicionar background='#90AE6E' text="Adicionar categoria" onClick={() => setOpenModalDelete(true)}></ButtonAdicionar>
-                        <ModalDelete isOpenModal={openModalDelete} setModalOpenDelete={() => setOpenModalDelete(!openModalDelete)}></ModalDelete>
+                        {/* <ButtonAdicionar background='#90AE6E' text="Adicionar categoria"></ButtonAdicionar> */}
 
                         <ButtonAdicionar background='#E3E9DD' text="Adicionar produto" onClick={() => setOpenModal(true)}></ButtonAdicionar>
-                        <ModalCardapio isOpen={openModal} setModalOpen={() => setOpenModal(!openModal)}></ModalCardapio>
-
+                        <ModalCardapio
+                            isOpen={openModal}
+                            setModalOpen={() => setOpenModal(!openModal)}
+                            onProdutoCriado={(novoProduto) => { setProdutos([...produtos, novoProduto]) }}
+                            onUpdateProduto={handleUpdateProduto}
+                            isEditing={isEditing}
+                            produtoEmEdicao={produtoEmEdicao}
+                            produtos={produtos}
+                        ></ModalCardapio>
                     </div>
 
                     <div className="container-produtos">
 
                         <div className="container-lista-produtos">
 
-                            <div className="header-lista-produtos">
-
-                                <h2>Bolos</h2>
-
-                                <div className="container-button-adicionar">
-
-                                    <ButtonAdicionar background="#E3E9DD" text="Adicionar produto" ></ButtonAdicionar>
-
-                                </div>
-
-                                <div className="container-button-pausado-ativo">
-
-                                    <ButtonPausadoAtivo background="#E3E9DD" text="Pausado"></ButtonPausadoAtivo>
-
-                                    <ButtonPausadoAtivo background="#90AE6E" text="Ativo"></ButtonPausadoAtivo>
-
-                                </div>
-
-                                <TresPontos></TresPontos>
-
-                            </div>
-
                             <div className="container-produtos-preco-status">
 
-                                <h3>Produtos</h3>
+                                <h3 className="title-list">Produtos</h3>
 
                                 <span className="text-preco">Preço</span>
 
@@ -99,10 +208,20 @@ export function CardapioPage() {
 
                             <div className="container-produtos-preco-status-options">
 
-                                <CardapioItem imgProduto={primeiroProduto} nomeProduto="Bolo de Chocolate Branco" precoProduto="29,90"></CardapioItem>
-                                <CardapioItem imgProduto={segundoProduto} nomeProduto="Bolo de Frutas Vermelhas" precoProduto="29,90"></CardapioItem>
-                                <CardapioItem imgProduto={terceiroProduto} nomeProduto="Bolo de Chocolate" precoProduto="29,90"></CardapioItem>
-                                <CardapioItem imgProduto={quartoProduto} nomeProduto="Bolo de Frutas Vermalhas" precoProduto="29,90"></CardapioItem>
+                                {produtos.map((produto, index) => (
+                                    <CardapioItem
+                                        key={index}
+                                        id={produto.id}
+                                        imgProduto={produto.imagem}
+                                        nomeProduto={produto.nome}
+                                        precoProduto={produto.preco}
+                                        categoriaProduto={produto.id_categoria_produto}
+                                        statusProduto={produto.id_status_produto}
+                                        descricaoProduto={produto.descricao}
+                                        onDelete={handleDeleteProduto}
+                                        onEdit={() => handleEditProduto(produto)}
+                                    />
+                                ))}
 
                             </div>
 

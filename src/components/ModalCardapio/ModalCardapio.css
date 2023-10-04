@@ -3,7 +3,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 1;
+  z-index: 100;
   position: fixed;
   backdrop-filter: blur(2px);
   background-color: rgb(0, 0, 0, 0.7);
@@ -69,20 +69,59 @@
   display: flex;
   grid-area: img;
   justify-content: center;
+  flex-direction: column;
+  gap: 25px;
 }
 
 .span-input-item-img{
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 300;
   color: #000; 
 }
 
+.custom-file-input {
+  background-color: #295F1B;
+  display: inline-block;
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-size: 1.25rem;
+  text-align: center;
+  cursor: pointer;
+  color: #fff;
+  width: 200px;
+  border: none;
+  margin-left: 25%;
+}
+
+.custom-file-input input {
+  display: none; 
+}
+
+.imagem-preview {
+  max-width: 350px;
+  max-height: 350px;
+  border-radius: 15px;
+  border: 3px dotted #b0aeae;
+  display: flex;
+  align-self: center;
+  box-shadow: 2px 2px 8px#AFACAB;
+}
+/* 
 .input-modal-img{
   height: 350px;
   border-radius: 15px;
   border: 3px dotted #b0aeae;
   box-shadow: 2px 2px 8px#AFACAB;
 }
+
+.imagem-preview {
+  max-width: 350px;
+  max-height: 350px;
+  border-radius: 15px;
+  border: 3px dotted #b0aeae;
+  box-shadow: 2px 2px 8px #AFACAB;
+  margin-top: 10px;
+} */
 
 .inputs-modal-left{
   grid-area: inputs;

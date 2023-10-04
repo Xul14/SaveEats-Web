@@ -1,28 +1,58 @@
-import React, { useState} from "react";
-import "./TresPontos.css"
+//Import React
+import React, { useState, useEffect, useRef } from "react";
+
+//Import css, img e components
+import { ModalDelete } from "../ModalDelete/ModalDelete"
 import tresPontos from "./img/tres-pontos.png"
+import "./TresPontos.css"
 
-export function TresPontos() {
-    const [mostrarLista, setMostrarLista] = useState(false);
+export function TresPontos({ onEdit, onDelete }) {
+    //Modal para deletar um item
+    const [openModalDelete, setOpenModalDelete] = useState(false)
+    const [menuOpen, setMenuOpen] = useState(false);
+    const menuRef = useRef(null);
 
-    const toggleLista = () => {
-        setMostrarLista(!mostrarLista);
+    // Fecha o menu quando ocorre um clique fora dele
+    useEffect(() => {
+      function handleClickOutside(event) {
+        if (menuRef.current && !menuRef.current.contains(event.target)) {
+          setMenuOpen(false);
+        }
+      }
+  
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, []);
+
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen);
     };
 
-    const handleMouseLeave = () => {
-        setTimeout(() => {setMostrarLista(false);}, 200000); 
-      };
+    const handleDeleteClick = () => {
+        setOpenModalDelete(true);
+    };
+
+    const handleEditClick = () => {
+        onEdit();
+    };
 
     return (
-        <div className="container-tres-pontos" onMouseLeave={handleMouseLeave}>
-            <button className="botao" onClick={toggleLista}>
-                <img src={tresPontos} alt="Três pontoa" className="tres-pontos"/>
+        <div className={`container-tres-pontos ${menuOpen ? 'open' : ''}`}  ref={menuRef}>
+
+            <button onClick={toggleMenu} className="toggle-button">
+                <img src={tresPontos} alt="Três pontos" className="tres-pontos" />
             </button>
-            {mostrarLista && (
+
+            {menuOpen && (
+
                 <ul className="lista">
-                    <li>Editar</li>
-                    <li>Excluir</li>
+                    <li onClick={handleEditClick}>Editar</li>
+                    <li onClick={handleDeleteClick}>Excluir</li>
+                    <ModalDelete isOpenModal={openModalDelete} setModalOpenDelete={() => setOpenModalDelete(!openModalDelete)} onDelete={onDelete}></ModalDelete>
                 </ul>
+
             )}
         </div>
     );

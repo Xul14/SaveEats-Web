@@ -1,6 +1,6 @@
 .container-cardapio {
     width: 100%;
-    height: 100vh;
+    height: 100%;
     display: grid;
     grid-template-columns: 20% 80%;
 }
@@ -66,43 +66,9 @@
     width: 94%;
     height: 95%;
     display: grid;
-    grid-template-rows: 15% 15% 70%;
+    grid-template-rows: 15% 85%;
     border: 1px solid #C3C3C3;
     border-radius: 10px;
-}
-
-.header-lista-produtos {
-    width: 100%;
-    height: 100%;
-    display: grid;
-    grid-template-columns: 20% 45% 30% 5%;
-    align-items: center;
-    padding-left: 2%;
-    border-bottom: 1px solid #C3C3C3;
-}
-
-h2 {
-    padding-left: 5%;
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #143A0B;
-}
-
-.container-button-adicionar {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: end;
-    align-items: center;
-}
-
-.container-button-pausado-ativo {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
 }
 
 .container-produtos-preco-status {
@@ -115,7 +81,7 @@ h2 {
     border-bottom: 1px solid #C3C3C3;
 }
 
-h3 {
+.title-list {
     padding-left: 5%;
     font-size: 1.5rem;
     font-weight: 700;

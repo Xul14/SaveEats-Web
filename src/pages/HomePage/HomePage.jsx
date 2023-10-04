@@ -14,8 +14,8 @@ import { CurrentDate } from '../../components/CurrentDate/CurrentDate';
 
 export function HomePage() {
 
-    const location = useLocation();
-    const restaurante = location.state?.restaurante;
+    // const location = useLocation();
+    // const restaurante = location.state?.restaurante;
     const nomeRestaurante = localStorage.getItem("nome_fantasia");
 
     return (

@@ -41,6 +41,7 @@ export function LoginPage() {
             const responseData = Response.data;
             const restaurante = responseData.restaurante[0];
             localStorage.setItem("nome_fantasia", restaurante.nome_fantasia)
+            localStorage.setItem("id", restaurante.id)
             navigate("/menu/home", { state: { restaurante } })
             console.log(responseData);
 

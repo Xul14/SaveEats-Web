@@ -1,40 +1,46 @@
 .container-tres-pontos {
     position: relative;
     display: inline-block;
+    transition: left 0.3s;
 }
 
-.botao {
-    background-color: transparent;
+.menu.open {
+    right: 0;
+}
+
+.toggle-button {
+    margin: 0;
+    padding: 0;
     border: none;
     cursor: pointer;
     font-size: 18px;
-    padding: 0;
-    margin: 0;
     position: relative;
+    background-color: transparent;
 }
 
 .lista {
-    position: absolute;
-    left: 100%;
     top: 0;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    list-style: none;
-    padding: 8px 0;
     margin: 0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: none;
     z-index: 1;
+    left: 100%;
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .lista li {
-    padding: 8px 16px;
+    padding: 10px;
+    color: #000;
     cursor: pointer;
+    transition: background-color 0.2s;
 }
 
-.botao:hover+.lista {
-    display: block;
-}
+li:hover {
+    background-color: #90AE6E;
+} 
 
 .tres-pontos {
     height: 2vh;
