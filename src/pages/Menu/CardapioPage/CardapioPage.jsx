@@ -27,12 +27,13 @@ export function CardapioPage() {
     //Consumo da API para o input de Categorias
     const [categorias, setCategorias] = useState([])
     const [categoriaSelecionada, setCategoriaSelecionada] = useState('')
+    const [termoPesquisa, setTermoPesquisa] = useState("");
 
     useEffect(() => {
         async function fetchData() {
             try {
                 // const response = await axios.get('https://save-eats.cyclic.cloud/v1/saveeats/categoria/produto');
-                const response = await axios.get('http://localhost:3000/v1/saveeats/categoria/produto');
+                const response = await axios.get('http://localhost:8080/v1/saveeats/categoria/produto');
                 const responseData = response.data.categoria_produto
                 setCategorias(responseData)
             } catch (error) {
@@ -51,7 +52,7 @@ export function CardapioPage() {
         async function produtoData() {
             try {
                 // const produto = await axios.get(`https://save-eats.cyclic.cloud/v1/saveeats/restaurante/produtos/nome-fantasia/${nomeRestaurante}`);
-                const produto = await axios.get(`http://localhost:3000/v1/saveeats/restaurante/produtos/nome-fantasia/${nomeRestaurante}`);
+                const produto = await axios.get(`http://localhost:8080/v1/saveeats/restaurante/produtos/nome-fantasia/${nomeRestaurante}`);
                 const produtoData = produto.data.produtos_do_restaurante;
                 setProdutos(produtoData);
                 console.log(produtoData);
@@ -65,14 +66,23 @@ export function CardapioPage() {
 
 
     // Consumo da API para buscar produtos com base no termo de pesquisa
-    const [termoPesquisa, setTermoPesquisa] = useState("");
-    const [produtosBuscar, setProdutosBuscar] = useState([]);
+    const produtoData = async () => {
+        try {
+            // const produto = await axios.get(`https://save-eats.cyclic.cloud/v1/saveeats/restaurante/produtos/nome-fantasia/${nomeRestaurante}`);
+            const produto = await axios.get(`http://localhost:8080/v1/saveeats/restaurante/produtos/nome-fantasia/${nomeRestaurante}`);
+            const produtoData = produto.data.produtos_do_restaurante;
+            setProdutos(produtoData);
+            console.log(produtoData);
+        } catch (error) {
+            console.error('Erro ao obter dados da API:', error);
+        }
+    }
 
+    // Consumo da API para buscar produtos com base no termo de pesquisa
     const buscarProdutos = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/v1/saveeats/restaurante/produtos/id-restaurante/${idRestaurante}/nome-produto/${termoPesquisa}`);
-            // const response = await axios.get(`https://save-eats.cyclic.cloud/v1/saveeats/restaurante/produtos/id-restaurante/${idRestaurante}/nome-produto/${termoPesquisa}`);
-            const data = response.data;
+            const response = await axios.get(`http://localhost:8080/v1/saveeats/restaurante/produtos/id-restaurante/${idRestaurante}/nome-produto/${termoPesquisa}`);
+            const data = response.data.produtos_do_restaurante;
             setProdutos(data);
         } catch (error) {
             console.error("Erro ao buscar produtos:", error);
@@ -80,23 +90,25 @@ export function CardapioPage() {
     };
 
     useEffect(() => {
-        if (termoPesquisa.trim() !== "") {
-            buscarProdutos();
-        } else {
-            setProdutos([]);
+        produtoData();
+    }, []);
+
+    const handlePesquisaChange = (e) => {
+        setTermoPesquisa(e.target.value);
+        buscarProdutos();
+    };
+
+    useEffect(() => {
+        if (termoPesquisa.trim() === "") {
+            produtoData();
         }
     }, [termoPesquisa]);
 
-    const handlePesquisaEnter = (e) => {
-        if (e.key === "Enter") {
-            buscarProdutos();
-        }
-    };
 
     //Consumo da API para exclusão de um item do cardapio
     const handleDeleteProduto = async (id) => {
         try {
-            await axios.delete(`http://localhost:3000/v1/saveeats/produto/id/${id}`);
+            await axios.delete(`http://localhost:8080/v1/saveeats/produto/id/${id}`);
             // await axios.delete(`https://save-eats.cyclic.cloud/v1/saveeats/produto/id/${id}`);
             const updatedProdutos = produtos.filter((produto) => produto.id !== id);
             setProdutos(updatedProdutos)
@@ -145,14 +157,12 @@ export function CardapioPage() {
 
                     <div className="container-busca-categoria">
 
-                        {/* <input className="input-busca" type="search" placeholder="Buscar produto" /> */}
                         <input
                             className="input-busca"
                             type="search"
                             placeholder="Buscar produto"
                             value={termoPesquisa}
-                            onChange={(e) => setTermoPesquisa(e.target.value)}
-                            onKeyPress={handlePesquisaEnter}
+                            onChange={handlePesquisaChange}
                         />
 
                         <select name="Categoria" className="input-categoria" value={categoriaSelecionada} onChange={(e) => setCategoriaSelecionada(e.target.value)}>
@@ -175,8 +185,7 @@ export function CardapioPage() {
                             isOpen={openModal}
                             setModalOpen={() => setOpenModal(!openModal)}
                             onProdutoCriado={(novoProduto) => { setProdutos([...produtos, novoProduto]) }}
-                            onUpdateProduto={handleUpdateProduto} // Passa a função onUpdateProduto
-                            // onUpdateProduto={(produtoAtualizado) => handleUpdateProduto(produtoAtualizado)} // Passa a função onUpdateProduto
+                            onUpdateProduto={handleUpdateProduto}
                             isEditing={isEditing}
                             produtoEmEdicao={produtoEmEdicao}
                             produtos={produtos}
@@ -187,31 +196,9 @@ export function CardapioPage() {
 
                         <div className="container-lista-produtos">
 
-                            <div className="header-lista-produtos">
-
-                                <h2>Bolos</h2>
-
-                                <div className="container-button-adicionar">
-
-                                    <ButtonAdicionar background="#E3E9DD" text="Adicionar produto" ></ButtonAdicionar>
-
-                                </div>
-
-                                <div className="container-button-pausado-ativo">
-
-                                    <ButtonPausadoAtivo background="#E3E9DD" text="Pausado"></ButtonPausadoAtivo>
-
-                                    <ButtonPausadoAtivo background="#90AE6E" text="Ativo"></ButtonPausadoAtivo>
-
-                                </div>
-
-                                <TresPontos></TresPontos>
-
-                            </div>
-
                             <div className="container-produtos-preco-status">
 
-                                <h3>Produtos</h3>
+                                <h3 className="title-list">Produtos</h3>
 
                                 <span className="text-preco">Preço</span>
 
