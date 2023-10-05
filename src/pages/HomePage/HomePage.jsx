@@ -3,6 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
 
+//Import do axios
+import axios from 'axios'
+
 //Import css e components
 import "./HomePage.css"
 import greenImg from "./img/verde.png"
@@ -17,6 +20,59 @@ export function HomePage() {
     // const location = useLocation();
     // const restaurante = location.state?.restaurante;
     const nomeRestaurante = localStorage.getItem("nome_fantasia");
+    const idRestaurante = localStorage.getItem("id");
+    const [pedidosCancelados, setPedidosCancelados] = useState(0);
+    const [pedidosAtrasados, setPedidosAtrasados] = useState(0);
+    const [produtosPausados, setProdutosPausados] = useState(0);
+
+    useEffect(() => {
+        const getProdutosPausados = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/v1/saveeats/restaurante/produtos-pausados/idRestaurante/${idRestaurante}`);
+                const responseData = response.data.quantidade_produtos_pausados;
+                console.log(response);
+                console.log(responseData);
+                setProdutosPausados(responseData);
+            } catch (error) {
+                console.error('Erro ao obter dados da API:', error);
+            }
+        };
+
+        getProdutosPausados(); 
+    }, [idRestaurante]); 
+
+    useEffect(() => {
+        const getPedidosCancelados = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/v1/saveeats/restaurante/pedidos-cancelados/idRestaurante/${idRestaurante}`);
+                const responseData = response.data.quantidade_pedidos_cancelados;
+                console.log(response);
+                console.log(responseData);
+                setPedidosCancelados(responseData);
+            } catch (error) {
+                console.error('Erro ao obter dados da API:', error);
+            }
+        };
+
+        getPedidosCancelados(); 
+    }, [idRestaurante]); 
+
+
+    useEffect(() => {
+        const getPedidosAtrasados = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/v1/saveeats/restaurante/pedidos-atrasados/idRestaurante/${idRestaurante}`);
+                const responseData = response.data.quantidade_pedidos_atrasados;
+                console.log(response);
+                console.log(responseData);
+                setPedidosAtrasados(responseData);
+            } catch (error) {
+                console.error('Erro ao obter dados da API:', error);
+            }
+        };
+
+        getPedidosAtrasados(); 
+    }, [idRestaurante]); 
 
     return (
         <main className="main-menu">
@@ -63,7 +119,7 @@ export function HomePage() {
 
                     </div>
 
-                    <Cards titleCard="Itens pausados no cardápio" numberCard="2"></Cards>
+                    <Cards titleCard="Itens pausados no cardápio" numberCard={produtosPausados}></Cards>
 
                 </div>
 
@@ -73,8 +129,8 @@ export function HomePage() {
 
                 <div className="container-atrasos-pedidos">
 
-                    <Cards titleCard="Pedidos cancelados" numberCard="0"></Cards>
-                    <Cards titleCard="Pedidos em atraso" numberCard="0"></Cards>
+                    <Cards titleCard="Pedidos cancelados" numberCard={pedidosCancelados}></Cards>
+                    <Cards titleCard="Pedidos em atraso" numberCard={pedidosAtrasados}></Cards>
 
                 </div>
 
