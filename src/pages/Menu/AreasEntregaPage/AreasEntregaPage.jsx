@@ -1,5 +1,8 @@
 //Import React
-import React from "react";
+import React, { useState, useEffect } from "react";
+
+//Import Axios para integração
+import axios from 'axios'
 
 //Import css e components
 import "./AreasEntregaPage.css"
@@ -9,6 +12,26 @@ import { InputTaxas } from "../../../components/InputTaxas/InputTaxas";
 import { InputTempo } from "../../../components/InputTempo/InputTempo";
 
 export function AreasEntregaPage() {
+
+    const idRestaurante = localStorage.getItem("id");
+
+    
+    useEffect(() => {
+        async function areaEntregaData() {
+            try {
+                const areaEntregaResponse = await axios.get(`http://localhost:8080/v1/saveeats/restaurante/frete-area-entrega/idRestaurante/${idRestaurante}`);
+                const areaEntregaData = areaEntregaResponse.data.frete_area_entrega_do_restaurante;
+                console.log(areaEntregaResponse);
+                console.log(areaEntregaData);
+            } catch (error) {
+                console.error('Erro ao obter dados da API:', error);
+            }
+        }
+
+        areaEntregaData();
+    }, []);
+
+    
     return (
 
         <div>

@@ -33,7 +33,7 @@ export function CardapioPage() {
         async function fetchData() {
             try {
                 // const response = await axios.get('https://save-eats.cyclic.cloud/v1/saveeats/categoria/produto');
-                const response = await axios.get('http://localhost:3000/v1/saveeats/categoria/produto');
+                const response = await axios.get('http://localhost:8080/v1/saveeats/categoria/produto');
                 const responseData = response.data.categoria_produto
                 setCategorias(responseData)
             } catch (error) {
@@ -52,7 +52,7 @@ export function CardapioPage() {
         async function produtoData() {
             try {
                 // const produto = await axios.get(`https://save-eats.cyclic.cloud/v1/saveeats/restaurante/produtos/nome-fantasia/${nomeRestaurante}`);
-                const produto = await axios.get(`http://localhost:3000/v1/saveeats/restaurante/produtos/nome-fantasia/${nomeRestaurante}`);
+                const produto = await axios.get(`http://localhost:8080/v1/saveeats/restaurante/produtos/nome-fantasia/${nomeRestaurante}`);
                 const produtoData = produto.data.produtos_do_restaurante;
                 setProdutos(produtoData);
                 console.log(produtoData);
@@ -69,7 +69,7 @@ export function CardapioPage() {
     const produtoData = async () => {
         try {
             // const produto = await axios.get(`https://save-eats.cyclic.cloud/v1/saveeats/restaurante/produtos/nome-fantasia/${nomeRestaurante}`);
-            const produto = await axios.get(`http://localhost:3000/v1/saveeats/restaurante/produtos/nome-fantasia/${nomeRestaurante}`);
+            const produto = await axios.get(`http://localhost:8080/v1/saveeats/restaurante/produtos/nome-fantasia/${nomeRestaurante}`);
             const produtoData = produto.data.produtos_do_restaurante;
             setProdutos(produtoData);
             console.log(produtoData);
@@ -81,7 +81,7 @@ export function CardapioPage() {
     // Consumo da API para buscar produtos com base no termo de pesquisa
     const buscarProdutos = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/v1/saveeats/restaurante/produtos/id-restaurante/${idRestaurante}/nome-produto/${termoPesquisa}`);
+            const response = await axios.get(`http://localhost:8080/v1/saveeats/restaurante/produtos/id-restaurante/${idRestaurante}/nome-produto/${termoPesquisa}`);
             const data = response.data.produtos_do_restaurante;
             setProdutos(data);
         } catch (error) {
@@ -108,7 +108,7 @@ export function CardapioPage() {
     //Consumo da API para exclusão de um item do cardapio
     const handleDeleteProduto = async (id) => {
         try {
-            await axios.delete(`http://localhost:3000/v1/saveeats/produto/id/${id}`);
+            await axios.delete(`http://localhost:8080/v1/saveeats/produto/id/${id}`);
             // await axios.delete(`https://save-eats.cyclic.cloud/v1/saveeats/produto/id/${id}`);
             const updatedProdutos = produtos.filter((produto) => produto.id !== id);
             setProdutos(updatedProdutos)

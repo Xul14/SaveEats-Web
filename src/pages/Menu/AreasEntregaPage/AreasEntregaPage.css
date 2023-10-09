@@ -134,12 +134,13 @@
     width: 100%;
     height: 100%;
     display: flex;
+    justify-content: center;
     align-items: center;
     padding-left: 4vw;
 }
 
 .button-area-entrega {
-    width: 10vw;
+    width: 12vw;
     height: 6vh;
     border: none;
     border-radius: 10px;

@@ -18,27 +18,53 @@ import imgAlelo from "./img/alelo.png"
 import imgElo from "./img/elo.png"
 import imgVr from "./img/vr.png"
 import imgTicket from "./img/ticket.png"
+// import { mercadoPago } from "../../../api/API";
 
 export function FormasPagamentoPage() {
+
+    // axios.get('http://localhost:8080/v1/saveeats/obter-dados-do-mercado-pago')
+    //     .then(response => {
+    //         // Processar os dados da API do Mercado Pago recebidos do backend
+    //         console.log(response.data);
+    //     })
+    //     .catch(error => {
+    //         console.error('Erro ao obter dados do Mercado Pago:', error);
+    //     });
 
     //Consumo da API para pegar as formas de pagamento
     const [formaPagamento, setFormaPagamento] = useState([]);
 
+    // useEffect(() => {
+    //     async function formaPagamentoData() {
+    //         try {
+    //             // const formasPagamento = await axios.get(`https://save-eats.cyclic.cloud/v1/saveeats/forma/pagamento`);
+    //             const formasPagamento = await axios.get(`http://localhost:8080/v1/saveeats/forma/pagamento`);
+    //             const formaPagamentoData = formasPagamento.data.formas_de_pagamento;
+    //             setFormaPagamento(formaPagamentoData);
+    //             console.log(formaPagamentoData);
+    //         } catch (error) {
+    //             console.error('Erro ao obter dados da API:', error);
+    //         }
+    //     }
+
+    //     formaPagamentoData();
+    // }, []);
+
     useEffect(() => {
         async function formaPagamentoData() {
             try {
-                // const formasPagamento = await axios.get(`https://save-eats.cyclic.cloud/v1/saveeats/forma/pagamento`);
-                const formasPagamento = await axios.get(`http://localhost:3000/v1/saveeats/forma/pagamento`);
-                const formaPagamentoData = formasPagamento.data.formas_de_pagamento;
+                const formasPagamento = await axios.get('http://localhost:8080/v1/saveeats/obter-dados-do-mercado-pago');
+                const formaPagamentoData = formasPagamento.data;
                 setFormaPagamento(formaPagamentoData);
                 console.log(formaPagamentoData);
             } catch (error) {
-                console.error('Erro ao obter dados da API:', error);
+                console.error('Erro ao obter dados do Mercado Pago:', error);
             }
         }
 
         formaPagamentoData();
     }, []);
+
 
     return (
 
@@ -73,8 +99,8 @@ export function FormasPagamentoPage() {
                                 {formaPagamento.map((formaPagamento, index) => (
                                     <TiposPagamento
                                         key={index}
-                                        nomeFormaPagamento={formaPagamento.nome_forma_pagamento}
-                                        imgFormaPagamento={formaPagamento.foto_bandeira}
+                                        nomeFormaPagamento={formaPagamento.name}
+                                        imgFormaPagamento={formaPagamento.secure_thumbnail}
                                     />
                                 ))}
 

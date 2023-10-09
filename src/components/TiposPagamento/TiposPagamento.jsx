@@ -9,7 +9,7 @@ export function TiposPagamento({ imgFormaPagamento, nomeFormaPagamento }) {
 
             <div className="container-tipos-formas-pagamento">
 
-                <input type="checkbox" className="checkbox-tipo-pagamento" />
+                {/* <input type="checkbox" className="checkbox-tipo-pagamento" /> */}
 
                 <img src={imgFormaPagamento} alt="Forma de pagamento" className="tipo-pagamento" />
 
