@@ -1,11 +1,14 @@
 //Import React
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 //Import css e components
 import "./FormasPagamentoPage.css"
 import { MenuNavigation } from "../../../components/MenuNavigation/MenuNavigation";
 import { HeaderPages } from "../../../components/HeaderPages/Header";
 import { TiposPagamento } from "../../../components/TiposPagamento/TiposPagamento";
+
+//Import Axios para integração
+import axios from 'axios'
 
 import imgMastercard from "./img/mastercard.png"
 import imgVisa from "./img/visa.png"
@@ -17,6 +20,26 @@ import imgVr from "./img/vr.png"
 import imgTicket from "./img/ticket.png"
 
 export function FormasPagamentoPage() {
+
+    //Consumo da API para pegar as formas de pagamento
+    const [formaPagamento, setFormaPagamento] = useState([]);
+
+    useEffect(() => {
+        async function formaPagamentoData() {
+            try {
+                // const formasPagamento = await axios.get(`https://save-eats.cyclic.cloud/v1/saveeats/forma/pagamento`);
+                const formasPagamento = await axios.get(`http://localhost:3000/v1/saveeats/forma/pagamento`);
+                const formaPagamentoData = formasPagamento.data.formas_de_pagamento;
+                setFormaPagamento(formaPagamentoData);
+                console.log(formaPagamentoData);
+            } catch (error) {
+                console.error('Erro ao obter dados da API:', error);
+            }
+        }
+
+        formaPagamentoData();
+    }, []);
+
     return (
 
         <div>
@@ -47,7 +70,15 @@ export function FormasPagamentoPage() {
 
                             <div className="container-tipos-pagamento">
 
-                                <TiposPagamento nomeFormaPagamento="Dinheiro" imgFormaPagamento={imgDinheiro}></TiposPagamento>
+                                {formaPagamento.map((formaPagamento, index) => (
+                                    <TiposPagamento
+                                        key={index}
+                                        nomeFormaPagamento={formaPagamento.nome_forma_pagamento}
+                                        imgFormaPagamento={formaPagamento.foto_bandeira}
+                                    />
+                                ))}
+
+                                {/* <TiposPagamento nomeFormaPagamento="Dinheiro" imgFormaPagamento={imgDinheiro}></TiposPagamento>
 
                                 <TiposPagamento nomeFormaPagamento="Elo" imgFormaPagamento={imgElo}></TiposPagamento>
 
@@ -61,7 +92,7 @@ export function FormasPagamentoPage() {
 
                                 <TiposPagamento nomeFormaPagamento="Visa" imgFormaPagamento={imgVisa}></TiposPagamento>
 
-                                <TiposPagamento nomeFormaPagamento="Ticket" imgFormaPagamento={imgTicket}></TiposPagamento>
+                                <TiposPagamento nomeFormaPagamento="Ticket" imgFormaPagamento={imgTicket}></TiposPagamento> */}
 
                             </div>
 
