@@ -10,12 +10,14 @@ import { MenuNavigation } from "../../../components/MenuNavigation/MenuNavigatio
 import { HeaderPages } from "../../../components/HeaderPages/Header";
 import { InputTaxas } from "../../../components/InputTaxas/InputTaxas";
 import { InputTempo } from "../../../components/InputTempo/InputTempo";
+import { InputTaxaTempo } from "../../../components/InputTaxaTempo/InputTaxaTempo";
 
 export function AreasEntregaPage() {
 
     const idRestaurante = localStorage.getItem("id");
 
-    
+    const [areaEntrega, setAreaEntrega] = useState([]);
+
     useEffect(() => {
         async function areaEntregaData() {
             try {
@@ -23,6 +25,7 @@ export function AreasEntregaPage() {
                 const areaEntregaData = areaEntregaResponse.data.frete_area_entrega_do_restaurante;
                 console.log(areaEntregaResponse);
                 console.log(areaEntregaData);
+                setAreaEntrega(areaEntregaData)
             } catch (error) {
                 console.error('Erro ao obter dados da API:', error);
             }
@@ -31,7 +34,18 @@ export function AreasEntregaPage() {
         areaEntregaData();
     }, []);
 
-    
+      //Consumo da API para exclusão de um frete area de entrega
+      const handleDeleteFrete = async (id) => {
+        try {
+            await axios.delete(`http://localhost:8080/v1/saveeats/frete/area/entrega/id/${id}`);
+            const updatedFrete = areaEntrega.filter((areaEntrega) => areaEntrega.id !== id);
+            setAreaEntrega(updatedFrete)
+            console.log(id)
+        } catch (error) {
+            console.error("Erro ao tentar excluir:", error);
+        }
+    };
+
     return (
 
         <div>
@@ -70,62 +84,32 @@ export function AreasEntregaPage() {
 
                     <div className="container-alcance-taxas-tempo">
 
-                        <div className="container-alcance">
+                        <div className="title-alcance-tempo-taxa">
 
                             <span className="title-alcance">Alcance</span>
-
-                            <span className="text-km">Até 1km</span>
-
-                            <span className="text-km">Até 2km</span>
-
-                            <span className="text-km">Até 3km</span>
-
-                            <span className="text-km">Até 4km</span>
-
-                        </div>
-
-                        <div className="container-taxas">
-
                             <span className="title-taxas">Taxa</span>
-
-                            <div className="container-input-taxas">
-
-                                <InputTaxas></InputTaxas>
-
-                                <InputTaxas></InputTaxas>
-
-                                <InputTaxas></InputTaxas>
-
-                                <InputTaxas></InputTaxas>
-
-                            </div>
-
-                        </div>
-
-                        <div className="container-tempo">
-
                             <span className="title-tempo">Tempo</span>
 
-                            <div className="container-input-tempo">
-
-                                <InputTempo></InputTempo>
-
-                                <InputTempo></InputTempo>
-
-                                <InputTempo></InputTempo>
-
-                                <InputTempo></InputTempo>
-
-                            </div>
-
                         </div>
 
+                        <div className="container-infos">
+                            {areaEntrega.map((areaEntrega, index) => (
+                                <InputTaxaTempo
+                                key={index}
+                                id={areaEntrega.area_entrega_id}
+                                km={areaEntrega.km}
+                                taxa={areaEntrega.valor_entrega}
+                                tempo={areaEntrega.tempo_entrega}
+                                onDelete={handleDeleteFrete}
+                                />
+                            ))}
+                        </div>
 
                     </div>
 
                     <div className="container-button-area-entrega">
 
-                        <button className="button-area-entrega">Salvar área de entrega</button>
+                        <button className="button-area-entrega">Adicionar área de entrega</button>
 
                     </div>
 
