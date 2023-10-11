@@ -1,0 +1,143 @@
+.modal-area-entrega {
+    bottom: 0;
+    left: 45%;
+    opacity: 0;
+    opacity: 1;
+    z-index: 1;
+    z-index: -1;
+    bottom: 50%;
+    width: 700px;
+    height: 300px;
+    position: absolute;
+    border-radius: 20px;
+    animation-name: slide;
+    transform: translateY(50%);
+    background-color: #fff;
+    animation-duration: 0.5s;
+}
+
+.add-item-area-entrega {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-areas: 'header''bodyModal''btn-salvar';
+    grid-template-rows: 50px 1fr 80px;
+}
+
+.closeModal {
+    grid-area: header;
+    color: #000;
+    display: flex;
+    font-size: 2rem;
+    font-weight: 600;
+    justify-content: end;
+    padding-left: 20px;
+}
+
+.body-area-entrega-modal {
+    grid-area: bodyModal;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    grid-template-rows: 1fr 1fr;
+}
+
+.title-areas-entrega {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    height: 100%;
+    width: 100%;
+    gap: 20px;
+    justify-content: center;
+}
+
+.inputs-add-area-entrega {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    height: 100%;
+    width: 100%;
+    gap: 20px;
+    justify-content: center;
+}
+
+.container-alcance {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.text-km {
+    width: 150px;
+    font-size: 1.5rem;
+    justify-content: center;
+    display: flex;
+}
+
+.container-input-taxas {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-taxas {
+    width: 150px;
+    height: 50px;
+    border: 1px solid #C4C4C4;
+    justify-content: center;
+    display: flex;
+}
+
+.container-input-tempo {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-tempo {
+    width: 150px;
+    height: 50px;
+    border: 1px solid #C4C4C4;
+    justify-content: center;
+    align-items: center;
+    padding-left: 10%;
+    display: flex;
+}
+
+.btn-criar-area-entrega {
+    grid-area: btn-salvar;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-salvar {
+    border: none;
+    height: 40px;
+    width: 150px;
+    color: #FFF;
+    font-size: 1.5rem;
+    border-radius: 50px;
+    background-color: #5f8e29;
+}
+
+
+@keyframes slide {
+    from {
+        bottom: 0%;
+        opacity: 0.1;
+    }
+
+    to {
+        bottom: 50%;
+        transform: translateY(50%);
+        opacity: 1;
+    }
+}

@@ -21,12 +21,10 @@ export function InputTaxaTempo({ id, km, taxa, tempo, onDelete }) {
             </div>
 
             <div className="container-input-taxas">
-                {/* <InputTaxas>{taxa}</InputTaxas> */}
                 <input type="text" className="input-taxas"value={`R$ ${taxa}`} readOnly></input>
             </div>
 
             <div className="container-input-tempo">
-                {/* <InputTempo>{tempo}</InputTempo> */}
                 <input type="time" className="input-tempo" value={tempo}></input>
             </div>
 

@@ -11,12 +11,14 @@ import { HeaderPages } from "../../../components/HeaderPages/Header";
 import { InputTaxas } from "../../../components/InputTaxas/InputTaxas";
 import { InputTempo } from "../../../components/InputTempo/InputTempo";
 import { InputTaxaTempo } from "../../../components/InputTaxaTempo/InputTaxaTempo";
+import { ModalFreteAreaEntrega } from "../../../components/ModalFreteAreaEntrega/ModalFreteAreaEntrega";
 
 export function AreasEntregaPage() {
 
     const idRestaurante = localStorage.getItem("id");
 
     const [areaEntrega, setAreaEntrega] = useState([]);
+    const [openModal, setOpenModal] = useState(false)
 
     useEffect(() => {
         async function areaEntregaData() {
@@ -34,8 +36,8 @@ export function AreasEntregaPage() {
         areaEntregaData();
     }, []);
 
-      //Consumo da API para exclusão de um frete area de entrega
-      const handleDeleteFrete = async (id) => {
+    //Consumo da API para exclusão de um frete area de entrega
+    const handleDeleteFrete = async (id) => {
         try {
             await axios.delete(`http://localhost:8080/v1/saveeats/frete/area/entrega/id/${id}`);
             const updatedFrete = areaEntrega.filter((areaEntrega) => areaEntrega.id !== id);
@@ -95,12 +97,12 @@ export function AreasEntregaPage() {
                         <div className="container-infos">
                             {areaEntrega.map((areaEntrega, index) => (
                                 <InputTaxaTempo
-                                key={index}
-                                id={areaEntrega.area_entrega_id}
-                                km={areaEntrega.km}
-                                taxa={areaEntrega.valor_entrega}
-                                tempo={areaEntrega.tempo_entrega}
-                                onDelete={handleDeleteFrete}
+                                    key={index}
+                                    id={areaEntrega.area_entrega_id}
+                                    km={areaEntrega.km}
+                                    taxa={areaEntrega.valor_entrega}
+                                    tempo={areaEntrega.tempo_entrega}
+                                    onDelete={handleDeleteFrete}
                                 />
                             ))}
                         </div>
@@ -109,7 +111,11 @@ export function AreasEntregaPage() {
 
                     <div className="container-button-area-entrega">
 
-                        <button className="button-area-entrega">Adicionar área de entrega</button>
+                        <button className="button-area-entrega" onClick={() => setOpenModal(true)}>Adicionar área de entrega</button>
+                        <ModalFreteAreaEntrega
+                        isOpenModal={openModal}
+                        setModalOpenModalAreaEntrega={() => setOpenModal(!openModal)}
+                        />
 
                     </div>
 
