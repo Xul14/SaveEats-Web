@@ -113,9 +113,10 @@ export function AreasEntregaPage() {
 
                         <button className="button-area-entrega" onClick={() => setOpenModal(true)}>Adicionar área de entrega</button>
                         <ModalFreteAreaEntrega
-                        isOpenModal={openModal}
-                        setModalOpenModalAreaEntrega={() => setOpenModal(!openModal)}
-                        />
+                            isOpenModal={openModal}
+                            setModalOpenModalAreaEntrega={() => setOpenModal(!openModal)}
+                            onCreateAreaEntrega={(novaAreaEntrega) => { setAreaEntrega([...areaEntrega, novaAreaEntrega]) }}
+                        ></ModalFreteAreaEntrega>
 
                     </div>
 
