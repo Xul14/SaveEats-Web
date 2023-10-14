@@ -2,7 +2,7 @@
     width: 100%;
     height: 150px;
     display: grid;
-    grid-template-columns: 13% 30% 18% 27.5% 11.5%;
+    grid-template-columns: 15% 30% 18% 27.5% 9.5%;
 }
 
 .container-imagem-produto {
@@ -16,6 +16,8 @@
 
 .imagem-produto {
     height: 10vh;
+    border-radius: 5px;
+    box-shadow: 2px 2px 8px#585757;
 }
 
 .container-nome-produto {
@@ -31,6 +33,7 @@
 .nome-produto {
     font-size: 1.8rem;
     font-weight: 700;
+    text-align: center;
 }
 
 .container-preco-produto {

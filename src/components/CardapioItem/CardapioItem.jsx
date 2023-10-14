@@ -30,15 +30,20 @@ export function CardapioItem({ id, imgProduto, nomeProduto, precoProduto, status
     const [statusId, setStatusId] = useState(statusProduto);
 
 
+    // Função para formatar o preço substituindo '.' por ','
+    const formatPrice = (price) => {
+        return `R$ ${price.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`.replace('.', ',');
+    };
+
     useEffect(() => {
         async function fetchButtonStyles() {
             try {
                 let pausadoColor, ativoColor;
 
-                if (statusId === 1) { 
+                if (statusId === 1) {
                     pausadoColor = '#90AE6E';
                     ativoColor = '#E3E9DD';
-                } else if (statusId === 2) { 
+                } else if (statusId === 2) {
                     pausadoColor = '#E3E9DD';
                     ativoColor = '#90AE6E';
                 } else {
@@ -72,7 +77,7 @@ export function CardapioItem({ id, imgProduto, nomeProduto, precoProduto, status
             </div>
 
             <div className="container-preco-produto">
-                <span className="preco-produto">R${precoProduto}</span>
+                <span className="preco-produto">{formatPrice(precoProduto)}</span>
             </div>
 
             <div className="container-status-produto">

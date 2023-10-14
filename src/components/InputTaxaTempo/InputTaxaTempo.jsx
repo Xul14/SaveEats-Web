@@ -7,10 +7,25 @@ import { InputTaxas } from "../InputTaxas/InputTaxas";
 import { InputTempo } from "../InputTempo/InputTempo";
 import { TresPontos } from "../TresPontos/TresPontos"
 
-export function InputTaxaTempo({ id, km, taxa, tempo, onDelete }) {
+export function InputTaxaTempo({ id, km, taxa, tempo, raio_entrega, onDelete, onEdit }) {
 
     const handleDeleteClick = () => {
         onDelete(id)
+    };
+
+    const handleEditClick = () => {
+        onEdit({
+            id,
+            km,
+            taxa,
+            tempo,
+            raio_entrega
+        });
+    };
+
+    // Função para formatar o preço substituindo '.' por ','
+    const formatPrice = (price) => {
+        return `R$ ${price.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`.replace('.', ',');
     };
 
     return (
@@ -21,7 +36,7 @@ export function InputTaxaTempo({ id, km, taxa, tempo, onDelete }) {
             </div>
 
             <div className="container-input-taxas">
-                <input type="text" className="input-taxas"value={`R$ ${taxa}`} readOnly></input>
+                <input type="text" className="input-taxas" value={formatPrice(taxa)} readOnly></input>
             </div>
 
             <div className="container-input-tempo">
@@ -29,7 +44,7 @@ export function InputTaxaTempo({ id, km, taxa, tempo, onDelete }) {
             </div>
 
             <div className="container-tres-pontos">
-                <TresPontos onDelete={handleDeleteClick}></TresPontos>
+                <TresPontos onDelete={handleDeleteClick} onEdit={handleEditClick}></TresPontos>
             </div>
 
         </div>

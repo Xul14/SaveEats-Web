@@ -12,6 +12,7 @@ import { InputTaxas } from "../../../components/InputTaxas/InputTaxas";
 import { InputTempo } from "../../../components/InputTempo/InputTempo";
 import { InputTaxaTempo } from "../../../components/InputTaxaTempo/InputTaxaTempo";
 import { ModalFreteAreaEntrega } from "../../../components/ModalFreteAreaEntrega/ModalFreteAreaEntrega";
+import img_nenhuma_area from './img/nenhuma-area-entrega.webp'
 
 export function AreasEntregaPage() {
 
@@ -25,8 +26,6 @@ export function AreasEntregaPage() {
             try {
                 const areaEntregaResponse = await axios.get(`http://localhost:8080/v1/saveeats/restaurante/frete-area-entrega/idRestaurante/${idRestaurante}`);
                 const areaEntregaData = areaEntregaResponse.data.frete_area_entrega_do_restaurante;
-                console.log(areaEntregaResponse);
-                console.log(areaEntregaData);
                 setAreaEntrega(areaEntregaData)
             } catch (error) {
                 console.error('Erro ao obter dados da API:', error);
@@ -46,6 +45,29 @@ export function AreasEntregaPage() {
         } catch (error) {
             console.error("Erro ao tentar excluir:", error);
         }
+    };
+
+    const [isEditing, setIsEditing] = useState(false);
+    const [entregaEmEdicao, setEntregaEmEdicao] = useState(null);
+
+    const handleEditEntrega = (areasEntrega) => {
+        setIsEditing(true);
+        setEntregaEmEdicao(areasEntrega);
+        setOpenModal(true);
+    };
+
+    const handleUpdateEntrega = (entregaAtualizada) => {
+        console.log(entregaAtualizada);
+        setAreaEntrega((areasEntrega) => {
+            const areaEntregaAtualizada = areasEntrega.map((areaEntrega) => {
+                if (areaEntrega.area_entrega_id === entregaAtualizada.area_entrega_id) {
+                    return entregaAtualizada;
+                }
+                return areaEntrega;
+            });
+            console.log(areaEntregaAtualizada);
+            return areaEntregaAtualizada;
+        });
     };
 
     return (
@@ -95,16 +117,25 @@ export function AreasEntregaPage() {
                         </div>
 
                         <div className="container-infos">
-                            {areaEntrega.map((areaEntrega, index) => (
-                                <InputTaxaTempo
-                                    key={index}
-                                    id={areaEntrega.area_entrega_id}
-                                    km={areaEntrega.km}
-                                    taxa={areaEntrega.valor_entrega}
-                                    tempo={areaEntrega.tempo_entrega}
-                                    onDelete={handleDeleteFrete}
-                                />
-                            ))}
+                            {areaEntrega ? (
+                                areaEntrega.map((areaEntrega, index) => (
+                                    <InputTaxaTempo
+                                        key={index}
+                                        id={areaEntrega.area_entrega_id}
+                                        raio_entrega={areaEntrega.raio_entrega}
+                                        km={areaEntrega.km}
+                                        taxa={areaEntrega.valor_entrega}
+                                        tempo={areaEntrega.tempo_entrega}
+                                        onDelete={handleDeleteFrete}
+                                        onEdit={() => handleEditEntrega(areaEntrega)}
+                                    />
+                                ))
+                            ) : (
+                                <div className="nenhuma-area-entrega">
+                                    <p>Nenhuma área de entrega encontrada.</p>
+                                    <p>Clique no botão para adicionar suas preferências de entrega.</p>
+                                </div>
+                            )}
                         </div>
 
                     </div>
@@ -116,8 +147,11 @@ export function AreasEntregaPage() {
                             isOpenModal={openModal}
                             setModalOpenModalAreaEntrega={() => setOpenModal(!openModal)}
                             onCreateAreaEntrega={(novaAreaEntrega) => { setAreaEntrega([...areaEntrega, novaAreaEntrega]) }}
+                            onUpdateAreaEntrega={handleUpdateEntrega}
+                            isEditing={isEditing}
+                            AreaEntregaEmEdicao={entregaEmEdicao}
+                            AreaEntregas={areaEntrega}
                         ></ModalFreteAreaEntrega>
-
                     </div>
 
                 </div>
