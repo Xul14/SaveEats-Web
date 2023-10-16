@@ -32,13 +32,14 @@
 }
 
 .input-area-entrega {
-    width: 17vw;
+    width: 15vw;
     height: 6vh;
     border: none;
     border-radius: 10px;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     border: 1px solid #276D15;
     padding-left: 1vw;
+    text-align: center;
 }
 
 .container-taxas-tempo {

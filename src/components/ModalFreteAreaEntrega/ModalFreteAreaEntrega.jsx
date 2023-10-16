@@ -39,18 +39,35 @@ export function ModalFreteAreaEntrega({ isOpenModal, setModalOpenModalAreaEntreg
     }, [AreaEntregaEmEdicao]);
 
 
+    // useEffect(() => {
+    //     async function getRaioEntrega(idRestaurante) {
+    //         try {
+    //             const response = await axios.get(`http://localhost:8080/v1/saveeats/restaurante/raio-entrega/idRestaurante/${idRestaurante}`)
+    //             const responseData = response.data.raio_entrega_do_restaurante
+    //             setRaioEntrega(responseData)
+    //         } catch (error) {
+    //             console.error('Erro ao obter dados da API:', error)
+    //         }
+    //     }
+    //     getRaioEntrega(idRestaurante)
+    // }, [])
+
     useEffect(() => {
-        async function getRaioEntrega(idRestaurante) {
+        async function areaEntregaData() {
             try {
-                const response = await axios.get(`http://localhost:8080/v1/saveeats/restaurante/raio-entrega/idRestaurante/${idRestaurante}`)
-                const responseData = response.data.raio_entrega_do_restaurante
-                setRaioEntrega(responseData)
+                const areaEntregaResponse = await axios.get(`http://localhost:8080/v1/saveeats/restaurante/frete-area-entrega/idRestaurante/${idRestaurante}`);
+                const areaEntregaData = areaEntregaResponse.data.frete_area_entrega_do_restaurante;
+                
+                if (areaEntregaData[0] && areaEntregaData[0].raio_entrega) {
+                    setRaioEntrega(areaEntregaData[0].raio_entrega);
+                }
             } catch (error) {
-                console.error('Erro ao obter dados da API:', error)
+                console.error('Erro ao obter dados da API:', error);
             }
         }
-        getRaioEntrega(idRestaurante)
-    }, [])
+
+        areaEntregaData();
+    }, []);
 
     const raio = raioEntrega && raioEntrega.length > 0 ? raioEntrega[0].raio_entrega : 1;
     // const taxaFormatada = taxa.replace(',', '.');
@@ -87,7 +104,7 @@ export function ModalFreteAreaEntrega({ isOpenModal, setModalOpenModalAreaEntreg
                     setModalOpenModalAreaEntrega(false)
                     setIsEditing(false)
                 } else {
-                    console.error("Falha ao editar o produto.");
+                    console.error("Falha ao editar.");
                     console.log(response)
                 }
 

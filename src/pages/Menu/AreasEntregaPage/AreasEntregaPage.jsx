@@ -20,12 +20,18 @@ export function AreasEntregaPage() {
 
     const [areaEntrega, setAreaEntrega] = useState([]);
     const [openModal, setOpenModal] = useState(false)
+    const [raioEntrega, setRaioEntrega] = useState('')
 
     useEffect(() => {
         async function areaEntregaData() {
             try {
                 const areaEntregaResponse = await axios.get(`http://localhost:8080/v1/saveeats/restaurante/frete-area-entrega/idRestaurante/${idRestaurante}`);
                 const areaEntregaData = areaEntregaResponse.data.frete_area_entrega_do_restaurante;
+                
+                if (areaEntregaData[0] && areaEntregaData[0].raio_entrega) {
+                    setRaioEntrega(areaEntregaData[0].raio_entrega);
+                }
+                console.log(areaEntregaData);
                 setAreaEntrega(areaEntregaData)
             } catch (error) {
                 console.error('Erro ao obter dados da API:', error);
@@ -70,6 +76,35 @@ export function AreasEntregaPage() {
         });
     };
 
+    const atualizarRaioEntrega = {
+        id_restaurante: idRestaurante,
+        raio_entrega: raioEntrega
+    }
+
+    const atualizarDados = async () => {
+        try {
+            const response = await axios.put("http://localhost:8080/v1/saveeats/restaurante/raio-entrega", atualizarRaioEntrega)
+
+            if (response.status === 200) {
+                console.log("Raio de Entrega editado com sucesso");
+                console.log(response);
+                console.log(atualizarRaioEntrega);
+            } else {
+                console.error("Falha ao editar.");
+                console.log(response)
+            }
+
+        } catch (error) {
+            console.error("Erro ao editar:", error);
+        }
+    };
+
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            atualizarDados();
+        }
+    };
+
     return (
 
         <div>
@@ -90,11 +125,13 @@ export function AreasEntregaPage() {
 
                         <span className="text-input-area-entrega">Raio de entrega</span>
 
-                        <select name="Categoria" className="input-area-entrega">
-                            <option></option>
-                            <option>teste</option>
-                            <option>teste</option>
-                        </select>
+                        <input
+                            type="text"
+                            className="input-area-entrega"
+                            onKeyUp={handleKeyPress}
+                            value={raioEntrega}
+                            onChange={(event) => setRaioEntrega(event.target.value)}
+                        />
 
                     </div>
 
