@@ -1,0 +1,57 @@
+.card-pedido {
+    display: grid;
+    width: 80%;
+    height: 350px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fdfdfd;
+    box-shadow: 2px 2px 8px#AFACAB;
+    grid-template-rows: 10% 7% 7% 10% 10% 40% 14%;
+}
+
+.nomeCliente {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.num_pedido {
+    color: #606060;
+}
+
+.endereco_cliente {
+    color: #606060;
+}
+
+.text-status-pedido {
+    color: #606060;
+    font-weight: 200;
+    align-items: center;
+    display: flex;
+}
+
+.status-atual-pedido {
+    color: #276D15;
+    font-weight: 700;
+    font-size: 1.2rem;
+    align-items: center;
+    display: flex;
+}
+
+.btns-card-pedido {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10%;
+}
+
+.btn-detalhes,
+.btn-att-status {
+    height: 40px;
+    width: 150px;
+    color: #FFF;
+    border: none;
+    border-radius: 50px;
+    background-color: #276D15;
+    font-size: 1rem;
+    font-weight: 200;
+}

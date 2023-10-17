@@ -104,24 +104,8 @@
   border: 3px dotted #b0aeae;
   display: flex;
   align-self: center;
-  box-shadow: 2px 2px 8px#AFACAB;
+  box-shadow: 2px 2px 8px rgb(0, 0, 0, 0.7);
 }
-/* 
-.input-modal-img{
-  height: 350px;
-  border-radius: 15px;
-  border: 3px dotted #b0aeae;
-  box-shadow: 2px 2px 8px#AFACAB;
-}
-
-.imagem-preview {
-  max-width: 350px;
-  max-height: 350px;
-  border-radius: 15px;
-  border: 3px dotted #b0aeae;
-  box-shadow: 2px 2px 8px #AFACAB;
-  margin-top: 10px;
-} */
 
 .inputs-modal-left{
   grid-area: inputs;

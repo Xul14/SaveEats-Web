@@ -22,6 +22,33 @@ export function AreasEntregaPage() {
     const [openModal, setOpenModal] = useState(false)
     const [raioEntrega, setRaioEntrega] = useState('')
 
+    // function LocationTracker() {
+        useEffect(() => {
+          const success = (pos) => {
+            console.log('Latitude:', pos.coords.latitude);
+            console.log('Longitude:', pos.coords.longitude);
+          };
+      
+          const error = (err) => {
+            console.error('Erro ao obter localização:', err);
+          };
+      
+          const options = {
+            enableHighAccuracy: true,
+            timeout: 5000,
+          };
+      
+          const watchID = navigator.geolocation.watchPosition(success, error, options);
+      
+          // Certifique-se de parar a observação quando o componente for desmontado
+          return () => {
+            navigator.geolocation.clearWatch(watchID);
+          };
+        }, []);
+      
+    //     return null; // Este componente não renderiza nada na tela
+    //   }
+
     useEffect(() => {
         async function areaEntregaData() {
             try {

@@ -110,7 +110,6 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado, produtoEm
   // Post de um novo produto
   const handleCreateProduto = async () => {
     console.log(novoProduto);
-    console.log(produtoEmEdicao.id_status_produto);
 
     if (isEditing) {
 
