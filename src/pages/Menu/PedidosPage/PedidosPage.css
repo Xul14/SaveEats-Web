@@ -81,8 +81,11 @@
 
 .container-cards-pedido {
     width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
+    height: 100vh;
     padding: 20px;
+    display: flex;
+    overflow-y: auto;
+    gap: 50px;
+    align-items: center;
+    flex-direction: column;
 }

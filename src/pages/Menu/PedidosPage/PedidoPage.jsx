@@ -1,5 +1,8 @@
 //Import React
-import React from "react";
+import React, { useState, useEffect } from "react";
+
+//Import Axios para integração
+import axios from 'axios'
 
 //Import css e components
 import "./PedidosPage.css"
@@ -8,6 +11,24 @@ import { HeaderPages } from "../../../components/HeaderPages/Header";
 import { CardPedidos } from "../../../components/CardPedidos/CardPedidos";
 
 export function PedidosPage() {
+
+    const [pedidos, setPedidos] = useState([]);
+
+    //GET dos dados do pedido
+    useEffect(() => {
+        async function getDetailsPedido() {
+            try {
+                const response = await axios.get("http://localhost:8080/v1/saveeats/detalhes/pedido")
+                const responsePedidos = response.data.detalhes_do_pedido;
+                setPedidos(responsePedidos);
+                console.log(responsePedidos);
+            } catch (error) {
+                console.log('Erro ao pegar os dados:', error);
+            }
+        }
+        getDetailsPedido()
+    }, [])
+
     return (
         <div>
             <div className="container-pedidos-page">
@@ -46,9 +67,16 @@ export function PedidosPage() {
                     <span className="text-pedidos-recentes">Pedidos Recentes</span>
 
                     <div className="container-cards-pedido">
-                        <CardPedidos></CardPedidos>
+                        {pedidos.map((pedidos, index) => (
+                            <CardPedidos
+                                key={index}
+                                id={pedidos.id_pedido}
+                                nomeCliente={pedidos.nome_cliente}
+                                numPedido={pedidos.numero_pedido}
+                                statusPedido={pedidos.status_pedido}
+                            />
+                        ))}
                     </div>
-
                 </div>
             </div>
         </div>
