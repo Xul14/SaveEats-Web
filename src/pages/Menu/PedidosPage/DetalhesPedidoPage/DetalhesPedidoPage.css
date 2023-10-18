@@ -1,0 +1,36 @@
+.container-detalhes-pedido {
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 20% 80%;
+}
+
+.container-left-detalhes-pedido {
+    display: grid;
+    grid-template-rows: 15% 85%;
+    background-color: #F6F8F4;
+}
+
+.container-rigth-detalhes-pedido {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 15% 25% 7% 65%;
+    justify-items: center;
+}
+
+.container-status-pedido {
+    width: 95%;
+    height: 90%;
+    display: grid;
+    grid-template-rows: 50% 20% 30%;
+    background-color: #F4F4F4;
+    margin-top: 2rem;
+}
+
+.title-status-pedido {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    font-size: 1.5rem;
+}
