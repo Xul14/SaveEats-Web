@@ -24,7 +24,6 @@
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
     align-items: center;
-    gap: 2%;
 }
 
 .pesquisas-container {
@@ -77,6 +76,7 @@
     align-items: center;
     padding-left: 4vw;
     font-weight: 400;
+    width: 100%;
 }
 
 .container-cards-pedido {
