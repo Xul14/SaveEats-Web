@@ -10,7 +10,7 @@ import relogio from './img/clock.png'
 import check_cinza from './img/check-cinza.png'
 import check_verde from './img/check-verde.png'
 
-export function CardPedidos({ idPedido, nomeCliente, numPedido, statusPedido }) {
+export function CardPedidos({ idPedido, nomeCliente, numPedido, statusPedido, previsaoEntrega }) {
 
     const [status, setStatus] = useState(statusPedido);
     const statuses = ["Aguardando Confirmação", "Preparando Pedido", "Pedido a Caminho", "Pedido Entregue"];
@@ -19,8 +19,8 @@ export function CardPedidos({ idPedido, nomeCliente, numPedido, statusPedido }) 
         const currentIndex = statuses.indexOf(status);
 
         if (currentIndex === statuses.length - 1) {
-            // setStatus(statuses[0]);
-            console.log("Pedido Entregue");
+            setStatus(statuses[0]);
+            // console.log("Pedido Entregue");
         } else {
             setStatus(statuses[currentIndex + 1]);
         }
@@ -36,7 +36,7 @@ export function CardPedidos({ idPedido, nomeCliente, numPedido, statusPedido }) 
 
                     <div className="previsao-entrega-img">
                         <img src={relogio} alt="Relógio" className="img-relogio" />
-                        <span className="previsao-entrega">18:00 - 19:00</span>
+                        <span className="previsao-entrega">{previsaoEntrega}</span>
                     </div>
                 </div>
 

@@ -74,6 +74,7 @@ export function PedidosPage() {
                                 nomeCliente={pedidos.nome_cliente}
                                 numPedido={pedidos.numero_pedido}
                                 statusPedido={pedidos.status_pedido}
+                                previsaoEntrega={pedidos.previsao_entrega}
                             />
                         ))}
                     </div>
