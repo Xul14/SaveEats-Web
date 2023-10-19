@@ -1,0 +1,71 @@
+.container-status-pedido {
+    width: 95%;
+    height: 90%;
+    display: grid;
+    grid-template-rows: 50% 20% 30%;
+    background-color: #F4F4F4;
+    margin-top: 2rem;
+    border-radius: 10px;
+}
+
+.title-status-pedido {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: .5rem;
+    font-size: 1.8rem;
+    padding-left:3rem;
+}
+
+.text-despachado {
+    color: #276D15;
+}
+
+.container-icon-status {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3.2rem;
+}
+
+.icon-status-primeiro {
+    color: #488A27;
+}
+
+.icon-status-segundo {
+    color: #488A27;
+}
+
+.icon-status-terceiro {
+    color: #488A27;
+}
+
+.icon-status-quarto {
+    color: #78797D;
+}
+
+.fa-check-circle {
+    font-size: 3rem;
+}
+
+.linha-status {
+    width: 28rem;
+    height: 2rem;
+}
+
+.container-detalhes-status-pedido {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 28.5rem;
+}
+
+.container-passo-a-passo-status-pedido {
+    display: flex;
+    flex-direction: column;
+}
