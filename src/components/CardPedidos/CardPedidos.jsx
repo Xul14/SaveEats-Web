@@ -10,10 +10,33 @@ import relogio from './img/clock.png'
 import check_cinza from './img/check-cinza.png'
 import check_verde from './img/check-verde.png'
 
-export function CardPedidos({ idPedido, nomeCliente, numPedido, statusPedido, previsaoEntrega }) {
+export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statusPedido, previsaoEntrega }) {
 
-    const [status, setStatus] = useState(statusPedido);
     const statuses = ["Aguardando Confirmação", "Preparando Pedido", "Pedido a Caminho", "Pedido Entregue"];
+    const [enderecoFormatado, setEnderecoFormatado] = useState("");
+    const [status, setStatus] = useState(statusPedido);
+
+    //GET endereço cliente
+    useEffect(() => {
+        async function getEnderecoCliente() {
+            try {
+                const response = await axios.get(`http://localhost:8080/v1/saveeats/endereco/cliente/idcliente/${idCliente}`)
+                const responseEndereco = response.data.endereco_cliente;
+                console.log(responseEndereco);
+                
+                if (responseEndereco && responseEndereco.length > 0) {
+                    const endereco = responseEndereco[0];
+                    const enderecoFormatado = `Entrega em: ${endereco.rua_cliente} ${endereco.numero_endereco_cliente}, ${endereco.bairro_cliente}, ${endereco.nome_cidade} - ${endereco.nome_estado}`;
+                    setEnderecoFormatado(enderecoFormatado);
+                }
+
+            } catch (error) {
+                console.log('Erro ao pegar os dados:', error);
+            }
+        }
+        getEnderecoCliente()
+    }, [idCliente])
+
 
     const updateStatus = () => {
         const currentIndex = statuses.indexOf(status);
@@ -26,6 +49,10 @@ export function CardPedidos({ idPedido, nomeCliente, numPedido, statusPedido, pr
         }
     };
 
+    const onClickDetalhesPedido = () => {
+        console.log(idPedido);
+        localStorage.setItem("idPedido", idPedido)
+    }
 
     return (
         <>
@@ -45,7 +72,7 @@ export function CardPedidos({ idPedido, nomeCliente, numPedido, statusPedido, pr
                     <span className="previsao-entrega-text">Previsão de entrega</span>
                 </div>
 
-                <span className="endereco_cliente">Entrega em: Rua Elton Silva 95, Jandira - SP</span>
+                <span className="endereco_cliente">{enderecoFormatado}</span>
 
                 <span className="text-status-pedido">Status Pedido</span>
 
@@ -97,7 +124,7 @@ export function CardPedidos({ idPedido, nomeCliente, numPedido, statusPedido, pr
                 </div>
 
                 <div className="btns-card-pedido">
-                    <button className="btn-detalhes">Detalhes Pedido</button>
+                    <button className="btn-detalhes" onClick={onClickDetalhesPedido}>Detalhes Pedido</button>
                     <button className="btn-att-status" onClick={updateStatus} disabled={status === "Pedido Entregue"}>Atualizar status</button>
                 </div>
             </div>

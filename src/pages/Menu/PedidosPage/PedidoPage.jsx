@@ -13,21 +13,51 @@ import { CardPedidos } from "../../../components/CardPedidos/CardPedidos";
 export function PedidosPage() {
 
     const [pedidos, setPedidos] = useState([]);
+    const [termoPesquisa, setTermoPesquisa] = useState(" ");
+    const idRestaurante = localStorage.getItem("id");
 
     //GET dos dados do pedido
-    useEffect(() => {
-        async function getDetailsPedido() {
-            try {
-                const response = await axios.get("http://localhost:8080/v1/saveeats/detalhes/pedido")
-                const responsePedidos = response.data.detalhes_do_pedido;
-                setPedidos(responsePedidos);
-                console.log(responsePedidos);
-            } catch (error) {
-                console.log('Erro ao pegar os dados:', error);
-            }
+    // useEffect(() => {
+    const getDetailsPedido = async () => {
+        try {
+            const response = await axios.get(`http://localhost:8080/v1/saveeats/detalhes/pedido/idRestaurante/${idRestaurante}`)
+            const responsePedidos = response.data.detalhes_do_pedido;
+            setPedidos(responsePedidos);
+            console.log(responsePedidos);
+
+        } catch (error) {
+            console.log('Erro ao pegar os dados:', error);
         }
-        getDetailsPedido()
-    }, [])
+    }
+    //     getDetailsPedido()
+    // }, [])
+
+    // Consumo da API para buscar produtos com base no termo de pesquisa
+    const buscarPedido = async () => {
+        try {
+            const response = await axios.get(`http://localhost:8080/v1/saveeats/detalhes/pedido/idRestaurante/${idRestaurante}/numeroPedido/${termoPesquisa}`);
+            const data = response.data.detalhes_do_pedido;
+            setPedidos(data);
+        } catch (error) {
+            console.error("Erro ao buscar pedidos:", error);
+        }
+    };
+
+    useEffect(() => {
+        getDetailsPedido();
+    }, []);
+
+    const handlePesquisaChange = (e) => {
+        console.log(termoPesquisa);
+        setTermoPesquisa(e.target.value);
+        buscarPedido();
+    };
+
+    useEffect(() => {
+        if (termoPesquisa.trim() === "") {
+            getDetailsPedido();
+        }
+    }, [termoPesquisa]);
 
     return (
         <div>
@@ -45,7 +75,12 @@ export function PedidosPage() {
 
                         <div className="pesquisas-container">
                             <span className="span-inputs">Número do pedido</span>
-                            <input className="input-buscar-pedido" type="search" />
+                            <input
+                                className="input-buscar-pedido"
+                                type="search"
+                                value={termoPesquisa}
+                                onChange={handlePesquisaChange}
+                            />
                         </div>
 
                         <div className="pesquisas-container">
@@ -67,16 +102,24 @@ export function PedidosPage() {
                     <span className="text-pedidos-recentes">Pedidos Recentes</span>
 
                     <div className="container-cards-pedido">
-                        {pedidos.map((pedidos, index) => (
-                            <CardPedidos
-                                key={index}
-                                id={pedidos.id_pedido}
-                                nomeCliente={pedidos.nome_cliente}
-                                numPedido={pedidos.numero_pedido}
-                                statusPedido={pedidos.status_pedido}
-                                previsaoEntrega={pedidos.previsao_entrega}
-                            />
-                        ))}
+                        {pedidos ? (
+                            pedidos.map((pedidos, index) => (
+
+                                <CardPedidos
+                                    key={index}
+                                    idPedido={pedidos.id_pedido}
+                                    idCliente={pedidos.id_cliente}
+                                    nomeCliente={pedidos.nome_cliente}
+                                    numPedido={pedidos.numero_pedido}
+                                    statusPedido={pedidos.status_pedido}
+                                    previsaoEntrega={pedidos.previsao_entrega}
+                                />
+                            ))
+                        ) : (
+                            <div className="nenhuma-area-entrega">
+                                <p>Você não tem nenhum pedido até o momento.</p>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
