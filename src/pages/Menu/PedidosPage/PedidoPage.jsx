@@ -13,24 +13,19 @@ import { CardPedidos } from "../../../components/CardPedidos/CardPedidos";
 export function PedidosPage() {
 
     const [pedidos, setPedidos] = useState([]);
-    const [termoPesquisa, setTermoPesquisa] = useState(" ");
+    const [termoPesquisa, setTermoPesquisa] = useState("");
     const idRestaurante = localStorage.getItem("id");
 
-    //GET dos dados do pedido
-    // useEffect(() => {
     const getDetailsPedido = async () => {
         try {
             const response = await axios.get(`http://localhost:8080/v1/saveeats/detalhes/pedido/idRestaurante/${idRestaurante}`)
             const responsePedidos = response.data.detalhes_do_pedido;
             setPedidos(responsePedidos);
             console.log(responsePedidos);
-
         } catch (error) {
             console.log('Erro ao pegar os dados:', error);
         }
     }
-    //     getDetailsPedido()
-    // }, [])
 
     // Consumo da API para buscar produtos com base no termo de pesquisa
     const buscarPedido = async () => {
@@ -43,15 +38,14 @@ export function PedidosPage() {
         }
     };
 
-    useEffect(() => {
-        getDetailsPedido();
-    }, []);
-
     const handlePesquisaChange = (e) => {
-        console.log(termoPesquisa);
         setTermoPesquisa(e.target.value);
         buscarPedido();
     };
+
+    useEffect(() => {
+        buscarPedido();
+    }, [termoPesquisa]);
 
     useEffect(() => {
         if (termoPesquisa.trim() === "") {
