@@ -1,18 +1,22 @@
-.menus {
+.menu-item {
+    height: 90px;
+    gap: 1.25rem;
     display: flex;
-    align-items: center;
-    gap: 1rem;
-    transition: .2s;
+    font-weight: 200;
+    font-weight: 600;
+    color: #818080;
+    /* color: #3f3f3fcc; */
+    font-size: 1.5rem;
+    padding-left: 30px;
+    align-items: flex-end;
+    text-decoration: none;
 }
 
-.menus:hover {
+.menu-item.active {
     color: #295F1B;
 }
 
-img {
+.menu-icon,
+.menu-text {
     height: 2rem;
-}
-
-span {
-    font-size: 1.5rem;
 }

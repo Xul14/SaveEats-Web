@@ -4,17 +4,65 @@ import React, { useState, useEffect } from "react";
 //Import Axios para integração
 import axios from 'axios'
 
-//Import css
+//Import css, imgs, components e outros
 import './CardPedidos.css'
 import relogio from './img/clock.png'
 import check_cinza from './img/check-cinza.png'
 import check_verde from './img/check-verde.png'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 
 export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statusPedido, previsaoEntrega }) {
 
-    const statuses = ["Aguardando Confirmação", "Preparando Pedido", "Pedido a Caminho", "Pedido Entregue"];
     const [enderecoFormatado, setEnderecoFormatado] = useState("");
-    const [status, setStatus] = useState(statusPedido);
+    // const [status, setStatus] = useState(statusPedido);
+
+    const allowedStatusSequence = [1, 2, 3, 5];
+    const [currentStatus, setCurrentStatus] = useState(statusPedido);
+    const [checkColor, setCheckColor] = useState("gray");
+
+    const statuses = [
+        "Aguardando Confirmação",
+        "Preparando Pedido",
+        "Pedido a Caminho",
+        "Pedido Entregue"
+    ];
+
+    const updateStatus = async () => {
+        const currentIndex = allowedStatusSequence.indexOf(currentStatus);
+        console.log(currentIndex);
+        console.log(currentStatus);
+
+        if (currentIndex < 0 || currentIndex === allowedStatusSequence.length - 1) {
+            // O status atual não está na sequência permitida ou já está no status final (Pedido Entregue).
+            console.log("vazio");
+            return;
+        }
+
+        const newStatus = allowedStatusSequence[currentIndex + 1];
+
+        try {
+        console.log("entrou 2");
+
+            // Fazer uma solicitação para atualizar o status
+            const response = await axios.put('http://localhost:8080/v1/saveeats/status-pedido', {
+                id_pedido: idPedido,
+                id_novo_status_pedido: newStatus,
+            });
+
+            if (response.status === 200) {
+                // Atualização bem-sucedida, atualize o status local.
+                setCurrentStatus(newStatus);
+                setCheckColor("green");
+            }
+        } catch (error) {
+            console.error("Erro ao atualizar o status: ", error);
+            // Lógica de tratamento de erro, se necessário.
+        }
+    };
+
+
+
 
     //GET endereço cliente
     useEffect(() => {
@@ -23,7 +71,7 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
                 const response = await axios.get(`http://localhost:8080/v1/saveeats/endereco/cliente/idcliente/${idCliente}`)
                 const responseEndereco = response.data.endereco_cliente;
                 console.log(responseEndereco);
-                
+
                 if (responseEndereco && responseEndereco.length > 0) {
                     const endereco = responseEndereco[0];
                     const enderecoFormatado = `Entrega em: ${endereco.rua_cliente} ${endereco.numero_endereco_cliente}, ${endereco.bairro_cliente}, ${endereco.nome_cidade} - ${endereco.nome_estado}`;
@@ -38,16 +86,16 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
     }, [idCliente])
 
 
-    const updateStatus = () => {
-        const currentIndex = statuses.indexOf(status);
+    // const updateStatus = () => {
+    //     const currentIndex = statuses.indexOf(status);
 
-        if (currentIndex === statuses.length - 1) {
-            setStatus(statuses[0]);
-            // console.log("Pedido Entregue");
-        } else {
-            setStatus(statuses[currentIndex + 1]);
-        }
-    };
+    //     if (currentIndex === statuses.length - 1) {
+    //         setStatus(statuses[0]);
+    //         // console.log("Pedido Entregue");
+    //     } else {
+    //         setStatus(statuses[currentIndex + 1]);
+    //     }
+    // };
 
     const onClickDetalhesPedido = () => {
         console.log(idPedido);
@@ -76,21 +124,42 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
 
                 <span className="text-status-pedido">Status Pedido</span>
 
-                <span className="status-atual-pedido">{status}</span>
+                <span className="status-atual-pedido">{currentStatus}</span>
+                {/* <span className="status-atual-pedido">{status}</span> */}
                 {/* <span className="status-atual-pedido">{statusPedido}</span> */}
 
                 <div className="container-time-line">
                     <div className="icons-line">
-                        <img src={check_verde} alt="" className="img-check" />
+                        {/* <img src={check_verde} alt="" className="img-check" /> */}
+                        <FontAwesomeIcon
+                            icon={faCircleCheck}
+                            className="check-icon"
+                            style={{ color: checkColor }}
+                        />
                         <p className="linha">______________________________</p>
 
-                        <img src={check_verde} alt="" className="img-check" />
+                        {/* <img src={check_verde} alt="" className="img-check" /> */}
+                        <FontAwesomeIcon
+                            icon={faCircleCheck}
+                            className="check-icon"
+                            style={{ color: checkColor }}
+                        />
                         <p className="linha">______________________________</p>
 
-                        <img src={check_cinza} alt="" className="img-check" />
+                        {/* <img src={check_cinza} alt="" className="img-check" /> */}
+                        <FontAwesomeIcon
+                            icon={faCircleCheck}
+                            className="check-icon"
+                            style={{ color: checkColor }}
+                        />
                         <p className="linha">______________________________</p>
 
-                        <img src={check_cinza} alt="" className="img-check" />
+                        <FontAwesomeIcon
+                            icon={faCircleCheck}
+                            className="check-icon"
+                            style={{ color: checkColor }}
+                        />
+                        {/* <img src={check_cinza} alt="" className="img-check" /> */}
                     </div>
 
                     <div className="status-hora">
@@ -125,7 +194,9 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
 
                 <div className="btns-card-pedido">
                     <button className="btn-detalhes" onClick={onClickDetalhesPedido}>Detalhes Pedido</button>
-                    <button className="btn-att-status" onClick={updateStatus} disabled={status === "Pedido Entregue"}>Atualizar status</button>
+                    {/* <button className="btn-att-status" onClick={updateStatus} disabled={!allowedStatusSequence.includes(currentStatus)}>Atualizar status</button> */}
+                    <button className="btn-att-status" onClick={updateStatus} >Atualizar status</button>
+                    {/* <button className="btn-att-status" onClick={updateStatus} disabled={status === "Pedido Entregue"}>Atualizar status</button> */}
                 </div>
             </div>
 

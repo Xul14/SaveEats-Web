@@ -5,11 +5,12 @@
     grid-template-columns: 20% 80%;
 }
 
-.container-left-cardapio {
+/* .container-left-cardapio {
     display: grid;
     grid-template-rows: 15% 85%;
-    background-color: #F6F8F4;
-}
+    background-color: #f2fee6;
+    background-color: #9bbc92;
+} */
 
 .container-rigth-cardapio {
     width: 100%;
