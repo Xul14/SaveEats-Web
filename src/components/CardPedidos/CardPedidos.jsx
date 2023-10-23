@@ -54,6 +54,16 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
         }
     };
 
+    // axios.get(`http://localhost:8080/v1/saveeats/status/pedido/id/${idPedido}`)
+    //     .then(response => {
+    //         if (response.data && response.data.status_pedido) {
+    //             setCurrentStatus(response.data.status_pedido);
+    //         }
+    //     })
+    //     .catch(error => {
+    //         console.error("Erro ao obter o status do pedido: ", error);
+    //     });
+
     //GET endereço cliente
     useEffect(() => {
         async function getEnderecoCliente() {
@@ -74,18 +84,6 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
         }
         getEnderecoCliente()
     }, [idCliente])
-
-
-    // const updateStatus = () => {
-    //     const currentIndex = statuses.indexOf(status);
-
-    //     if (currentIndex === statuses.length - 1) {
-    //         setStatus(statuses[0]);
-    //         // console.log("Pedido Entregue");
-    //     } else {
-    //         setStatus(statuses[currentIndex + 1]);
-    //     }
-    // };
 
     const onClickDetalhesPedido = () => {
         console.log(idPedido);
@@ -115,8 +113,9 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
                 <span className="text-status-pedido">Status Pedido</span>
 
                 <span className="status-atual-pedido">{statuses[currentStatus - 1]}</span>
-                {/* <span className="status-atual-pedido">{status}</span> */}
-                {/* <span className="status-atual-pedido">{statusPedido}</span> */}
+                {/* <span className="status-atual-pedido">
+                    {currentStatus !== undefined ? statuses[currentStatus - 1] : "Carregando..."}
+                </span> */}
 
                 <div className="container-time-line">
 
