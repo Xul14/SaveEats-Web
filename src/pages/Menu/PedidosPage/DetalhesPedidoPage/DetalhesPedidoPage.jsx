@@ -6,7 +6,9 @@ import "./DetalhesPedidoPage.css"
 import { MenuNavigation } from "../../../../components/MenuNavigation/MenuNavigation";
 import { HeaderDetalhesPedido } from "../../../../components/HeaderDetalhesPedido/HeaderDetalhesPedido";
 import { StatusPedido } from "../../../../components/StatusPedido/StatusPedido";
-import produtos from "../DetalhesPedidoPage/img/coxinha.jpg"
+import { ProdutosPedido } from "../../../../components/ProdutosPedidos/ProdutosPedido";
+import { ButtonDetalhesPedido } from "../../../../components/ButtonDetalhesPedido/ButtonDetalhesPedido";
+import chat from "../DetalhesPedidoPage/img/chat.png"
 
 export function DetalhesPedidoPage() {
     return (
@@ -48,12 +50,29 @@ export function DetalhesPedidoPage() {
 
                     </div>
 
-                    <div className="container-detalhes-produtos">
+                    <ProdutosPedido></ProdutosPedido>
 
-                        <img src={produtos} alt="Produtos" className="quantidade-produto" />
+                    <div className="container-botoes-chat">
+
+                        <div className="container-botoes-detalhes-pedido">
+
+                            <ButtonDetalhesPedido text={"Cancelar pedido"} background={"#FE9112"}></ButtonDetalhesPedido>
+
+                            <ButtonDetalhesPedido text={"Atualizar status"} background={"#276D15"}></ButtonDetalhesPedido>
+
+                            <ButtonDetalhesPedido text={"Confirmar pedido"} background={"#276D15"}></ButtonDetalhesPedido>
+
+                        </div>
+
+
+                        <div className="container-chat">
+
+                            <img src={chat} alt="Imagem Chat" className="chat" />
+
+                        </div>
+
 
                     </div>
-
 
                 </div>
 

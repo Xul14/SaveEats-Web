@@ -1,0 +1,11 @@
+.botao-detalhes-pedido {
+    width: 18rem;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 100px;
+    font-size: 1.5rem;
+    color: #FFF;
+}
