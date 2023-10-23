@@ -14,13 +14,6 @@ import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 
 export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statusPedido, previsaoEntrega }) {
 
-    const [enderecoFormatado, setEnderecoFormatado] = useState("");
-    // const [status, setStatus] = useState(statusPedido);
-
-    const allowedStatusSequence = [1, 2, 3, 5];
-    const [currentStatus, setCurrentStatus] = useState(statusPedido);
-    const [checkColor, setCheckColor] = useState("gray");
-
     const statuses = [
         "Aguardando Confirmação",
         "Preparando Pedido",
@@ -28,41 +21,38 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
         "Pedido Entregue"
     ];
 
+    const [enderecoFormatado, setEnderecoFormatado] = useState("");
+    const allowedStatusSequence = [1, 2, 3, 5];
+    const [currentStatus, setCurrentStatus] = useState(statusPedido);
+    const [checkColor, setCheckColor] = useState(localStorage.getItem(`pedido_atualizado_${idPedido}`) ? "green" : "gray");
+
     const updateStatus = async () => {
         const currentIndex = allowedStatusSequence.indexOf(currentStatus);
-        console.log(currentIndex);
-        console.log(currentStatus);
-
-        if (currentIndex < 0 || currentIndex === allowedStatusSequence.length - 1) {
-            // O status atual não está na sequência permitida ou já está no status final (Pedido Entregue).
-            console.log("vazio");
-            return;
-        }
-
         const newStatus = allowedStatusSequence[currentIndex + 1];
 
         try {
-        console.log("entrou 2");
+            console.log("entrou 2");
+            console.log(newStatus);
 
-            // Fazer uma solicitação para atualizar o status
             const response = await axios.put('http://localhost:8080/v1/saveeats/status-pedido', {
                 id_pedido: idPedido,
                 id_novo_status_pedido: newStatus,
             });
 
             if (response.status === 200) {
-                // Atualização bem-sucedida, atualize o status local.
                 setCurrentStatus(newStatus);
                 setCheckColor("green");
+                localStorage.setItem(`pedido_atualizado_${idPedido}`, true);
+
+                console.log("atualizou");
+            } else {
+                console.log("error");
             }
         } catch (error) {
             console.error("Erro ao atualizar o status: ", error);
             // Lógica de tratamento de erro, se necessário.
         }
     };
-
-
-
 
     //GET endereço cliente
     useEffect(() => {
@@ -124,79 +114,33 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
 
                 <span className="text-status-pedido">Status Pedido</span>
 
-                <span className="status-atual-pedido">{currentStatus}</span>
+                <span className="status-atual-pedido">{statuses[currentStatus - 1]}</span>
                 {/* <span className="status-atual-pedido">{status}</span> */}
                 {/* <span className="status-atual-pedido">{statusPedido}</span> */}
 
                 <div className="container-time-line">
+
                     <div className="icons-line">
-                        {/* <img src={check_verde} alt="" className="img-check" /> */}
-                        <FontAwesomeIcon
-                            icon={faCircleCheck}
-                            className="check-icon"
-                            style={{ color: checkColor }}
-                        />
-                        <p className="linha">______________________________</p>
-
-                        {/* <img src={check_verde} alt="" className="img-check" /> */}
-                        <FontAwesomeIcon
-                            icon={faCircleCheck}
-                            className="check-icon"
-                            style={{ color: checkColor }}
-                        />
-                        <p className="linha">______________________________</p>
-
-                        {/* <img src={check_cinza} alt="" className="img-check" /> */}
-                        <FontAwesomeIcon
-                            icon={faCircleCheck}
-                            className="check-icon"
-                            style={{ color: checkColor }}
-                        />
-                        <p className="linha">______________________________</p>
-
-                        <FontAwesomeIcon
-                            icon={faCircleCheck}
-                            className="check-icon"
-                            style={{ color: checkColor }}
-                        />
-                        {/* <img src={check_cinza} alt="" className="img-check" /> */}
+                        {allowedStatusSequence.map((status, index) => (
+                            <React.Fragment key={index}>
+                                <FontAwesomeIcon icon={faCircleCheck} className="check-icon" style={{ color: index < currentStatus ? "green" : "gray" }} />
+                                {index < allowedStatusSequence.length - 1 && <p className="linha">______________________________</p>}
+                            </React.Fragment>
+                        ))}
                     </div>
 
                     <div className="status-hora">
-                        <div className="status-hora-div">
-                            <p>Pedido Confirmado</p>
-                            <p className="hr">17:45</p>
-                        </div>
-
-                        <p></p>
-
-                        <div className="status-hora-div">
-                            <p>Pedido em preparo</p>
-                            <p className="hr">17:45</p>
-                        </div>
-
-                        <p></p>
-
-                        <div className="status-hora-div">
-                            <p>Saiu para entrega</p>
-                            <p className="hr">17:45</p>
-                        </div>
-
-                        <p></p>
-
-                        <div className="status-hora-div">
-                            <p>Pedido Entregue</p>
-                            <p className="hr">17:45</p>
-                        </div>
-
+                        {statuses.map((status, index) => (
+                            <div key={index} className="status-hora-div">
+                                <p>{status}</p>
+                            </div>
+                        ))}
                     </div>
                 </div>
 
                 <div className="btns-card-pedido">
                     <button className="btn-detalhes" onClick={onClickDetalhesPedido}>Detalhes Pedido</button>
-                    {/* <button className="btn-att-status" onClick={updateStatus} disabled={!allowedStatusSequence.includes(currentStatus)}>Atualizar status</button> */}
-                    <button className="btn-att-status" onClick={updateStatus} >Atualizar status</button>
-                    {/* <button className="btn-att-status" onClick={updateStatus} disabled={status === "Pedido Entregue"}>Atualizar status</button> */}
+                    <button className="btn-att-status" onClick={updateStatus} disabled={currentStatus === 4}>Atualizar status</button>
                 </div>
             </div>
 
