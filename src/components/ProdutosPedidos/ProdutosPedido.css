@@ -1,0 +1,33 @@
+.container-detalhes-produtos {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding-left: 3.5rem;
+}
+
+.quantidade-produto {
+    width: 8rem;
+    height: 8rem;
+    border-radius: 100px;
+}
+
+.container-nome-unidade-produto {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    font-size: 1.5rem;
+    font-weight: 300;
+}
+
+.container-unidade-produto-detalhes-pedido {
+    display: flex;
+    gap: 1rem;
+}
+
+.quantiade-produto {
+    font-size: 1.5rem;
+    font-weight: 300;
+    padding-left: 6.5rem;
+}

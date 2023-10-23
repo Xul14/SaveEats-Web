@@ -1,0 +1,80 @@
+.container-detalhes-pedido {
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 20% 80%;
+}
+
+.container-left-detalhes-pedido {
+    display: grid;
+    grid-template-rows: 15% 85%;
+    background-color: #F6F8F4;
+}
+
+.container-rigth-detalhes-pedido {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 15% 25% 20% 30% 10%;
+    justify-items: center;
+}
+
+.container-detalhes-pedido-total-pagamento {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5rem;
+    padding-left: 3rem;
+}
+
+.title-despachado {
+    font-size: 2rem;
+    color: #143A0B;
+}
+
+.container-total-pedido {
+    display: flex;
+    gap: 42rem;
+    font-size: 1.5rem;
+    color: #3F3F3F
+}
+
+.container-pagamento-entrega {
+    display: flex;
+    gap: 24rem;
+    font-size: 1.5rem;
+    color: #3F3F3F
+}
+
+.container-botoes-chat {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 92% 8%;
+    align-items: center;
+}
+
+.container-botoes-detalhes-pedido {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10rem;
+}
+
+.container-chat {
+    width: 5rem;
+    height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100px;
+    background-color: #29601a;
+}
+
+.chat {
+    height: 3rem;
+}
