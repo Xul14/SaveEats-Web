@@ -1,5 +1,6 @@
 //Import React
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom'
 
 //Import Axios para integração
 import axios from 'axios'
@@ -11,18 +12,20 @@ import check_cinza from './img/check-cinza.png'
 import check_verde from './img/check-verde.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import { StatusPedido } from "../StatusPedido/StatusPedido";
 
 export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statusPedido, previsaoEntrega }) {
 
     const statuses = [
-        "Aguardando Confirmação",
+        "Pedido Confirmado",
         "Preparando Pedido",
         "Pedido a Caminho",
         "Pedido Entregue"
     ];
-
+    // console.log(statusPedido);
+    const navigate = useNavigate()
+    const allowedStatusSequence = [9, 2, 3, 5];
     const [enderecoFormatado, setEnderecoFormatado] = useState("");
-    const allowedStatusSequence = [1, 2, 3, 5];
     const [currentStatus, setCurrentStatus] = useState(statusPedido);
     const [checkColor, setCheckColor] = useState(localStorage.getItem(`pedido_atualizado_${idPedido}`) ? "green" : "gray");
 
@@ -31,8 +34,6 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
         const newStatus = allowedStatusSequence[currentIndex + 1];
 
         try {
-            console.log("entrou 2");
-            console.log(newStatus);
 
             const response = await axios.put('http://localhost:8080/v1/saveeats/status-pedido', {
                 id_pedido: idPedido,
@@ -44,25 +45,13 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
                 setCheckColor("green");
                 localStorage.setItem(`pedido_atualizado_${idPedido}`, true);
 
-                console.log("atualizou");
             } else {
                 console.log("error");
             }
         } catch (error) {
             console.error("Erro ao atualizar o status: ", error);
-            // Lógica de tratamento de erro, se necessário.
         }
     };
-
-    // axios.get(`http://localhost:8080/v1/saveeats/status/pedido/id/${idPedido}`)
-    //     .then(response => {
-    //         if (response.data && response.data.status_pedido) {
-    //             setCurrentStatus(response.data.status_pedido);
-    //         }
-    //     })
-    //     .catch(error => {
-    //         console.error("Erro ao obter o status do pedido: ", error);
-    //     });
 
     //GET endereço cliente
     useEffect(() => {
@@ -70,7 +59,6 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
             try {
                 const response = await axios.get(`http://localhost:8080/v1/saveeats/endereco/cliente/idcliente/${idCliente}`)
                 const responseEndereco = response.data.endereco_cliente;
-                console.log(responseEndereco);
 
                 if (responseEndereco && responseEndereco.length > 0) {
                     const endereco = responseEndereco[0];
@@ -88,6 +76,7 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
     const onClickDetalhesPedido = () => {
         console.log(idPedido);
         localStorage.setItem("idPedido", idPedido)
+        navigate("/menu/detalhes/pedido")
     }
 
     return (
@@ -112,10 +101,7 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
 
                 <span className="text-status-pedido">Status Pedido</span>
 
-                <span className="status-atual-pedido">{statuses[currentStatus - 1]}</span>
-                {/* <span className="status-atual-pedido">
-                    {currentStatus !== undefined ? statuses[currentStatus - 1] : "Carregando..."}
-                </span> */}
+                <span className="status-atual-pedido">{statuses[currentStatus - 1] || statusPedido.replace(";", "")}</span>
 
                 <div className="container-time-line">
 
@@ -126,6 +112,7 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
                                 {index < allowedStatusSequence.length - 1 && <p className="linha">______________________________</p>}
                             </React.Fragment>
                         ))}
+
                     </div>
 
                     <div className="status-hora">
