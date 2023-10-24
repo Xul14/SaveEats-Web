@@ -1,11 +1,34 @@
 //Import React
-import React from "react";
+import React, { useState, useEffect } from "react";
+
+//Import Axios para integração
+import axios from 'axios'
 
 //Import css e components
 import "./StatusPedido.css"
 import teste from "../StatusPedido/img/linha.png"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 
 export function StatusPedido() {
+
+    const idPedido = localStorage.getItem("idPedido");
+    const [pedido, setPedido] = useState([]);
+
+    useEffect(() => {
+        async function getDetailsPedido() {
+            try {
+                const response = await axios.get(`http://localhost:8080/v1/saveeats/detalhes/pedido/id/${idPedido}`)
+                const responsePedido = response.data.detalhes_do_pedido;
+                setPedido(responsePedido);
+                console.log(responsePedido);
+            } catch (error) {
+                console.log('Erro ao pegar os dados:', error);
+            }
+        }
+        getDetailsPedido()
+    }, [idPedido])
+
     return (
         <>
 
@@ -15,32 +38,32 @@ export function StatusPedido() {
 
                     <span className="text-status-detalhes-pedido">Status do pedido</span>
 
-                    <span className="text-despachado">Despachado</span>
+                    <span className="text-despachado">{pedido.status_pedido}</span>
 
                 </div>
 
                 <div className="container-icon-status">
 
                     <div className="icon-status-primeiro">
-                        <i class="fas fa-check-circle"></i>
+                        <FontAwesomeIcon icon={faCircleCheck} className="check-icon" />
                     </div>
 
                     <img src={teste} alt="" className="linha-status" />
 
                     <div className="icon-status-segundo">
-                        <i class="fas fa-check-circle"></i>
+                        <FontAwesomeIcon icon={faCircleCheck} className="check-icon" />
                     </div>
 
                     <img src={teste} alt="" className="linha-status" />
 
                     <div className="icon-status-terceiro">
-                        <i class="fas fa-check-circle"></i>
+                        <FontAwesomeIcon icon={faCircleCheck} className="check-icon" />
                     </div>
 
                     <img src={teste} alt="" className="linha-status" />
 
                     <div className="icon-status-quarto">
-                        <i class="fas fa-check-circle"></i>
+                        <FontAwesomeIcon icon={faCircleCheck} className="check-icon" />
                     </div>
 
                 </div>

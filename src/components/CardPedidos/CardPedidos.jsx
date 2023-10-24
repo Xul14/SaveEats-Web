@@ -72,10 +72,13 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
         }
         getEnderecoCliente()
     }, [idCliente])
-
+    
+    
     const onClickDetalhesPedido = () => {
-        console.log(idPedido);
+        console.log(enderecoFormatado);
         localStorage.setItem("idPedido", idPedido)
+        localStorage.setItem("statusPedido", statusPedido)
+        localStorage.setItem("enderecoCliente", enderecoFormatado)
         navigate("/menu/detalhes/pedido")
     }
 
