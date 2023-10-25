@@ -86,7 +86,7 @@ export function DetalhesPedidoPage() {
 
                             <span className="text-pagamento-entrega">Pagamento na entrega</span>
 
-                            <span className="text-forma-pagamento-entrega">Débito Mastercard</span>
+                            <span className="text-forma-pagamento-entrega">{pedido.nome_forma_pagamento}</span>
 
                         </div>
 

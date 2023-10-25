@@ -4,8 +4,9 @@
     display: grid;
     grid-template-rows: 50% 20% 30%;
     background-color: #F4F4F4;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     border-radius: 10px;
+    padding: 20px;
 }
 
 .title-status-pedido {
@@ -13,12 +14,14 @@
     flex-direction: column;
     justify-content: center;
     gap: .5rem;
-    font-size: 1.8rem;
+    font-size: 1.7rem;
     padding-left:3rem;
+    font-weight: 300;
 }
 
 .text-despachado {
     color: #276D15;
+    font-weight: 700;
 }
 
 .container-icon-status {
@@ -27,7 +30,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 2rem;
+    gap: 3rem;
 }
 
 .icon-status-primeiro {
@@ -55,6 +58,10 @@
     height: 2rem;
 }
 
+.text-passo-a-passo-status{
+    font-size: 1.2rem;
+}
+
 .container-detalhes-status-pedido {
     width: 100%;
     height: 100%;
@@ -62,7 +69,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    gap: 17.5rem;
+    gap: 17rem;
 }
 
 .container-passo-a-passo-status-pedido {

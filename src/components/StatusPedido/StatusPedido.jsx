@@ -74,7 +74,7 @@ export function StatusPedido() {
 
                         <span className="text-passo-a-passo-status">Pedido realizado</span>
 
-                        <span className="horario-pedido-realizado">18:25</span>
+                        {/* <span className="horario-pedido-realizado">18:25</span> */}
 
                     </div>
 
@@ -82,7 +82,7 @@ export function StatusPedido() {
 
                         <span className="text-passo-a-passo-status">Pedido sendo preparado</span>
 
-                        <span className="horario-sendo-preparado">18:26</span>
+                        {/* <span className="horario-sendo-preparado">18:26</span> */}
 
                     </div>
 
@@ -90,7 +90,7 @@ export function StatusPedido() {
 
                         <span className="text-passo-a-passo-status">Saiu para entrega</span>
 
-                        <span className="horario-saiu-para-entrega">18:40</span>
+                        {/* <span className="horario-saiu-para-entrega">18:40</span> */}
 
                     </div>
 
@@ -98,7 +98,7 @@ export function StatusPedido() {
 
                         <span className="text-passo-a-passo-status">Pedido entregue</span>
 
-                        <span className="horario-saiu-para-entrega">19:00</span>
+                        {/* <span className="horario-saiu-para-entrega">19:00</span> */}
 
                     </div>
 
