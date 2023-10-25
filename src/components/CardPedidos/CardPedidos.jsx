@@ -13,8 +13,6 @@ import check_verde from './img/check-verde.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import { StatusPedido } from "../StatusPedido/StatusPedido";
-import linha from "../StatusPedido/img/linha.png"
-
 
 export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statusPedido, previsaoEntrega }) {
 
@@ -77,8 +75,10 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
     
     
     const onClickDetalhesPedido = () => {
+        console.log(enderecoFormatado);
         localStorage.setItem("idPedido", idPedido)
         localStorage.setItem("statusPedido", statusPedido)
+        localStorage.setItem("enderecoCliente", enderecoFormatado)
         navigate("/menu/detalhes/pedido")
     }
 
@@ -112,7 +112,7 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
                         {allowedStatusSequence.map((status, index) => (
                             <React.Fragment key={index}>
                                 <FontAwesomeIcon icon={faCircleCheck} className="check-icon" style={{ color: index < currentStatus ? "green" : "gray" }} />
-                                {index < allowedStatusSequence.length - 1 &&    <img src={linha} alt="" className="linha-status" />}
+                                {index < allowedStatusSequence.length - 1 && <p className="linha">______________________________</p>}
                             </React.Fragment>
                         ))}
 

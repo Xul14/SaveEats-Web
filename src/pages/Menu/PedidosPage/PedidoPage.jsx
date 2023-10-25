@@ -1,5 +1,6 @@
 //Import React
 import React, { useState, useEffect } from "react";
+import io from 'socket.io-client';
 
 //Import Axios para integração
 import axios from 'axios'
@@ -15,6 +16,25 @@ export function PedidosPage() {
     const [pedidos, setPedidos] = useState([]);
     const [termoPesquisa, setTermoPesquisa] = useState("");
     const idRestaurante = localStorage.getItem("id");
+
+    function playNotificationSound() {
+        const audio = new Audio('./notificacao_pedido.mp3'); // Substitua pelo caminho real do seu arquivo de som
+        audio.play();
+    }
+
+    useEffect(() => {
+        const socket = io('http://localhost:8080');
+        socket.on('novo_pedido', (novoPedido) => {
+            console.log(novoPedido);
+            console.log('Novo Pedido Recebido:', novoPedido);
+            setPedidos((prevPedidos) => [...prevPedidos, novoPedido]);
+            // playNotificationSound();
+        });
+
+        return () => {
+            socket.disconnect();
+        };
+    }, []);
 
     const getDetailsPedido = async () => {
         try {
