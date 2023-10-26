@@ -17,25 +17,6 @@ export function PedidosPage() {
     const [termoPesquisa, setTermoPesquisa] = useState("");
     const idRestaurante = localStorage.getItem("id");
 
-    function playNotificationSound() {
-        const audio = new Audio('./notificacao_pedido.mp3'); // Substitua pelo caminho real do seu arquivo de som
-        audio.play();
-    }
-
-    useEffect(() => {
-        const socket = io('http://localhost:8080');
-        socket.on('novo_pedido', (novoPedido) => {
-            console.log(novoPedido);
-            console.log('Novo Pedido Recebido:', novoPedido);
-            setPedidos((prevPedidos) => [...prevPedidos, novoPedido]);
-            // playNotificationSound();
-        });
-
-        return () => {
-            socket.disconnect();
-        };
-    }, []);
-
     const getDetailsPedido = async () => {
         try {
             const response = await axios.get(`http://localhost:8080/v1/saveeats/detalhes/pedido/idRestaurante/${idRestaurante}`)
@@ -46,6 +27,19 @@ export function PedidosPage() {
             console.log('Erro ao pegar os dados:', error);
         }
     }
+
+    // Função para realizar a consulta periódica
+    const checkForNewPedidos = async () => {
+        await getDetailsPedido(); 
+        setTimeout(checkForNewPedidos, 5000); 
+    };
+
+    useEffect(() => {
+        checkForNewPedidos(); 
+        console.log("Novo pedido");
+        return () => clearTimeout(checkForNewPedidos);
+    }, []);
+
 
     // Consumo da API para buscar produtos com base no termo de pesquisa
     const buscarPedido = async () => {
