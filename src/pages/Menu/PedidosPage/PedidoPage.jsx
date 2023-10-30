@@ -10,12 +10,14 @@ import "./PedidosPage.css"
 import { MenuNavigation } from "../../../components/MenuNavigation/MenuNavigation";
 import { HeaderPages } from "../../../components/HeaderPages/Header";
 import { CardPedidos } from "../../../components/CardPedidos/CardPedidos";
+import notificationSound from "./Olha_A_Mensagem_www.toquesengracadosmp3.com.mp3";
 
 export function PedidosPage() {
 
     const [pedidos, setPedidos] = useState([]);
     const [termoPesquisa, setTermoPesquisa] = useState("");
     const idRestaurante = localStorage.getItem("id");
+    const [playSound, setPlaySound] = useState(false);
 
     const getDetailsPedido = async () => {
         try {
@@ -30,12 +32,21 @@ export function PedidosPage() {
 
     // Função para realizar a consulta periódica
     const checkForNewPedidos = async () => {
-        await getDetailsPedido(); 
-        setTimeout(checkForNewPedidos, 5000); 
+        const previousPedidos = [...pedidos];
+        await getDetailsPedido();
+
+        if (pedidos.length > previousPedidos.length) {
+            setPlaySound(true);
+            setTimeout(() => setPlaySound(false), 5000);
+        }
+
+        setTimeout(checkForNewPedidos, 5000);
+        // setPlaySound(true); // Aciona a reprodução do som
+        // setTimeout(() => setPlaySound(false), 5000);
     };
 
     useEffect(() => {
-        checkForNewPedidos(); 
+        checkForNewPedidos();
         console.log("Novo pedido");
         return () => clearTimeout(checkForNewPedidos);
     }, []);
@@ -129,6 +140,7 @@ export function PedidosPage() {
                             </div>
                         )}
                     </div>
+                    <audio id="newOrderAudio" src={notificationSound} preload="auto"></audio>
                 </div>
             </div>
         </div>

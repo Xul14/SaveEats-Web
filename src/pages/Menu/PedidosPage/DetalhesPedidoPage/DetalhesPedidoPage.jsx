@@ -11,6 +11,7 @@ import { HeaderDetalhesPedido } from "../../../../components/HeaderDetalhesPedid
 import { StatusPedido } from "../../../../components/StatusPedido/StatusPedido";
 import { ProdutosPedido } from "../../../../components/ProdutosPedidos/ProdutosPedido";
 import { ButtonDetalhesPedido } from "../../../../components/ButtonDetalhesPedido/ButtonDetalhesPedido";
+import { ModalCancelPedido } from "../../../../components/ModalCancelPedido/ModalCancelPedido";
 import chat from "../DetalhesPedidoPage/img/chat.png"
 
 export function DetalhesPedidoPage() {
@@ -18,6 +19,8 @@ export function DetalhesPedidoPage() {
     const idPedido = localStorage.getItem("idPedido");
 
     const [pedido, setPedido] = useState([]);
+    const [openModal, setOpenModal] = useState(false)
+    // const [menuOpen, setMenuOpen] = useState(false);
     // const statusPedido = pedido.status_pedido.replace(";", " ")
 
     useEffect(() => {
@@ -49,6 +52,11 @@ export function DetalhesPedidoPage() {
         }
         getDetailsProduto()
     }, [idPedido])
+
+    // const handleCancelClick = () => {
+    //     // setOpenModal(true);
+    //     console.log("clicou");
+    // };
 
     // const formatPrice = (precoTotal) => {
     //     return `R$ ${precoTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`.replace('.', ',');

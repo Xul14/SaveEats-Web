@@ -12,7 +12,7 @@ import check_cinza from './img/check-cinza.png'
 import check_verde from './img/check-verde.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
-import { StatusPedido } from "../StatusPedido/StatusPedido";
+import linha from "../StatusPedido/img/linha.png";
 
 export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statusPedido, previsaoEntrega }) {
 
@@ -22,7 +22,7 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
         "Pedido a Caminho",
         "Pedido Entregue"
     ];
-    // console.log(statusPedido);
+
     const navigate = useNavigate()
     const allowedStatusSequence = [9, 2, 3, 5];
     const [enderecoFormatado, setEnderecoFormatado] = useState("");
@@ -72,8 +72,8 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
         }
         getEnderecoCliente()
     }, [idCliente])
-    
-    
+
+
     const onClickDetalhesPedido = () => {
         console.log(enderecoFormatado);
         localStorage.setItem("idPedido", idPedido)
@@ -112,7 +112,8 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
                         {allowedStatusSequence.map((status, index) => (
                             <React.Fragment key={index}>
                                 <FontAwesomeIcon icon={faCircleCheck} className="check-icon" style={{ color: index < currentStatus ? "green" : "gray" }} />
-                                {index < allowedStatusSequence.length - 1 && <p className="linha">______________________________</p>}
+                                {index < allowedStatusSequence.length - 1 && <img className="linha-status" src={linha} />}
+                                {/* {index < allowedStatusSequence.length - 1 && <p className="linha">______________________________</p>}; */}
                             </React.Fragment>
                         ))}
 
@@ -129,7 +130,8 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
 
                 <div className="btns-card-pedido">
                     <button className="btn-detalhes" onClick={onClickDetalhesPedido}>Detalhes Pedido</button>
-                    <button className="btn-att-status" onClick={updateStatus} disabled={currentStatus === 4}>Atualizar status</button>
+                    <button className="btn-att-status" onClick={updateStatus} >Atualizar status</button>
+                    {/* <button className="btn-att-status" onClick={updateStatus} disabled={currentStatus === 4}>Atualizar status</button> */}
                 </div>
             </div>
 
