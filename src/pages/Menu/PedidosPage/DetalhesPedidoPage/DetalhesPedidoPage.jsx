@@ -20,6 +20,7 @@ export function DetalhesPedidoPage() {
 
     const [pedido, setPedido] = useState([]);
     const [openModal, setOpenModal] = useState(false);
+    const [buttonClicked, setButtonClicked] = useState(false);
 
     useEffect(() => {
         async function getDetailsPedido() {
@@ -62,6 +63,16 @@ export function DetalhesPedidoPage() {
 
         } catch (error) {
             console.error("Erro ao atualizar o status: ", error);
+        }
+    };
+
+    const handleButtonClick = async () => {
+        if (!buttonClicked) {
+            setButtonClicked(true);
+            // Faça o que você deseja quando o botão é clicado pela primeira vez (Confirmar Pedido)
+        } else {
+            // Se o botão já foi clicado, faça outra ação (Atualizar Status)
+            console.log("já clicado");
         }
     };
 
@@ -128,9 +139,15 @@ export function DetalhesPedidoPage() {
                             <ButtonDetalhesPedido text={"Cancelar pedido"} background={"#FE9112"} onClick={() => setOpenModal(true)}></ButtonDetalhesPedido>
                             <ModalCancelPedido isOpenModal={openModal} setModalOpen={() => setOpenModal(false)} onConfirm={handleCancelClick} />
 
-                            <ButtonDetalhesPedido text={"Atualizar status"} background={"#276D15"}></ButtonDetalhesPedido>
+                            <ButtonDetalhesPedido
+                                text={buttonClicked ? "Atualizar status" : "Confirmar pedido"}
+                                background={"#276D15"}
+                                onClick={handleButtonClick}
+                            />
 
-                            <ButtonDetalhesPedido text={"Confirmar pedido"} background={"#276D15"}></ButtonDetalhesPedido>
+                            {/* <ButtonDetalhesPedido text={"Atualizar status"} background={"#276D15"}></ButtonDetalhesPedido> */}
+
+                            {/* <ButtonDetalhesPedido text={"Confirmar pedido"} background={"#276D15"}></ButtonDetalhesPedido> */}
 
                         </div>
 
