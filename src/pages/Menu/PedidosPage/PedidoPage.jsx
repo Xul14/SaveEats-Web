@@ -21,7 +21,7 @@ export function PedidosPage() {
 
     const getDetailsPedido = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/v1/saveeats/detalhes/pedido/idRestaurante/${idRestaurante}`)
+            const response = await axios.get(`http://localhost:3000/v1/saveeats/detalhes/pedido/idRestaurante/${idRestaurante}`)
             const responsePedidos = response.data.detalhes_do_pedido;
             setPedidos(responsePedidos);
             console.log(responsePedidos);
@@ -41,8 +41,8 @@ export function PedidosPage() {
         }
 
         setTimeout(checkForNewPedidos, 5000);
-        // setPlaySound(true); // Aciona a reprodução do som
-        // setTimeout(() => setPlaySound(false), 5000);
+        setPlaySound(true); // Aciona a reprodução do som
+        setTimeout(() => setPlaySound(false), 5000);
     };
 
     useEffect(() => {
@@ -55,7 +55,7 @@ export function PedidosPage() {
     // Consumo da API para buscar produtos com base no termo de pesquisa
     const buscarPedido = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/v1/saveeats/detalhes/pedido/idRestaurante/${idRestaurante}/numeroPedido/${termoPesquisa}`);
+            const response = await axios.get(`http://localhost:3000/v1/saveeats/detalhes/pedido/idRestaurante/${idRestaurante}/numeroPedido/${termoPesquisa}`);
             const data = response.data.detalhes_do_pedido;
             setPedidos(data);
         } catch (error) {

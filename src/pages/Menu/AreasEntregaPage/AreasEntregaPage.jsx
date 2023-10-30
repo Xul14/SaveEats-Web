@@ -52,7 +52,7 @@ export function AreasEntregaPage() {
     useEffect(() => {
         async function areaEntregaData() {
             try {
-                const areaEntregaResponse = await axios.get(`http://localhost:8080/v1/saveeats/restaurante/frete-area-entrega/idRestaurante/${idRestaurante}`);
+                const areaEntregaResponse = await axios.get(`http://localhost:3000/v1/saveeats/restaurante/frete-area-entrega/idRestaurante/${idRestaurante}`);
                 const areaEntregaData = areaEntregaResponse.data.frete_area_entrega_do_restaurante;
                 
                 if (areaEntregaData[0] && areaEntregaData[0].raio_entrega) {
@@ -71,7 +71,7 @@ export function AreasEntregaPage() {
     //Consumo da API para exclusão de um frete area de entrega
     const handleDeleteFrete = async (id) => {
         try {
-            await axios.delete(`http://localhost:8080/v1/saveeats/frete/area/entrega/id/${id}`);
+            await axios.delete(`http://localhost:3000/v1/saveeats/frete/area/entrega/id/${id}`);
             const updatedFrete = areaEntrega.filter((areaEntrega) => areaEntrega.id !== id);
             setAreaEntrega(updatedFrete)
             console.log(id)
@@ -110,7 +110,7 @@ export function AreasEntregaPage() {
 
     const atualizarDados = async () => {
         try {
-            const response = await axios.put("http://localhost:8080/v1/saveeats/restaurante/raio-entrega", atualizarRaioEntrega)
+            const response = await axios.put("http://localhost:3000/v1/saveeats/restaurante/raio-entrega", atualizarRaioEntrega)
 
             if (response.status === 200) {
                 console.log("Raio de Entrega editado com sucesso");

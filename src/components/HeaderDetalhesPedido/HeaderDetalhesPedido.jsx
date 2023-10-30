@@ -18,7 +18,7 @@ export function HeaderDetalhesPedido() {
     useEffect(() => {
         async function getDetailsPedido() {
             try {
-                const response = await axios.get(`http://localhost:8080/v1/saveeats/detalhes/pedido/id/${idPedido}`)
+                const response = await axios.get(`http://localhost:3000/v1/saveeats/detalhes/pedido/id/${idPedido}`)
                 const responsePedido = response.data.detalhes_do_pedido;
                 setPedido(responsePedido);
                 console.log(responsePedido);
@@ -35,7 +35,7 @@ export function HeaderDetalhesPedido() {
     useEffect(() => {
         async function getEnderecoCliente() {
                 try {
-                        const response = await axios.get(`http://localhost:8080/v1/saveeats/endereco/cliente/idcliente/${idCliente}`)
+                        const response = await axios.get(`http://localhost:3000/v1/saveeats/endereco/cliente/idcliente/${idCliente}`)
                 const responseEndereco = response.data.endereco_cliente;
     
                 if (responseEndereco && responseEndereco.length > 0) {

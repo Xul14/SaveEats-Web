@@ -7,17 +7,9 @@ import './ModalCancelPedido.css'
 export function ModalCancelPedido({ isOpenModal, setModalOpen, onConfirm }) {
 
   const handleConfirm = async () => {
-    try {
-      const response = await axios.put('http://localhost:8080/v1/saveeats/status-pedido', {
-        id_pedido: idPedido,
-        id_novo_status_pedido: 7,
-      });
-      console.log(response);
-      setModalOpen(false);
-
-    } catch (error) {
-      console.error("Erro ao atualizar o status: ", error);
-    }
+    onConfirm()
+    setModalOpen(true);
+    console.log("clicou");
   }
 
   if (isOpenModal) {

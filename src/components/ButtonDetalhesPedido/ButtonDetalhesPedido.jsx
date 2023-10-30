@@ -4,11 +4,11 @@ import React from "react";
 //Import css e components
 import "./ButtonDetalhesPedido.css"
 
-export function ButtonDetalhesPedido({ text, background }) {
+export function ButtonDetalhesPedido({ text, background, onClick }) {
     return (
         <>
 
-            <button style={{ background }} className="botao-detalhes-pedido">{text}</button>
+            <button style={{ background }} onClick={onClick} className="botao-detalhes-pedido">{text}</button>
 
         </>
     )

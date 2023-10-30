@@ -13,6 +13,7 @@ import check_verde from './img/check-verde.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import linha from "../StatusPedido/img/linha.png";
+import { ButtonDetalhesPedido } from "../ButtonDetalhesPedido/ButtonDetalhesPedido";
 
 export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statusPedido, previsaoEntrega }) {
 
@@ -35,7 +36,7 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
 
         try {
 
-            const response = await axios.put('http://localhost:8080/v1/saveeats/status-pedido', {
+            const response = await axios.put('http://localhost:3000/v1/saveeats/status-pedido', {
                 id_pedido: idPedido,
                 id_novo_status_pedido: newStatus,
             });
@@ -57,7 +58,7 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
     useEffect(() => {
         async function getEnderecoCliente() {
             try {
-                const response = await axios.get(`http://localhost:8080/v1/saveeats/endereco/cliente/idcliente/${idCliente}`)
+                const response = await axios.get(`http://localhost:3000/v1/saveeats/endereco/cliente/idcliente/${idCliente}`)
                 const responseEndereco = response.data.endereco_cliente;
 
                 if (responseEndereco && responseEndereco.length > 0) {
@@ -80,6 +81,10 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
         localStorage.setItem("statusPedido", statusPedido)
         localStorage.setItem("enderecoCliente", enderecoFormatado)
         navigate("/menu/detalhes/pedido")
+    }
+
+    const onclick = () => {
+        console.log("foi");
     }
 
     return (
@@ -131,6 +136,7 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
                 <div className="btns-card-pedido">
                     <button className="btn-detalhes" onClick={onClickDetalhesPedido}>Detalhes Pedido</button>
                     <button className="btn-att-status" onClick={updateStatus} >Atualizar status</button>
+                    {/* <button text={"Cancelar pedido"} background={"#FE9112"} onClick={onclick}></button> */}
                     {/* <button className="btn-att-status" onClick={updateStatus} disabled={currentStatus === 4}>Atualizar status</button> */}
                 </div>
             </div>

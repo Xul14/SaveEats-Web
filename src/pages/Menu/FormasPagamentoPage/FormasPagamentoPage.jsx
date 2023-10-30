@@ -18,7 +18,7 @@ export function FormasPagamentoPage() {
     useEffect(() => {
         async function formaPagamentoData() {
             try {
-                const formasPagamento = await axios.get('http://localhost:8080/v1/saveeats/obter-dados-do-mercado-pago');
+                const formasPagamento = await axios.get('http://localhost:3000/v1/saveeats/obter-dados-do-mercado-pago');
                 const formaPagamentoData = formasPagamento.data;
                 setFormaPagamento(formaPagamentoData);
                 console.log(formasPagamento);

@@ -19,14 +19,12 @@ export function DetalhesPedidoPage() {
     const idPedido = localStorage.getItem("idPedido");
 
     const [pedido, setPedido] = useState([]);
-    const [openModal, setOpenModal] = useState(false)
-    // const [menuOpen, setMenuOpen] = useState(false);
-    // const statusPedido = pedido.status_pedido.replace(";", " ")
+    const [openModal, setOpenModal] = useState(false);
 
     useEffect(() => {
         async function getDetailsPedido() {
             try {
-                const response = await axios.get(`http://localhost:8080/v1/saveeats/detalhes/pedido/id/${idPedido}`)
+                const response = await axios.get(`http://localhost:3000/v1/saveeats/detalhes/pedido/id/${idPedido}`)
                 const responsePedido = response.data.detalhes_do_pedido;
                 setPedido(responsePedido);
                 console.log(responsePedido);
@@ -42,7 +40,7 @@ export function DetalhesPedidoPage() {
     useEffect(() => {
         async function getDetailsProduto() {
             try {
-                const response = await axios.get(`http://localhost:8080/v1/saveeats/detalhes/pedido/id/${idPedido}`)
+                const response = await axios.get(`http://localhost:3000/v1/saveeats/detalhes/pedido/id/${idPedido}`)
                 const responsePedido = response.data.detalhes_do_pedido.produtos;
                 setProduto(responsePedido);
                 console.log(responsePedido);
@@ -53,10 +51,19 @@ export function DetalhesPedidoPage() {
         getDetailsProduto()
     }, [idPedido])
 
-    // const handleCancelClick = () => {
-    //     // setOpenModal(true);
-    //     console.log("clicou");
-    // };
+    const handleCancelClick = async () => {
+        try {
+            const response = await axios.put('http://localhost:3000/v1/saveeats/status-pedido', {
+                id_pedido: idPedido,
+                id_novo_status_pedido: 7,
+            });
+            console.log(response);
+            setOpenModal(false);
+
+        } catch (error) {
+            console.error("Erro ao atualizar o status: ", error);
+        }
+    };
 
     // const formatPrice = (precoTotal) => {
     //     return `R$ ${precoTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`.replace('.', ',');
@@ -80,7 +87,8 @@ export function DetalhesPedidoPage() {
 
                     <div className="container-detalhes-pedido-total-pagamento">
 
-                        <span className="title-despachado">{pedido.status_pedido}</span>
+                        {/* <span className="title-despachado">{pedido.status_pedido}</span> */}
+                        <span className="title-despachado">Detalhes do pedido</span>
 
                         <div className="container-total-pedido">
 
@@ -92,7 +100,7 @@ export function DetalhesPedidoPage() {
 
                         <div className="container-pagamento-entrega">
 
-                            <span className="text-pagamento-entrega">Pagamento na entrega</span>
+                            <span className="text-pagamento-entrega">Forma de pagamento</span>
 
                             <span className="text-forma-pagamento-entrega">{pedido.nome_forma_pagamento}</span>
 
@@ -117,7 +125,8 @@ export function DetalhesPedidoPage() {
 
                         <div className="container-botoes-detalhes-pedido">
 
-                            <ButtonDetalhesPedido text={"Cancelar pedido"} background={"#FE9112"}></ButtonDetalhesPedido>
+                            <ButtonDetalhesPedido text={"Cancelar pedido"} background={"#FE9112"} onClick={() => setOpenModal(true)}></ButtonDetalhesPedido>
+                            <ModalCancelPedido isOpenModal={openModal} setModalOpen={() => setOpenModal(false)} onConfirm={handleCancelClick} />
 
                             <ButtonDetalhesPedido text={"Atualizar status"} background={"#276D15"}></ButtonDetalhesPedido>
 
