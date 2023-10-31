@@ -17,3 +17,149 @@
     display: grid;
     grid-template-rows: 15% 10% 5% 70%;
 }
+
+main {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+    /* justify-content: center; */
+}
+
+.circle {
+    display: flex;
+    align-items: center;
+    /* height: 100px; */
+
+}
+
+.titulo {
+    display: flex;
+    justify-content: center;
+    padding-top: 1rem;
+    color: #143A0B;
+    font-size: 2.5rem;
+    align-items: center;
+    
+
+}
+
+.info1 {
+    font-size: 1.5rem;
+    margin-top: 40px;
+}
+
+.box1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 1px;
+    border-radius: 15px;
+    width: 800px;
+    height: 60px;
+    align-items: center;
+    margin-top: 20px;
+
+
+
+}
+.info2 {
+    font-size: 1.5rem;
+    margin-top: 40px;
+}
+
+.box2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 1px;
+    border-radius: 15px;
+    width: 800px;
+    height: 60px;
+    align-items: center;
+    margin-top: 20px;
+
+}
+
+.info3 {
+    font-size: 1.5rem;
+    margin-top: 40px;
+}
+
+.box3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 1px;
+    border-radius: 15px;
+    width: 800px;
+    height: 60px;
+    align-items: center;
+    margin-top: 20px;
+
+}
+
+.info4 {
+    font-size: 1.5rem;
+    margin-top: 40px;
+}
+
+.box4 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 1px;
+    border-radius: 15px;
+    width: 800px;
+    height: 60px;
+    align-items: center;
+    margin-top: 20px;
+
+}
+
+.info5 {
+    font-size: 1.5rem;
+    margin-top: 40px;
+}
+
+.box5 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 1px;
+    border-radius: 15px;
+    width: 800px;
+    height: 60px;
+    align-items: center;
+    margin-top: 20px;
+
+    
+
+
+}
+
+.botao{
+    background-color: #FE9112;
+    border: none;
+    color: #fff;
+    padding: 15px 55px;
+    text-align: center;
+    text-decoration: none;
+    display: flex;
+    width: 15rem;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 15px;
+    transition: background-color 0.5s ease;
+    margin-top: 30px;
+    
+    
+}
+
+.botao:hover{
+    background-color: #295F1B;
+}
+
