@@ -21,8 +21,6 @@
     justify-items: center; 
 }
 
-
-
 .foto-restaurante {
     height: 200px;
     display: flex;
@@ -63,6 +61,8 @@
 
 .nome-input-editar {
     font-size: 1.5rem;
+    font-weight: 600;
+    color: #143A0B;
 }
 
 .input-editar {

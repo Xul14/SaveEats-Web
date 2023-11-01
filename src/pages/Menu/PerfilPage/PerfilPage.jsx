@@ -6,7 +6,7 @@ import axios from 'axios'
 
 //Import css e components
 import "./PerfilPage.css"
-import img from './img/padaria.png'
+import noImg from './img/no-image.webp'
 import { MenuNavigation } from "../../../components/MenuNavigation/MenuNavigation";
 
 export function PerfilPage() {
@@ -14,7 +14,7 @@ export function PerfilPage() {
     //Pegando dados do restaurante
     const nomeRestaurante = localStorage.getItem("nome_fantasia");
     const idRestaurante = localStorage.getItem("id");
-    const [dadosPerfil, setDadosPerfil] = useState([]);
+    const [dadosPerfil, setDadosPerfil] = useState([0]);
 
     useEffect(() => {
         async function fetchData() {
@@ -50,7 +50,12 @@ export function PerfilPage() {
                     <div className="container-editar-dados">
 
                         <div className="input-editar-dados">
-                            <p className="nome-input-editar">Nome da estabelecimento</p>
+                            <p className="nome-input-editar">Nome do estabelecimento</p>
+                            <input type="text" className="input-editar" value={dadosPerfil[0].nome_fantasia}></input>
+                        </div>
+
+                        <div className="input-editar-dados">
+                            <p className="nome-input-editar">Categoria</p>
                             <input type="text" className="input-editar"></input>
                         </div>
 
@@ -60,22 +65,37 @@ export function PerfilPage() {
                         </div>
 
                         <div className="input-editar-dados">
-                            <p className="nome-input-editar">Categoria</p>
+                            <p className="nome-input-editar">CEP</p>
                             <input type="text" className="input-editar"></input>
                         </div>
 
                         <div className="input-editar-dados">
-                            <p className="nome-input-editar">Nome da loja</p>
+                            <p className="nome-input-editar">Rua</p>
                             <input type="text" className="input-editar"></input>
                         </div>
 
                         <div className="input-editar-dados">
-                            <p className="nome-input-editar">Nome da loja</p>
+                            <p className="nome-input-editar">Número</p>
                             <input type="text" className="input-editar"></input>
                         </div>
 
                         <div className="input-editar-dados">
-                            <p className="nome-input-editar">Nome da loja</p>
+                            <p className="nome-input-editar">Bairro</p>
+                            <input type="text" className="input-editar"></input>
+                        </div>
+
+                        <div className="input-editar-dados">
+                            <p className="nome-input-editar">Cidade</p>
+                            <input type="text" className="input-editar"></input>
+                        </div>
+
+                        <div className="input-editar-dados">
+                            <p className="nome-input-editar">Estado</p>
+                            <input type="text" className="input-editar"></input>
+                        </div>
+
+                        <div className="input-editar-dados">
+                            <p className="nome-input-editar">Complemento</p>
                             <input type="text" className="input-editar"></input>
                         </div>
 
