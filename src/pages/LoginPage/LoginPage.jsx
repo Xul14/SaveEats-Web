@@ -40,12 +40,15 @@ export function LoginPage() {
 
             const responseData = Response.data;
             const restaurante = responseData.restaurante[0];
-            localStorage.setItem("nome_fantasia", restaurante.nome_fantasia)
+
             localStorage.setItem("id", restaurante.id)
+            localStorage.setItem("email", restaurante.email)
+            localStorage.setItem("senha", restaurante.senha)
+            localStorage.setItem("nome_fantasia", restaurante.nome_fantasia)
+            localStorage.setItem("id_endereco_restaurante", restaurante.id_endereco_restaurante)
+
             navigate("/menu/home", { state: { restaurante } })
             console.log(responseData);
-
-
         })
         .catch(error => {
 
