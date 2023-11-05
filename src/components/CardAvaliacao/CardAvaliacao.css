@@ -1,0 +1,64 @@
+.card-avaliacao-cliente {
+    width: 90%;
+    height: 150px;
+    display: grid;
+    grid-template-columns: 10% 1fr 10%;
+    border-bottom: 3px solid #dedddc;
+}
+
+.img-cliente{
+    height: 100px;
+    display: flex;
+    justify-self: center;
+    border-radius: 50%;
+}
+
+.avaliacao-cliente {
+    display: grid;
+    padding: 10px;
+    grid-template-rows: 35% 25% 1fr;
+}
+
+.nome-cliente-av {
+    font-size: 1.5rem;
+    align-items: center;
+    display: flex;
+}
+
+.estrelas-num {
+    align-items: center;
+    display: flex;
+    gap: 10px;
+}
+
+.nota-av{
+    color: #F5AC47;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.estrelas-num img{
+    height: 20px;
+}
+
+.resposta-av{
+    font-size: 1.3rem;
+    padding-top: 10px;
+    color: #686868;
+    display: flex;
+}
+
+.data-av{
+    display: flex;
+    padding-top: 10px;
+    color: #686868;
+    justify-content: center;
+}
+
+.star-filled {
+    color: #F5AC47;
+}
+
+.star-empty {
+    color: #ccc; 
+}

@@ -16,7 +16,7 @@ export function CardsInformativos() {
                 <img className="img-cards-informativos" src={sacolaCompras} />
             </div>
 
-            <div className="option calendario">
+            <div className="option calendario-card">
                 <p className="text-card-informativo">Escolha suas formas de pagamento</p>
                 <img className="img-cards-informativos" src={formasPagamento} />
             </div>
