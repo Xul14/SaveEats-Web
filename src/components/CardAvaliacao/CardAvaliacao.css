@@ -7,7 +7,7 @@
 }
 
 .img-cliente{
-    height: 100px;
+    height: 90px;
     display: flex;
     justify-self: center;
     border-radius: 50%;
@@ -28,13 +28,14 @@
 .estrelas-num {
     align-items: center;
     display: flex;
-    gap: 10px;
+    gap: 2px;
 }
 
 .nota-av{
     color: #F5AC47;
     font-size: 1.3rem;
     font-weight: 600;
+    padding-right: 5px;
 }
 
 .estrelas-num img{
