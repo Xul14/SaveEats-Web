@@ -1,9 +1,15 @@
 .bar-chart {
+    width: 80%;
     display: flex;
-    width: 100%;
     margin: 0 auto;
-    max-width: 400px;
     flex-direction: column;
+}
+
+.container-bar-av {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 20% 1fr 10%;
 }
 
 .bar {
@@ -13,7 +19,7 @@
     margin-bottom: 10px;
     border-radius: 5px;
     justify-content: space-between;
-    background-color:  rgba(144, 174, 110, 0.15);
+    background-color: rgba(144, 174, 110, 0.15);
 }
 
 .bar-label {
@@ -21,26 +27,37 @@
     align-self: center;
 }
 
-.bar-fill {
+.bar_fill {
     width: 0;
     padding: 5px;
-    color: #fff;
     text-align: right;
     border-radius: 0 5px 5px 0;
-    background-color: #488A27;
+    background-color: #48a431;
+    box-shadow: 0px 0px 5px #48a431;
     transition: width 0.3s ease-in-out;
+    animation: fillAnimation 2s ease;
 }
 
-.bar-label {
+.bar_label {
     align-self: center;
+    font-weight: 500;
+}
+
+.quant_avaliacao_estrela {
+    display: flex;
+    justify-content: center;
+
 }
 
 .bar-fill {
     background-color: #2ecc71;
 }
 
-.chart-background {
-    padding: 10px;
-    border-radius: 10px;
-    background-color: #f1f1f1;
-}
+@keyframes fillAnimation {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }

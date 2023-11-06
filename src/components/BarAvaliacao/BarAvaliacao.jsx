@@ -3,15 +3,15 @@ import React, { useState, useEffect } from "react";
 import './BarAvaliacao.css'
 
 const data = [
-    { label: 'Estrela 1', value: 4 },
-    { label: 'Estrela 2', value: 8 },
-    { label: 'Estrela 3', value: 12 },
-    { label: 'Estrela 4', value: 6 },
-    { label: 'Estrela 5', value: 20 },
+    { label: '5 Estrelas', value: 2 },
+    { label: '4 Estrelas', value: 1 },
+    { label: '3 Estrelas', value: 0 },
+    { label: '2 Estrelas', value: 0 },
+    { label: '1 Estrela', value: 0 },
 ];
 
 export const BarAvaliacao = () => {
-    const max = Math.max(...data.map((item) => item.value));
+    const totalValue = data.reduce((acc, item) => acc + item.value, 0);
 
     return (
 
@@ -19,13 +19,15 @@ export const BarAvaliacao = () => {
 
             {data.map((item, index) => (
 
-                <div className="bar" key={index}>
+                <div className="container-bar-av">
 
-                     {/* <div className="bar-label">{item.label}</div> */}
+                    <div className="bar_label">{item.label}</div>
 
-                    <div className="bar-fill" style={{ width: `${(item.value / max) * 100}%` }}>
-                        {/* {item.value} */}
+                    <div className="bar" key={index}>
+                        <div className="bar_fill" style={{ width: `${(item.value / totalValue) * 100}%` }}></div>
                     </div>
+
+                    <p className="quant_avaliacao_estrela">{item.value}</p>
 
                 </div>
 

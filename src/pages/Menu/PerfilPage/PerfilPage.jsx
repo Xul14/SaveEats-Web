@@ -21,12 +21,30 @@ export function PerfilPage() {
     const [dadosPerfil, setDadosPerfil] = useState([0]);
     const [isEditing, setIsEditing] = useState(false);
 
+    //Consumo da API para o input de Categorias
+    const [categorias, setCategorias] = useState([])
+    const [categoriaSelecionada, setCategoriaSelecionada] = useState('')
+
+    useEffect(() => {
+        async function fetchCategoria() {
+            try {
+                const response = await axios.get('http://localhost:3000/v1/saveeats/categoria/restaurante');
+                const responseData = response.data.categorias
+                setCategorias(responseData)
+                // setCategoriaSelecionada(responseData.categoria);
+            } catch (error) {
+                console.error('Erro ao obter dados da API:', error)
+            }
+        }
+
+        fetchCategoria()
+    }, [])
+
     useEffect(() => {
         async function fetchData() {
             try {
                 const response = await axios.get(`http://localhost:3000/v1/saveeats/restaurante/id/${idRestaurante}`);
                 const responseData = response.data.restaurantes
-                console.log(responseData);
                 setDadosPerfil(responseData)
             } catch (error) {
                 console.error('Erro ao obter dados da API:', error)
@@ -61,10 +79,9 @@ export function PerfilPage() {
             nome_cidade: dadosPerfil[0].nome_cidade,
             nome_estado: dadosPerfil[0].nome_estado
         };
-console.log(dadosAtualizados);
+        console.log(dadosAtualizados);
         try {
             const response = await axios.put(`http://localhost:3000/v1/saveeats/restaurante/id/${idRestaurante}`, dadosAtualizados);
-            // const response = await axios.put(`http://localhost:8080/v1/saveeats/restaurante/id/${dadosAtualizados.id_restaurante}`, dadosAtualizados);
 
             if (response.status === 200) {
                 console.log("Editado com sucesso");
@@ -78,11 +95,9 @@ console.log(dadosAtualizados);
         setIsEditing(false);
     }
 
-    // Função para atualizar os campos de entrada conforme o usuário digita
     const handleInputChange = (e, field) => {
         const newValue = e.target.value;
 
-        // Atualize o estado de acordo com o campo modificado
         setDadosPerfil(prevData => ({
             ...prevData,
             [0]: {
@@ -129,7 +144,18 @@ console.log(dadosAtualizados);
 
                         <div className="input-editar-dados">
                             <p className="nome-input-editar">Categoria do estabelecimento</p>
-                            <input type="text" className="input-editar" value={dadosPerfil[0].categoria_restaurante} disabled={!isEditing} onChange={(e) => handleInputChange(e, "categoria_restaurante")} ></input>
+
+
+                            <select name="Categoria" className="input-editar option-av" value={categoriaSelecionada} disabled={!isEditing} onChange={(e) => setCategoriaSelecionada(e.target.value)}>
+                                <option>{dadosPerfil[0].categoria_restaurante}</option>
+                                {categorias.map((categoria, index) => (
+                                    <option key={index} value={categoria.nome_categoria}>
+                                        {categoria.nome_categoria}
+                                    </option>
+                                ))}
+                            </select>
+
+
                         </div>
 
                         <div className="input-editar-dados">

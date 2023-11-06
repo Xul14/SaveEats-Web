@@ -56,12 +56,6 @@ export function AvaliacaoPage() {
 
                             <div className="container_bars_estrelas">
 
-                                {/* <div className="card">
-                                    <p className="avaliation_number">5</p>
-                                    <div className="card_5"></div>
-                                    <p className="avaliation_result">95</p>
-                                </div> */}
-
                                 <BarAvaliacao/>
 
                             </div>
