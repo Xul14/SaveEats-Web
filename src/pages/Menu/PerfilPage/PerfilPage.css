@@ -101,3 +101,75 @@
 .btn-salvar-alteracoes:hover{
     background-color: #295F1B;
 }
+
+
+.container-perfil {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 20% 80%;
+}
+
+.container-left-perfil {
+    display: grid;
+    grid-template-rows: 15% 85%;
+    background-color: #f2fee6;
+}
+
+.container-rigth-perfil {
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 25% 5% 1fr 10%;
+    overflow: auto;
+    align-items: center;
+    justify-items: center;
+}
+
+.image-container {
+    position: relative;
+}
+
+.foto-restaurante {
+    height: 200px;
+    display: flex;
+    margin-top: 30px;
+    justify-content: center;
+    border-radius: 50%;
+    border: 2px solid #295F1B;
+    box-shadow: 2px 2px 5px #AFACAB;
+}
+
+.camera-button {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color: #FE9112;
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 18px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+}
+
+.camera-button:hover {
+    background-color: #295F1B;
+}
+
+.nome-restaurante {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    color: #143A0B;
+    font-size: 2.5rem;
+    align-items: center;
+    text-align: center;
+    text-transform: uppercase;
+}
+

@@ -1,5 +1,5 @@
 //Import React
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import './BarAvaliacao.css'
 
 const data = [

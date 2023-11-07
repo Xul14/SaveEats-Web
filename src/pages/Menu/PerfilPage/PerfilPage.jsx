@@ -7,6 +7,7 @@ import axios from 'axios'
 //Import css e components
 import "./PerfilPage.css"
 import noImg from './img/no-image.webp'
+import { uploadImageToFirebase } from "../../../firebase";
 import { MenuNavigation } from "../../../components/MenuNavigation/MenuNavigation";
 
 export function PerfilPage() {
@@ -25,6 +26,7 @@ export function PerfilPage() {
     const [categorias, setCategorias] = useState([])
     const [categoriaSelecionada, setCategoriaSelecionada] = useState('')
 
+    //Categorias do restaurante
     useEffect(() => {
         async function fetchCategoria() {
             try {
@@ -40,12 +42,17 @@ export function PerfilPage() {
         fetchCategoria()
     }, [])
 
+    //Dados do restaurante
     useEffect(() => {
         async function fetchData() {
             try {
                 const response = await axios.get(`http://localhost:3000/v1/saveeats/restaurante/id/${idRestaurante}`);
                 const responseData = response.data.restaurantes
                 setDadosPerfil(responseData)
+
+                if (responseData[0].foto) {
+                    setImagemPerfil(responseData[0].foto);
+                }
             } catch (error) {
                 console.error('Erro ao obter dados da API:', error)
             }
@@ -53,6 +60,27 @@ export function PerfilPage() {
         fetchData()
     }, [])
 
+    //upload de imagem
+    const [imagemPerfil, setImagemPerfil] = useState('');
+
+    const handleCameraButtonClick = () => {
+        const fileInput = document.getElementById("fileInput");
+        fileInput.click();
+    };
+
+    const handleImageChange = async (e) => {
+        const imageFile = e.target.files[0];
+        console.log(imageFile);
+        try {
+            const downloadURL = await uploadImageToFirebase(imageFile);
+            setImagemPerfil(downloadURL);
+            console.log("foi?");
+        } catch (error) {
+            console.error('Erro ao fazer upload da imagem:', error);
+        }
+    };
+
+    //Edição de dados
     const handleEdit = () => {
         setIsEditing(true);
     }
@@ -66,6 +94,7 @@ export function PerfilPage() {
             razao_social: dadosPerfil[0].razao_social,
             email: emailRestaurante,
             senha: senhaRestaurante,
+            // foto: imagemPerfil,
             foto: dadosPerfil[0].foto,
             cnpj: dadosPerfil[0].cnpj,
             categoria_restaurante: dadosPerfil[0].categoria_restaurante,
@@ -78,8 +107,10 @@ export function PerfilPage() {
             complemento: dadosPerfil[0].complemento,
             nome_cidade: dadosPerfil[0].nome_cidade,
             nome_estado: dadosPerfil[0].nome_estado
-        };
+        }
+
         console.log(dadosAtualizados);
+
         try {
             const response = await axios.put(`http://localhost:3000/v1/saveeats/restaurante/id/${idRestaurante}`, dadosAtualizados);
 
@@ -118,7 +149,20 @@ export function PerfilPage() {
                 <div className="container-rigth-perfil">
 
                     <div>
-                        <img src={dadosPerfil[0].foto} alt="" className="foto-restaurante" />
+                        {/* <img src={dadosPerfil[0].foto} alt="" className="foto-restaurante" /> */}
+                        <div className="image-container">
+                            <img src={imagemPerfil} alt="" className="foto-restaurante" />
+                            <button className="camera-button" onClick={handleCameraButtonClick} disabled={!isEditing}>
+                                <i className="fas fa-camera"></i>
+                            </button>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                id="fileInput"
+                                style={{ display: "none" }}
+                                onChange={(e) => handleImageChange(e)}
+                            />
+                        </div>
                     </div>
 
                     <div>
