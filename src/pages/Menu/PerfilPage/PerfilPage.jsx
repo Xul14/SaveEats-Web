@@ -94,10 +94,10 @@ export function PerfilPage() {
             razao_social: dadosPerfil[0].razao_social,
             email: emailRestaurante,
             senha: senhaRestaurante,
-            // foto: imagemPerfil,
-            foto: dadosPerfil[0].foto,
+            foto: imagemPerfil,
+            // foto: dadosPerfil[0].foto,
             cnpj: dadosPerfil[0].cnpj,
-            categoria_restaurante: dadosPerfil[0].categoria_restaurante,
+            categoria_restaurante: categoriaSelecionada,
             numero_telefone: dadosPerfil[0].numero_telefone,
             id_endereco_restaurante: idEnderecoRestaurante,
             rua: dadosPerfil[0].rua,
@@ -137,7 +137,7 @@ export function PerfilPage() {
             }
         }));
     }
-
+ 
     return (
         <div>
             <div className="container-perfil">
