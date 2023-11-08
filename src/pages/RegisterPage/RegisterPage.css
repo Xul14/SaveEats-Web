@@ -32,7 +32,7 @@ header {
     /* align-items: center; */
 }
 
-.container {
+.container-cadastro {
     width: 90vw;
     height: 85vh;
     display: grid;
@@ -43,7 +43,7 @@ header {
     z-index: 1;
 }
 
-.container-left {
+.container-left-cadastro {
     width: 100%;
     height: 100%;
     display: flex;
@@ -66,32 +66,55 @@ header {
     color: #3F3F3F;
 }
 
-.subtitle {
+.subtitle-cadastro {
     width: 34rem;
     text-align: center;
-    font-weight: 600;
-    font-size: 2rem;
-    color: #1B470F;
+    font-weight: 400;
+    font-size: 1.5rem;
+    /* color: #1B470F; */
 }
 
-.container-rigth {
+.container-rigth-cadastro {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 20% 5% 5% 1fr 10%;
+    align-items: center;
+}
+
+/* .container-rigth-cadastro {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+} */
+
+.logo-cadastro-saveeats{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .cadastro {
-    font-size: 2.5rem;
+    display: flex;
     font-weight: 800;
-    text-transform: uppercase;
     color: #295F1B;
+    font-size: 2.5rem;
+    align-items: center;
+    text-transform: uppercase;
+    justify-content: center;
+
 }
 
-.subtitlee {
-    font-size: 1.5rem;
+.subtitle-cadastro {
+    width: 100%;
+    display: flex;
     font-weight: 400;
+    font-size: 1.5rem;
+    align-items: center;
+    justify-content: center;
 }
 
 .inputs {
@@ -113,7 +136,6 @@ header {
     background-color: #e0e0df;
     
 }
-
 
 .span-input {
     width: 22rem;
@@ -209,7 +231,7 @@ footer {
         align-items: center;
     }
     
-    .logo {
+    .logo-cadastro {
         height: 10rem;
     }
 

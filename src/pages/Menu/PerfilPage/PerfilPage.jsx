@@ -95,7 +95,6 @@ export function PerfilPage() {
             email: emailRestaurante,
             senha: senhaRestaurante,
             foto: imagemPerfil,
-            // foto: dadosPerfil[0].foto,
             cnpj: dadosPerfil[0].cnpj,
             categoria_restaurante: categoriaSelecionada,
             numero_telefone: dadosPerfil[0].numero_telefone,

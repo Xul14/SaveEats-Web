@@ -48,7 +48,7 @@
     display: grid;
     padding-top: 10px;
     font-size: 1.25rem;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 2fr 1fr;
 }
 
 .text-linha-custo {

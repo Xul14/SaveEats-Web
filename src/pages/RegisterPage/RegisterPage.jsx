@@ -48,38 +48,38 @@ export function RegisterPage() {
     })
 
     const addPost = data => axios.post('https://save-eats.cyclic.cloud/v1/saveeats/restaurante/procedore', data)
-    .then(Response => {
+        .then(Response => {
 
-        const responseData = Response.data;
-        const restaurante = responseData.restaurante[0];
-        navigate("/menu/home", { state: { restaurante } })
-        console.log(responseData);
+            const responseData = Response.data;
+            const restaurante = responseData.restaurante[0];
+            navigate("/menu/home", { state: { restaurante } })
+            console.log(responseData);
 
 
-    })
-    .catch(error => {
+        })
+        .catch(error => {
 
-        if (error.response) {
+            if (error.response) {
 
-            if (error.response.status === 401) {
-                alert('Esse e-mail já está vinculado a uma conta.');
+                if (error.response.status === 401) {
+                    alert('Esse e-mail já está vinculado a uma conta.');
 
-            }else if(error.response.status === 400) {
-                alert('Campos obrigatórios não foram preenchidos');
+                } else if (error.response.status === 400) {
+                    alert('Campos obrigatórios não foram preenchidos');
 
-            } 
-            else if(error.response.status === 500) {
-                alert('Devido a um erro interno do servidor, não foi possivel processar a requisição.');
+                }
+                else if (error.response.status === 500) {
+                    alert('Devido a um erro interno do servidor, não foi possivel processar a requisição.');
+                }
+
+            } else {
+                console.error(error);
+                alert('Ocorreu um erro inesperado. Tente novamente mais tarde.');
             }
 
-        } else {
-            console.error(error);
-            alert('Ocorreu um erro inesperado. Tente novamente mais tarde.');
-        }
-
-        console.log("Deu errado");
-        console.log(data);
-    })
+            console.log("Deu errado");
+            console.log(data);
+        })
 
     return (
         <div className='registerContent'>
@@ -89,20 +89,22 @@ export function RegisterPage() {
             </header>
             <main className="main-cadastro">
 
-                <div className="container">
+                <div className="container-cadastro">
 
                     <ContainerLeft></ContainerLeft>
 
-                    <div className="container-rigth">
+                    <div className="container-rigth-cadastro">
 
-                        <img className="logo" src={logo} alt="Logo" />
+                        <div className="logo-cadastro-saveeats">
+                            <img className="logo-cadastro" src={logo} alt="Logo" />
+                        </div>
 
-                        <h1 className='cadastro'>cadastro</h1>
-                        <h2 className='subtitlee'>Crie sua conta</h2>
+                        <h1 className="cadastro">cadastro</h1>
+                        <h2 className="subtitle-cadastro">Crie sua conta</h2>
 
                         <div className="inputs">
 
-                            <div className='inputDiv'>
+                            <div className="inputDiv">
                                 <span className="span-input">Categoria Estabelecimento</span>
                                 <input type="text" name="nome_categoria" {...register("nome_categoria")} />
                                 <p className="error">{errors.nome_categoria?.message}</p>
@@ -200,9 +202,9 @@ export function RegisterPage() {
                             </div>
 
                         </div>
-                            <div className="container-button">
-                                <button className='btnCadastro'  onClick={handleSubmit(addPost)}>Criar conta</button>
-                            </div>
+                        <div className="container-button">
+                            <button className='btnCadastro' onClick={handleSubmit(addPost)}>Criar conta</button>
+                        </div>
 
                     </div>
                 </div>
