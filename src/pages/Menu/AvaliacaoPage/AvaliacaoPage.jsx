@@ -6,31 +6,48 @@ import axios from 'axios'
 
 //Import css e components
 import "./AvaliacaoPage.css"
+import { HeaderPages } from "../../../components/HeaderPages/Header";
 import { MenuNavigation } from "../../../components/MenuNavigation/MenuNavigation";
 import { CardAvaliacao } from "../../../components/CardAvaliacao/CardAvaliacao";
-import { HeaderPages } from "../../../components/HeaderPages/Header";
 import { BarAvaliacao } from "../../../components/BarAvaliacao/BarAvaliacao";
-import img from './img/perfilcoments.png'
-import img2 from './img/estrelas.png'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 export function AvaliacaoPage() {
 
     const idRestaurante = localStorage.getItem("id");
     const [avaliacao, setAvaliacao] = useState([]);
+    const [avaliacaoData, setAvaliacaoData] = useState([]);
 
     useEffect(() => {
         async function getAvaliacoes() {
             try {
                 const response = await axios.get(`http://localhost:3000/v1/saveeats/avaliacoes/restaurante/idRestaurante/${idRestaurante}`);
-                const responseData = response.data.avaliacoes_do_restaurante
-                console.log(responseData);
-                setAvaliacao(responseData)
+                const responseDataAvaliacao = response.data.avaliacoes_do_restaurante
+                const responseData = response.data
+                setAvaliacaoData(responseData)
+                setAvaliacao(responseDataAvaliacao)
             } catch (error) {
                 console.error('Erro ao obter dados da API:', error)
             }
         }
         getAvaliacoes()
     }, [])
+
+    function mediaEstrelas(media) {
+        const numeroEstrelas = Math.round(parseFloat(media));
+        const stars = [];
+
+        for (let i = 1; i <= 5; i++) {
+            if (i <= numeroEstrelas) {
+                stars.push(<FontAwesomeIcon icon={faStar} key={i} className="star-filled-avaliacao"/>);
+            } else {
+                stars.push(<FontAwesomeIcon icon={faStar} key={i} className="star-empty-avaliacao"/>);
+            }
+        }
+
+        return stars;
+    }
 
     return (
         <div>
@@ -49,20 +66,25 @@ export function AvaliacaoPage() {
                         <div className="card_avaliacao">
 
                             <div className="container_media_estrelas">
-                                <p className="title_media_estrelas">4,0</p>
-                                <img className="media_estrelas" src={img2} alt="" />
-                                <p className="titdesc_media_estrelas">355 avaliações</p>
+
+                                <p className="title_media_estrelas">{avaliacaoData.media_estrelas} </p>
+
+                                <div className="star-rating">
+                                    {mediaEstrelas(avaliacaoData.media_estrelas)}
+                                </div>
+
+                                <p className="titdesc_media_estrelas">{avaliacaoData.quantidade_avaliacoes} avaliações</p>
                             </div>
 
                             <div className="container_bars_estrelas">
 
-                                <BarAvaliacao/>
+                                <BarAvaliacao />
 
                             </div>
                         </div>
                     </div>
 
-                    <p className="quantidade-avaliacoes">20 avaliações encontradas</p>
+                    <p className="quantidade-avaliacoes">{avaliacaoData.quantidade_avaliacoes} avaliações encontradas</p>
 
                     <div className="container_avaliacao">
 

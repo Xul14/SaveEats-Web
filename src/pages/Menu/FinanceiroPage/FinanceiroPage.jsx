@@ -6,8 +6,19 @@ import "./FinanceiroPage.css"
 import { MenuNavigation } from "../../../components/MenuNavigation/MenuNavigation";
 import { CardsDesempenho } from "../../../components/CardsDesempenho/CardsDesempenho";
 import { HeaderPages } from "../../../components/HeaderPages/Header";
+import { PieChart, Pie } from 'recharts';
+
 
 export function FinanceiroPage() {
+
+    const data = [
+        { name: 'Geeksforgeeks', students: 400, fill: '#B7CB9F' },
+        { name: 'Technical scripter', students: 700, fill: '#90AE6E' },
+        { name: 'Geek-i-knack', students: 200, fill: '#295F1B' },
+        { name: 'Geek-o-mania', students: 1000, fill: '#FE9112' }
+    ];
+
+
     return (
         <div>
             <div className="container-financeiro">
@@ -21,7 +32,20 @@ export function FinanceiroPage() {
 
                     <div className="container-resumo-valores">
 
-                        <div className="grafico-financeiro"></div>
+                        <div className="grafico-financeiro">
+                            <PieChart width={380} height={380}>
+                                {data.map((entry, index) => (
+                                    <Pie
+                                        key={`pie-${index}`}
+                                        data={[entry]}
+                                        dataKey="students"
+                                        outerRadius={180}
+                                        fill={entry.fill}
+                                    />
+                                ))}
+                            </PieChart>
+
+                        </div>
 
                         <div className="resumo-valores-financeiro">
 
