@@ -45,12 +45,13 @@
     padding-bottom: 2rem;
 }
 
+
 .linhas-custos {
     gap: 5rem;
     display: grid;
     padding-top: 10px;
     font-size: 1.25rem;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 2.5fr 1fr;
 }
 
 .text-linha-custo {
@@ -63,6 +64,7 @@
 
 .total-mensal {
     color: #276D15;
+    font-weight: 600;
 }
 
 .cards-financeiros {

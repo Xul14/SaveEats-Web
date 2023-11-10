@@ -6,6 +6,7 @@ import "./HorarioFuncionamentoPage.css"
 import { MenuNavigation } from "../../../components/MenuNavigation/MenuNavigation";
 import { HeaderPages } from "../../../components/HeaderPages/Header";
 import { CalendarFuncionamento } from '../../../components/CalendarFuncionamento/CalendarFuncionamento'
+import { HorarioDiaSemana } from "../../../components/HorarioDiaSemana/HorarioDiaSemana";
 
 export function HorarioFuncionamentoPage() {
     return (
@@ -21,6 +22,10 @@ export function HorarioFuncionamentoPage() {
 
                     <div className="calendario">
                         <CalendarFuncionamento></CalendarFuncionamento>
+                    </div>
+
+                    <div className="container-horarios-funcionamento">
+                        <HorarioDiaSemana></HorarioDiaSemana>
                     </div>
 
                 </div>

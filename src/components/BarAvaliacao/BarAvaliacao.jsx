@@ -22,7 +22,7 @@ export const BarAvaliacao = () => {
         }
         getAvaliacoes()
     }, [])
-;
+        ;
     const data = [
         { label: '5 Estrelas', value: avaliacaoData[4] },
         { label: '4 Estrelas', value: avaliacaoData[3] },
@@ -31,31 +31,31 @@ export const BarAvaliacao = () => {
         { label: '1 Estrela', value: avaliacaoData[0] },
     ];
 
-   const totalValue = data.reduce((acc, item) => acc + item.value, 0);
+    const totalValue = data.reduce((acc, item) => acc + item.value, 0);
 
-    return (
+        return (
 
-        <div className="bar-chart">
+            <div className="bar-chart">
 
-            {data.map((item, index) => (
+                {data.map((item, index) => (
 
-                <div className="container-bar-av">
+                    <div className="container-bar-av">
 
-                    <div className="bar_label">{item.label}</div>
+                        <div className="bar_label">{item.label}</div>
 
-                    <div className="bar" key={index}>
-                        <div className="bar_fill" style={{ width: `${(item.value / totalValue) * 100}%` }}></div>
+                        <div className="bar" key={index}>
+                            <div className="bar_fill" style={{ width: `${(item.value / totalValue) * 100}%` }}></div>
+                        </div>
+
+                        <p className="quant_avaliacao_estrela">{item.value}</p>
+
                     </div>
 
-                    <p className="quant_avaliacao_estrela">{item.value}</p>
+                ))}
 
-                </div>
-
-            ))}
-
-        </div>
-    );
-};
+            </div>
+        );
+    };
 
 
 

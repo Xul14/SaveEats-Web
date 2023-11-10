@@ -17,6 +17,21 @@ export function FinanceiroPage() {
 
     const [financeiro, setFinanceiro] = useState([])
     const [financeiroMensal, setFinanceiroMensal] = useState([])
+    const [resumoValores, setResumoValores] = useState([])
+
+    //Resumo dos valores
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await axios.get(`http://localhost:3000/v1/saveeats/valor-total-liquido-comissao/restaurante/idRestaurante/${idRestaurante}`);
+                const responseData = response.data.dados_financeiro
+                setResumoValores(responseData)
+            } catch (error) {
+                console.error('Erro ao obter dados da API:', error)
+            }
+        }
+        fetchData()
+    }, [])
 
     //Acompanhamento diário
     useEffect(() => {
@@ -39,7 +54,6 @@ export function FinanceiroPage() {
                 const response = await axios.get(`http://localhost:3000/v1/saveeats/acompanhamento-desempenho-mes-atual/restaurante/idRestaurante/${idRestaurante}`);
                 const responseData = response.data.acompanhamento_desempenho_mes_atual
                 setFinanceiroMensal(responseData)
-                console.log(responseData);
             } catch (error) {
                 console.error('Erro ao obter dados da API:', error)
             }
@@ -86,20 +100,20 @@ export function FinanceiroPage() {
 
                             <span className="text-resumo-valores">Resumo dos valores</span>
 
-                            <div className="linhas-custos">
-                                <span className="text-linha-custo">Total de vendas</span>
-                                <span className="valor-custo">R$ 20.011,13</span>
-                            </div>
+                                <div className="linhas-custos">
+                                    <span className="text-linha-custo">Total de vendas</span>
+                                    <span className="valor-custo">{`R$ ${resumoValores.length > 0 ? resumoValores[0].total_pedidos : "0,00"}`}</span>
+                                </div>
 
-                            <div className="linhas-custos">
-                                <span className="text-linha-custo">Comissão Save Eats (11%)</span>
-                                <span className="valor-custo">R$ 4.500,88</span>
-                            </div>
+                                <div className="linhas-custos">
+                                    <span className="text-linha-custo">Comissão Save Eats (11%)</span>
+                                    <span className="valor-custo">{`R$ ${resumoValores.length > 0 ? resumoValores[0].comissao_save_eats : "0,00"}`}</span>
+                                </div>
 
-                            <div className="linhas-custos">
-                                <span className="text-linha-custo">Total líquido</span>
-                                <span className="valor-custo total-mensal">R$ 15.510,25</span>
-                            </div>
+                                <div className="linhas-custos">
+                                    <span className="text-linha-custo">Total líquido</span>
+                                    <span className="valor-custo total-mensal">{`R$ ${resumoValores.length > 0 ? resumoValores[0].valor_liquido : "0,00"}`}</span>
+                                </div>
 
                         </div>
 
@@ -125,8 +139,6 @@ export function FinanceiroPage() {
                             thirdColumn="Valor líquido"
                             thirdData={`R$ ${financeiroMensal.length > 0 ? financeiroMensal[0].valor_liquido_mes_atual : "0,00"}`}
                         />
-                        {/* <CardsDesempenho titleCard="Acompanhamento de desempenho" firstColumn="Pedidos hoje" firstData={financeiro.quantidade_pedidos_data_atual} secondColumn="Valor vendido" secondData={`R$ ${financeiro.valor_total_pedidos_data_atual}`} thirdColumn="Pedidos concluídos" thirdData={financeiro.quantidade_pedidos_concluido_data_atual}></CardsDesempenho> */}
-                        {/* <CardsDesempenho titleCard="Acompanhamento de desempenho total" firstColumn="Pedidos no mês" firstData="5" secondColumn="Valor vendido (Bruto)" secondData="R$ 211,12" thirdColumn="Valor líquido" thirdData="3"></CardsDesempenho> */}
                     </div>
 
                 </div>

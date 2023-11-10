@@ -15,22 +15,37 @@ export function FormasPagamentoPage() {
     //Consumo da API para pegar as formas de pagamento
     const [formaPagamento, setFormaPagamento] = useState([]);
 
+    // useEffect(() => {
+    //     async function formaPagamentoData() {
+    //         try {
+    //             const formasPagamento = await axios.get('http://localhost:3000/v1/saveeats/obter-dados-do-mercado-pago');
+    //             const formaPagamentoData = formasPagamento.data;
+    //             setFormaPagamento(formaPagamentoData);
+    //             console.log(formasPagamento);
+
+    //         } catch (error) {
+    //             console.error('Erro ao obter dados do Mercado Pago:', error);
+    //         }
+    //     }
+
+    //     formaPagamentoData();
+    // }, []);
+
     useEffect(() => {
         async function formaPagamentoData() {
             try {
-                const formasPagamento = await axios.get('http://localhost:3000/v1/saveeats/obter-dados-do-mercado-pago');
-                const formaPagamentoData = formasPagamento.data;
+                const formasPagamento = await axios.get('http://localhost:3000/v1/saveeats/forma/pagamento');
+                const formaPagamentoData = formasPagamento.data.formas_de_pagamento;
+                console.log(formaPagamentoData);
                 setFormaPagamento(formaPagamentoData);
-                console.log(formasPagamento);
 
             } catch (error) {
-                console.error('Erro ao obter dados do Mercado Pago:', error);
+                console.error('Erro ao obter dados:', error);
             }
         }
 
         formaPagamentoData();
     }, []);
-
 
     return (
 
@@ -62,13 +77,22 @@ export function FormasPagamentoPage() {
 
                             <div className="container-tipos-pagamento">
 
-                                {formaPagamento.map((formaPagamento, index) => (
+                                {/* {formaPagamento.map((formaPagamento, index) => (
                                     <TiposPagamento
                                         key={index}
                                         nomeFormaPagamento={formaPagamento.name}
                                         imgFormaPagamento={formaPagamento.secure_thumbnail}
                                     />
+                                ))} */}
+
+                                {formaPagamento.map((formaPagamento, index) => (
+                                    <TiposPagamento
+                                        key={index}
+                                        nomeFormaPagamento={formaPagamento.nome_forma_pagamento}
+                                        imgFormaPagamento={formaPagamento.foto_bandeira}
+                                    />
                                 ))}
+
 
                             </div>
 
