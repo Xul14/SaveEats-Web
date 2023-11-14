@@ -1,92 +1,45 @@
-// //Import React
-// import React, { useState, useEffect } from "react";
-
-// //Import Axios para integração
-// import axios from 'axios'
-// import "./HorarioDiaSemana.css"
-
-// export function HorarioDiaSemana() {
-
-//     const [diaSemana, setDiaSemana] = useState([])
-
-//     useEffect(() => {
-//         async function fetchData() {
-//             try {
-//                 const response = await axios.get('http://localhost:3000/v1/saveeats/dia/semana');
-//                 const responseData = response.data.dia_semana
-//                 setDiaSemana(responseData)
-//                 console.log(responseData);
-//             } catch (error) {
-//                 console.error('Erro ao obter dados da API:', error)
-//             }
-//         }
-//         fetchData()
-//     }, [])
-
-//     return (
-
-//         <div className="dia-semana-container">
-
-//             <div className="inicio-termino">
-//                 <p></p>
-//                 <p className="text-inicio-termino">Início</p>
-//                 <p className="text-inicio-termino">Término</p>
-//                 <p className="text-inicio-termino">Tempo total</p>
-//             </div>
-
-//             <div className="dia-semana-item">
-
-//                 {/* <div className="dia-semana-rows">
-//                     <p className="dia-da-semana">Domingo</p>
-//                     <p className="horario">12:00</p>
-//                     <p className="horario">12:00</p>
-//                     <p className="horario">12:00</p>
-//                 </div> */}
-
-//                 <div className="dia-semana-rows">
-
-//                     {diaSemana.map((diaSemana, index) => (
-//                         <p className="dia-da-semana">Domingo</p>
-//                     ))}
-
-//                 </div>
-
-//                 <div className="dia-semana-rows">
-
-//                     <div className="container-hora">
-
-//                         <p className="horario">12:00</p>
-//                         <p className="horario">12:00</p>
-//                         <p className="horario">12:00</p>
-
-//                     </div>
-//                 </div>
-//             </div>
-
-//         </div>
-//     )
-// }
-
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import "./HorarioDiaSemana.css";
 
 export function HorarioDiaSemana() {
-  const [diaSemana, setDiaSemana] = useState([]);
+
+  const idRestaurante = localStorage.getItem("id");
+
+  const [diasSemana, setDiasSemana] = useState([]);
+  const [horariosFuncionamento, setHorariosFuncionamento] = useState([]);
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchDiasSemana() {
       try {
         const response = await axios.get('http://localhost:3000/v1/saveeats/dia/semana');
         const responseData = response.data.dia_semana;
-        setDiaSemana(responseData);
+        setDiasSemana(responseData);
         console.log(responseData);
       } catch (error) {
-        console.error('Erro ao obter dados da API:', error);
+        console.error('Erro ao obter dados dos dias da semana:', error);
       }
     }
-    fetchData();
+
+    async function fetchHorariosFuncionamento() {
+      try {
+        const response = await axios.get(`http://localhost:3000/v1/saveeats/restaurante/dia-horario-funcionamento/idRestaurante/${idRestaurante}`);
+        const responseData = response.data.dias_horarios_funcionamento;
+        setHorariosFuncionamento(responseData);
+        console.log(responseData);
+      } catch (error) {
+        console.error('Erro ao obter dados dos horários de funcionamento:', error);
+      }
+    }
+
+    fetchDiasSemana();
+    fetchHorariosFuncionamento();
   }, []);
+
+  const getHorarioPorDia = (dia, tipo) => {
+    const horario = horariosFuncionamento.find((item) => item.dia_da_semana === dia);
+    return horario ? (tipo === "inicio" ? horario.horario_inicio : horario.horario_final) : "-";
+  };
 
   return (
     <div className="dia-semana-container">
@@ -98,13 +51,12 @@ export function HorarioDiaSemana() {
       </div>
 
       <div className="dia-semana-item">
-        {diaSemana.map((dia, index) => (
+
+        {diasSemana.map((dia, index) => (
           <div key={index} className="dia-semana-rows">
             <p className="dia-da-semana">{dia.dia_semana}</p>
-            {/* Adicione os elementos correspondentes ao início, término e tempo total */}
-            <p className="horario">12:00</p>
-            <p className="horario">12:00</p>
-            <p className="horario">12:00</p>
+            <p className="horario">{getHorarioPorDia(dia.dia_semana, "inicio")}</p>
+            <p className="horario">{getHorarioPorDia(dia.dia_semana, "termino")}</p>
           </div>
         ))}
       </div>
