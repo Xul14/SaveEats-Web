@@ -40,8 +40,9 @@ export function HeaderDetalhesPedido() {
     
                 if (responseEndereco && responseEndereco.length > 0) {
                     const endereco = responseEndereco[0];
-                    const enderecoFormatado = `Entrega em: ${endereco.rua_cliente} ${endereco.numero_endereco_cliente}, ${endereco.bairro_cliente}, ${endereco.nome_cidade} - ${endereco.nome_estado}`;
+                    const enderecoFormatado = `Entrega em: ${endereco.logradouro_cliente} ${endereco.numero_endereco_cliente}, ${endereco.bairro_cliente}, ${endereco.localidade_cliente} - ${endereco.uf_cliente}`;
                     setEnderecoFormatado(enderecoFormatado);
+                    console.log(enderecoFormatado);
                 }
     
             } catch (error) {

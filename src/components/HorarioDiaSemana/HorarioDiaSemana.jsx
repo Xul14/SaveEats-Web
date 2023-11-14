@@ -25,8 +25,8 @@ export function HorarioDiaSemana() {
       try {
         const response = await axios.get(`http://localhost:3000/v1/saveeats/restaurante/dia-horario-funcionamento/idRestaurante/${idRestaurante}`);
         const responseData = response.data.dias_horarios_funcionamento;
-        setHorariosFuncionamento(responseData);
         console.log(responseData);
+        setHorariosFuncionamento(responseData);
       } catch (error) {
         console.error('Erro ao obter dados dos horários de funcionamento:', error);
       }
@@ -40,6 +40,7 @@ export function HorarioDiaSemana() {
     const horario = horariosFuncionamento.find((item) => item.dia_da_semana === dia);
     return horario ? (tipo === "inicio" ? horario.horario_inicio : horario.horario_final) : "-";
   };
+  
 
   return (
     <div className="dia-semana-container">
@@ -47,7 +48,6 @@ export function HorarioDiaSemana() {
         <p></p>
         <p className="text-inicio-termino">Início</p>
         <p className="text-inicio-termino">Término</p>
-        <p className="text-inicio-termino">Tempo total</p>
       </div>
 
       <div className="dia-semana-item">
@@ -55,8 +55,8 @@ export function HorarioDiaSemana() {
         {diasSemana.map((dia, index) => (
           <div key={index} className="dia-semana-rows">
             <p className="dia-da-semana">{dia.dia_semana}</p>
-            <p className="horario">{getHorarioPorDia(dia.dia_semana, "inicio")}</p>
-            <p className="horario">{getHorarioPorDia(dia.dia_semana, "termino")}</p>
+            <p className="horario-inicio-termino">{getHorarioPorDia(dia.dia_semana, "inicio")}</p>
+            <p className="horario-inicio-termino">{getHorarioPorDia(dia.dia_semana, "termino")}</p>
           </div>
         ))}
       </div>

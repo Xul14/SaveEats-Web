@@ -24,6 +24,7 @@ export function HomePage() {
     const [pedidosCancelados, setPedidosCancelados] = useState(0);
     const [pedidosAtrasados, setPedidosAtrasados] = useState(0);
     const [produtosPausados, setProdutosPausados] = useState(0);
+    const [desempenho, setDesempenho] = useState([])
 
     useEffect(() => {
         const getProdutosPausados = async () => {
@@ -73,6 +74,19 @@ export function HomePage() {
 
         getPedidosAtrasados(); 
     }, [idRestaurante]); 
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await axios.get(`http://localhost:3000/v1/saveeats/acompanhamento-desempenho-data-atual/restaurante/idRestaurante/${idRestaurante}`);
+                const responseData = response.data.acompanhamento_desempenho_data_atual
+                setDesempenho(responseData)
+            } catch (error) {
+                console.error('Erro ao obter dados da API:', error)
+            }
+        }
+        fetchData()
+    }, [])
 
     return (
         <main className="main-menu">
@@ -124,7 +138,15 @@ export function HomePage() {
                 </div>
 
                 <div className="container-desempenho">
-                    <CardsDesempenho titleCard="Acompanhamento de desempenho" firstColumn="Pedidos hoje" firstData="5" secondColumn="Valor vendido" secondData="R$ 211,12" thirdColumn="Pedidos concluídos" thirdData="3"></CardsDesempenho>
+                <CardsDesempenho
+                            titleCard="Acompanhamento de desempenho"
+                            firstColumn="Pedidos hoje"
+                            firstData={desempenho.length > 0 ? desempenho[0].quantidade_pedidos_data_atual : 0}
+                            secondColumn="Valor vendido"
+                            secondData={`R$ ${desempenho.length > 0 ? desempenho[0].valor_total_pedidos_data_atual : "0,00"}`}
+                            thirdColumn="Pedidos concluídos"
+                            thirdData={desempenho.length > 0 ? desempenho[0].quantidade_pedidos_concluido_data_atual : 0}
+                        />
                 </div>
 
                 <div className="container-atrasos-pedidos">

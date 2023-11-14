@@ -69,16 +69,10 @@ export function DetalhesPedidoPage() {
     const handleButtonClick = async () => {
         if (!buttonClicked) {
             setButtonClicked(true);
-            // Faça o que você deseja quando o botão é clicado pela primeira vez (Confirmar Pedido)
         } else {
-            // Se o botão já foi clicado, faça outra ação (Atualizar Status)
             console.log("já clicado");
         }
     };
-
-    // const formatPrice = (precoTotal) => {
-    //     return `R$ ${precoTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`.replace('.', ',');
-    // };
 
     return (
         <div>
