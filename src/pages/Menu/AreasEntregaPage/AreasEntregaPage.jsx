@@ -22,39 +22,35 @@ export function AreasEntregaPage() {
     const [openModal, setOpenModal] = useState(false)
     const [raioEntrega, setRaioEntrega] = useState('')
 
-    // function LocationTracker() {
-        useEffect(() => {
-          const success = (pos) => {
+    useEffect(() => {
+        const success = (pos) => {
             console.log('Latitude:', pos.coords.latitude);
             console.log('Longitude:', pos.coords.longitude);
-          };
-      
-          const error = (err) => {
+        };
+
+        const error = (err) => {
             console.error('Erro ao obter localização:', err);
-          };
-      
-          const options = {
+        };
+
+        const options = {
             enableHighAccuracy: true,
             timeout: 5000,
-          };
-      
-          const watchID = navigator.geolocation.watchPosition(success, error, options);
-      
-          // Certifique-se de parar a observação quando o componente for desmontado
-          return () => {
+        };
+
+        const watchID = navigator.geolocation.watchPosition(success, error, options);
+
+        return () => {
             navigator.geolocation.clearWatch(watchID);
-          };
-        }, []);
-      
-    //     return null; // Este componente não renderiza nada na tela
-    //   }
+        };
+    }, []);
+
 
     useEffect(() => {
         async function areaEntregaData() {
             try {
                 const areaEntregaResponse = await axios.get(`http://localhost:3000/v1/saveeats/restaurante/frete-area-entrega/idRestaurante/${idRestaurante}`);
                 const areaEntregaData = areaEntregaResponse.data.frete_area_entrega_do_restaurante;
-                
+
                 if (areaEntregaData[0] && areaEntregaData[0].raio_entrega) {
                     setRaioEntrega(areaEntregaData[0].raio_entrega);
                 }
