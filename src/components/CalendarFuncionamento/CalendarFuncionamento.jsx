@@ -21,6 +21,7 @@ export const CalendarFuncionamento = () => {
 
     const wrapperStyle = {
         width: 380,
+        zIndex: 0,
         border: `1px solid ${token.colorBorderSecondary}`,
         borderRadius: token.borderRadiusLG,
         boxShadow: '3px 3px 15px #AFACAB',

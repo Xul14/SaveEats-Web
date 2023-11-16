@@ -1,5 +1,6 @@
 //Import React
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
 
 //Import css e components
 import "./HorarioFuncionamentoPage.css"
@@ -9,6 +10,52 @@ import { CalendarFuncionamento } from '../../../components/CalendarFuncionamento
 import { HorarioDiaSemana } from "../../../components/HorarioDiaSemana/HorarioDiaSemana";
 
 export function HorarioFuncionamentoPage() {
+
+    const idRestaurante = localStorage.getItem("id");
+
+    const [diasSemana, setDiasSemana] = useState([]);
+    const [horariosFuncionamento, setHorariosFuncionamento] = useState([]);
+
+    useEffect(() => {
+        async function fetchDiasSemana() {
+            try {
+                const response = await axios.get('http://localhost:3000/v1/saveeats/dia/semana');
+                const responseData = response.data.dia_semana;
+                setDiasSemana(responseData);
+                console.log(responseData);
+            } catch (error) {
+                console.error('Erro ao obter dados dos dias da semana:', error);
+            }
+        }
+
+        async function fetchHorariosFuncionamento() {
+            try {
+                const response = await axios.get(`http://localhost:3000/v1/saveeats/restaurante/dia-horario-funcionamento/idRestaurante/${idRestaurante}`);
+                const responseData = response.data.dias_horarios_funcionamento;
+                console.log(responseData);
+                setHorariosFuncionamento(responseData);
+            } catch (error) {
+                console.error('Erro ao obter dados dos horários de funcionamento:', error);
+            }
+        }
+
+        fetchDiasSemana();
+        fetchHorariosFuncionamento();
+    }, []);
+
+    const getHorarioPorDia = (dia, tipo) => {
+        if (!horariosFuncionamento || horariosFuncionamento.length === 0) {
+            return "-";
+        }
+        const horario = horariosFuncionamento.find((item) => item.dia_da_semana === dia);
+
+        if (!horario) {
+            return "-";
+        }
+
+        return tipo === "inicio" ? horario.horario_inicio : horario.horario_final;
+    };
+
     return (
         <div>
             <div className="container-horario-funcionamento">
@@ -25,7 +72,22 @@ export function HorarioFuncionamentoPage() {
                     </div>
 
                     <div className="container-horarios-funcionamento">
-                        <HorarioDiaSemana></HorarioDiaSemana>
+
+                        <div className="inicio-termino">
+                            <p className="text-dia-semana">Dia da semana</p>
+                            <p className="text-inicio-termino">Início</p>
+                            <p className="text-inicio-termino">Término</p>
+                        </div>
+
+                        {diasSemana.map((dia, index) => (
+                            <HorarioDiaSemana
+                                key={index}
+                                id={dia.id}
+                                diaSemana={dia.dia_semana}
+                                inicio={getHorarioPorDia(dia.dia_semana, "inicio")}
+                                termino={getHorarioPorDia(dia.dia_semana, "termino")}
+                            />
+                        ))}
                     </div>
 
                 </div>
