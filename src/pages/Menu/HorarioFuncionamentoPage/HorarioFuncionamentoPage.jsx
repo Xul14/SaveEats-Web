@@ -8,6 +8,7 @@ import { MenuNavigation } from "../../../components/MenuNavigation/MenuNavigatio
 import { HeaderPages } from "../../../components/HeaderPages/Header";
 import { CalendarFuncionamento } from '../../../components/CalendarFuncionamento/CalendarFuncionamento'
 import { HorarioDiaSemana } from "../../../components/HorarioDiaSemana/HorarioDiaSemana";
+import { ModalHorarioFuncionamento } from "../../../components/ModalHorarioFuncionamento/ModalHorarioFuncionamento";
 
 export function HorarioFuncionamentoPage() {
 
@@ -56,6 +57,34 @@ export function HorarioFuncionamentoPage() {
         return tipo === "inicio" ? horario.horario_inicio : horario.horario_final;
     };
 
+    const [modalData, setModalData] = useState({
+        id: null,
+        diaSemana: "",
+        inicio: "",
+        termino: "",
+        isEditing: false
+    });
+
+    const handleEdit = ({ id, diaSemana, inicio, termino }) => {
+        setModalData({
+            id,
+            diaSemana,
+            inicio,
+            termino,
+            isEditing: !!id
+        });
+    };
+
+    const handleSaveModal = async (data) => {
+        if (data.id) {
+            // Lógica para editar um horário existente
+        } else {
+            // Lógica para adicionar um novo horário
+        }
+    };
+
+    console.log(horariosFuncionamento);
+
     return (
         <div>
             <div className="container-horario-funcionamento">
@@ -86,12 +115,16 @@ export function HorarioFuncionamentoPage() {
                                 diaSemana={dia.dia_semana}
                                 inicio={getHorarioPorDia(dia.dia_semana, "inicio")}
                                 termino={getHorarioPorDia(dia.dia_semana, "termino")}
+                                onEdit={handleEdit}
                             />
                         ))}
                     </div>
-
                 </div>
             </div>
+            <ModalHorarioFuncionamento
+                data={modalData}
+                onSave={handleSaveModal}
+            />
         </div>
     )
 }

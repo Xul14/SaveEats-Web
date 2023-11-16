@@ -7,6 +7,8 @@ import { TresPontos } from "../TresPontos/TresPontos"
 
 export function HorarioDiaSemana({ id, diaSemana, inicio, termino, onEdit, onDelete }) {
 
+  const [horariosFuncionamento, setHorariosFuncionamento] = useState([]);
+
   const handleDeleteClick = () => {
     console.log(id);
   };
