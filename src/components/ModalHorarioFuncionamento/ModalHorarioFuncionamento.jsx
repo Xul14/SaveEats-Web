@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./ModalHorarioFuncionamento.css"
 
 export function ModalHorarioFuncionamento({ data, onSave }) {
     const [formData, setFormData] = useState({
@@ -32,9 +33,10 @@ export function ModalHorarioFuncionamento({ data, onSave }) {
     };
 
     return (
-        <div className={`modal ${data.id ? 'open' : ''}`}>
+        <div className={`modal ${data.isEditing ? 'open' : ''}`}>
             <div className="modal-content">
                 <span className="close" onClick={() => onSave({})}>&times;</span>
+                {/* <div className="close" style={{ cursor: 'pointer' }} onClick={setModalOpenModalAreaEntrega}>x</div> */}
                 <h2>{data.isEditing ? "Editar" : "Adicionar"} Horário</h2>
                 <form>
                     <label htmlFor="diaSemana">Dia da semana:</label>

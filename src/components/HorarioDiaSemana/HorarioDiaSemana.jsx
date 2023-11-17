@@ -5,24 +5,22 @@ import axios from 'axios';
 import "./HorarioDiaSemana.css";
 import { TresPontos } from "../TresPontos/TresPontos"
 
-export function HorarioDiaSemana({ id, diaSemana, inicio, termino, onEdit, onDelete }) {
-
-  const [horariosFuncionamento, setHorariosFuncionamento] = useState([]);
+export function HorarioDiaSemana({ id, diaSemana, inicio, termino, onEdit, onDelete, horariosFuncionamento }) {
 
   const handleDeleteClick = () => {
     console.log(id);
   };
 
   const handleEditClick = () => {
-    const horarioExistente = horariosFuncionamento.find((item) => item.dia_da_semana === diaSemana);
+    const horarioExistente = horariosFuncionamento.find((item) => item.dia_semana === diaSemana);
     onEdit({
       id: horarioExistente ? horarioExistente.id : null,
       diaSemana,
       inicio,
-      termino
+      termino,
+      isEditing: !!horarioExistente
     });
   };
-
 
   return (
     <div className="dia-semana-container">

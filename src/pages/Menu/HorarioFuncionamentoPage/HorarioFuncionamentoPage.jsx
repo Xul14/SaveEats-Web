@@ -16,6 +16,26 @@ export function HorarioFuncionamentoPage() {
 
     const [diasSemana, setDiasSemana] = useState([]);
     const [horariosFuncionamento, setHorariosFuncionamento] = useState([]);
+    const [modalData, setModalData] = useState({
+        id: null,
+        diaSemana: "",
+        inicio: "",
+        termino: "",
+        isEditing: false
+    });
+
+    
+    // const handleEditIfNeeded = (horarios) => {
+    //     if (modalData.isEditing) {
+    //         const horarioExistente = horarios.find((item) => item.dia_da_semana === modalData.diaSemana);
+    //         handleEdit({
+    //             id: horarioExistente ? horarioExistente.id : null,
+    //             diaSemana: modalData.diaSemana,
+    //             inicio: modalData.inicio,
+    //             termino: modalData.termino
+    //         });
+    //     }
+    // };
 
     useEffect(() => {
         async function fetchDiasSemana() {
@@ -35,6 +55,7 @@ export function HorarioFuncionamentoPage() {
                 const responseData = response.data.dias_horarios_funcionamento;
                 console.log(responseData);
                 setHorariosFuncionamento(responseData);
+                // handleEditIfNeeded(responseData);
             } catch (error) {
                 console.error('Erro ao obter dados dos horários de funcionamento:', error);
             }
@@ -48,22 +69,14 @@ export function HorarioFuncionamentoPage() {
         if (!horariosFuncionamento || horariosFuncionamento.length === 0) {
             return "-";
         }
-        const horario = horariosFuncionamento.find((item) => item.dia_da_semana === dia);
-
+        const horario = horariosFuncionamento.find((item) => item.dia_semana === dia);
+    
         if (!horario) {
             return "-";
         }
-
+    
         return tipo === "inicio" ? horario.horario_inicio : horario.horario_final;
     };
-
-    const [modalData, setModalData] = useState({
-        id: null,
-        diaSemana: "",
-        inicio: "",
-        termino: "",
-        isEditing: false
-    });
 
     const handleEdit = ({ id, diaSemana, inicio, termino }) => {
         setModalData({
@@ -78,8 +91,11 @@ export function HorarioFuncionamentoPage() {
     const handleSaveModal = async (data) => {
         if (data.id) {
             // Lógica para editar um horário existente
+            console.log("edição");
+            console.log(modalData);
         } else {
             // Lógica para adicionar um novo horário
+            console.log("criar");
         }
     };
 
@@ -109,22 +125,25 @@ export function HorarioFuncionamentoPage() {
                         </div>
 
                         {diasSemana.map((dia, index) => (
-                            <HorarioDiaSemana
-                                key={index}
-                                id={dia.id}
-                                diaSemana={dia.dia_semana}
-                                inicio={getHorarioPorDia(dia.dia_semana, "inicio")}
-                                termino={getHorarioPorDia(dia.dia_semana, "termino")}
-                                onEdit={handleEdit}
-                            />
+                             <HorarioDiaSemana
+                             key={index}
+                             id={dia.id}
+                             diaSemana={dia.dia_semana}
+                             inicio={getHorarioPorDia(dia.dia_semana, "inicio")}
+                             termino={getHorarioPorDia(dia.dia_semana, "termino")}
+                             onEdit={handleEdit}
+                             horariosFuncionamento={horariosFuncionamento} 
+                         />
                         ))}
                     </div>
                 </div>
             </div>
+            {modalData.isEditing && (
             <ModalHorarioFuncionamento
                 data={modalData}
                 onSave={handleSaveModal}
             />
+        )}
         </div>
     )
 }
