@@ -65,7 +65,7 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
                     const endereco = responseEndereco[0];
                     const enderecoFormatado = `Entrega em: ${endereco.logradouro_cliente} ${endereco.numero_endereco_cliente}, ${endereco.bairro_cliente}, ${endereco.localidade_cliente} - ${endereco.uf_cliente}`;
                     setEnderecoFormatado(enderecoFormatado);
-                    console.log(enderecoFormatado);
+                    // console.log(enderecoFormatado);
                 }
 
             } catch (error) {

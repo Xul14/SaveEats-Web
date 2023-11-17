@@ -145,7 +145,7 @@ export function ModalFreteAreaEntrega({ isOpenModal, setModalOpenModalAreaEntreg
 
                     <div className="add-item-area-entrega">
 
-                        <div className="closeModal" style={{ cursor: 'pointer' }} onClick={setModalOpenModalAreaEntrega}>x</div>
+                        <div className="closeModalAreaEntrega" style={{ cursor: 'pointer' }} onClick={setModalOpenModalAreaEntrega}>x</div>
 
                         <div className="body-area-entrega-modal">
 

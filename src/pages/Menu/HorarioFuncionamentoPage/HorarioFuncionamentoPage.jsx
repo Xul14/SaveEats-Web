@@ -26,13 +26,13 @@ export function HorarioFuncionamentoPage() {
 
     const handleCloseModal = () => {
         setModalData({
-          id: null,
-          diaSemana: "",
-          inicio: "",
-          termino: "",
-          isEditing: false
+            id: null,
+            diaSemana: "",
+            inicio: "",
+            termino: "",
+            isEditing: false
         });
-      };;
+    };;
 
     useEffect(() => {
         async function fetchDiasSemana() {
@@ -66,11 +66,11 @@ export function HorarioFuncionamentoPage() {
             return "-";
         }
         const horario = horariosFuncionamento.find((item) => item.dia_semana === dia);
-    
+
         if (!horario) {
             return "-";
         }
-    
+
         return tipo === "inicio" ? horario.horario_inicio : horario.horario_final;
     };
 
@@ -86,8 +86,32 @@ export function HorarioFuncionamentoPage() {
 
     const handleSaveModal = async (data) => {
         if (data.id) {
+
+            const dadosAtualizados = {
+                restaurante_id: idRestaurante,
+                dia_semana_id: 4,
+                horario_inicio: "09:00:00",
+                horario_final: "19:00:00"
+            }
+
+            console.log(dadosAtualizados);
+
+            try {
+                const response = await axios.put(`http://localhost:3000/v1/saveeats/restaurante/dia-horario-funcionamento`, dadosAtualizados);
+
+                if (response.status === 200) {
+                    console.log("Editado com sucesso");
+                } else {
+                    console.log("Erro ao editar");
+                }
+            } catch (error) {
+                console.error('Erro ao atualizar os dados:', error);
+            }
+
             console.log("edição");
             console.log(modalData);
+
+
         } else {
             console.log("criar");
         }
@@ -119,26 +143,26 @@ export function HorarioFuncionamentoPage() {
                         </div>
 
                         {diasSemana.map((dia, index) => (
-                             <HorarioDiaSemana
-                             key={index}
-                             id={dia.id}
-                             diaSemana={dia.dia_semana}
-                             inicio={getHorarioPorDia(dia.dia_semana, "inicio")}
-                             termino={getHorarioPorDia(dia.dia_semana, "termino")}
-                             onEdit={handleEdit}
-                             horariosFuncionamento={horariosFuncionamento} 
-                         />
+                            <HorarioDiaSemana
+                                key={index}
+                                id={dia.id}
+                                diaSemana={dia.dia_semana}
+                                inicio={getHorarioPorDia(dia.dia_semana, "inicio")}
+                                termino={getHorarioPorDia(dia.dia_semana, "termino")}
+                                onEdit={handleEdit}
+                                horariosFuncionamento={horariosFuncionamento}
+                            />
                         ))}
                     </div>
                 </div>
             </div>
             {modalData.isEditing && (
-            <ModalHorarioFuncionamento
-                data={modalData}
-                onSave={handleSaveModal}
-                onClose={handleCloseModal}
-            />
-        )}
+                <ModalHorarioFuncionamento
+                    data={modalData}
+                    onSave={handleSaveModal}
+                    onClose={handleCloseModal}
+                />
+            )}
         </div>
     )
 }

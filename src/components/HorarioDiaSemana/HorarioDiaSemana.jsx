@@ -10,7 +10,7 @@ export function HorarioDiaSemana({ id, diaSemana, inicio, termino, onEdit, onDel
   const handleDeleteClick = () => {
     console.log(id);
   };
-console.log(id);
+
   const handleEditClick = () => {
     const horarioExistente = horariosFuncionamento.find((item) => item.dia_semana === diaSemana);
     onEdit({

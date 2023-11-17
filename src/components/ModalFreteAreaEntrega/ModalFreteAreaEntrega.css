@@ -24,14 +24,14 @@
     grid-template-rows: 50px 1fr 80px;
 }
 
-.closeModal {
+.closeModalAreaEntrega {
     grid-area: header;
     color: #000;
     display: flex;
     font-size: 2rem;
-    font-weight: 600;
+    font-weight: 700;
     justify-content: end;
-    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .body-area-entrega-modal {

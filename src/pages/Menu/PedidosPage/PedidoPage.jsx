@@ -41,7 +41,7 @@ export function PedidosPage() {
         }
 
         setTimeout(checkForNewPedidos, 5000);
-        setPlaySound(true); // Aciona a reprodução do som
+        setPlaySound(true); 
         setTimeout(() => setPlaySound(false), 5000);
     };
 
