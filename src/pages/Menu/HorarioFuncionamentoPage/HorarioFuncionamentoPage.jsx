@@ -24,18 +24,15 @@ export function HorarioFuncionamentoPage() {
         isEditing: false
     });
 
-    
-    // const handleEditIfNeeded = (horarios) => {
-    //     if (modalData.isEditing) {
-    //         const horarioExistente = horarios.find((item) => item.dia_da_semana === modalData.diaSemana);
-    //         handleEdit({
-    //             id: horarioExistente ? horarioExistente.id : null,
-    //             diaSemana: modalData.diaSemana,
-    //             inicio: modalData.inicio,
-    //             termino: modalData.termino
-    //         });
-    //     }
-    // };
+    const handleCloseModal = () => {
+        setModalData({
+          id: null,
+          diaSemana: "",
+          inicio: "",
+          termino: "",
+          isEditing: false
+        });
+      };;
 
     useEffect(() => {
         async function fetchDiasSemana() {
@@ -55,7 +52,6 @@ export function HorarioFuncionamentoPage() {
                 const responseData = response.data.dias_horarios_funcionamento;
                 console.log(responseData);
                 setHorariosFuncionamento(responseData);
-                // handleEditIfNeeded(responseData);
             } catch (error) {
                 console.error('Erro ao obter dados dos horários de funcionamento:', error);
             }
@@ -78,23 +74,21 @@ export function HorarioFuncionamentoPage() {
         return tipo === "inicio" ? horario.horario_inicio : horario.horario_final;
     };
 
-    const handleEdit = ({ id, diaSemana, inicio, termino }) => {
+    const handleEdit = ({ id, diaSemana, inicio, termino, isEditing }) => {
         setModalData({
             id,
             diaSemana,
             inicio,
             termino,
-            isEditing: !!id
+            isEditing
         });
     };
 
     const handleSaveModal = async (data) => {
         if (data.id) {
-            // Lógica para editar um horário existente
             console.log("edição");
             console.log(modalData);
         } else {
-            // Lógica para adicionar um novo horário
             console.log("criar");
         }
     };
@@ -142,6 +136,7 @@ export function HorarioFuncionamentoPage() {
             <ModalHorarioFuncionamento
                 data={modalData}
                 onSave={handleSaveModal}
+                onClose={handleCloseModal}
             />
         )}
         </div>

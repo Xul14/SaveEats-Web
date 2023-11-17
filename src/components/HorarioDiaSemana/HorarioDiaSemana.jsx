@@ -10,14 +10,14 @@ export function HorarioDiaSemana({ id, diaSemana, inicio, termino, onEdit, onDel
   const handleDeleteClick = () => {
     console.log(id);
   };
-
+console.log(id);
   const handleEditClick = () => {
     const horarioExistente = horariosFuncionamento.find((item) => item.dia_semana === diaSemana);
     onEdit({
       id: horarioExistente ? horarioExistente.id : null,
       diaSemana,
-      inicio,
-      termino,
+      inicio: horarioExistente ? horarioExistente.horario_inicio : "",
+      termino: horarioExistente ? horarioExistente.horario_final : "",
       isEditing: !!horarioExistente
     });
   };
@@ -42,6 +42,5 @@ export function HorarioDiaSemana({ id, diaSemana, inicio, termino, onEdit, onDel
 
       </div>
     </div>
-
   );
 }
