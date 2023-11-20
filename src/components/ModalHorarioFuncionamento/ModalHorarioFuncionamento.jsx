@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./ModalHorarioFuncionamento.css"
 
-export function ModalHorarioFuncionamento({ data, onSave, onClose }) {
+export function ModalHorarioFuncionamento({ data, onSave, onClose, onSaveSuccess }) {
 
     const handleClose = () => {
         onClose()
@@ -35,6 +35,7 @@ export function ModalHorarioFuncionamento({ data, onSave, onClose }) {
 
     const handleSave = () => {
         onSave(formData);
+        onSaveSuccess()
     };
 
     return (

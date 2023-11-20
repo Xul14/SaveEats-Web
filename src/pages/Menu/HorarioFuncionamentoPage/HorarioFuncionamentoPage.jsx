@@ -34,6 +34,27 @@ export function HorarioFuncionamentoPage() {
         });
     };;
 
+    const diasSemanaIdMap = {
+        "Domingo": 1,
+        "Segunda-Feira": 4,
+        "Terça-feira": 5,
+        "Quarta-feira": 7,
+        "Quinta-Feira": 8,
+        "Sexta-Feira": 9,
+        "Sábado": 10
+    };
+
+    const fetchHorarios = async () => {
+        try {
+            const response = await axios.get(`http://localhost:3000/v1/saveeats/restaurante/dia-horario-funcionamento/idRestaurante/${idRestaurante}`);
+            const responseData = response.data.dias_horarios_funcionamento;
+            console.log(responseData);
+            setHorariosFuncionamento(responseData);
+        } catch (error) {
+            console.error('Erro ao obter dados dos horários de funcionamento:', error);
+        }
+    };
+
     useEffect(() => {
         async function fetchDiasSemana() {
             try {
@@ -84,40 +105,48 @@ export function HorarioFuncionamentoPage() {
         });
     };
 
+    const onSaveSuccess = () => {
+        fetchHorarios();
+        handleCloseModal();
+    };
+
+    const getDiaSemanaId = (nomeDia) => {
+        return diasSemanaIdMap[nomeDia] || null;
+    };
+
     const handleSaveModal = async (data) => {
         if (data.id) {
+            const diaSemanaAtual = getDiaSemanaId(data.diaSemana);
 
-            const dadosAtualizados = {
-                restaurante_id: idRestaurante,
-                dia_semana_id: 4,
-                horario_inicio: "09:00:00",
-                horario_final: "19:00:00"
-            }
+            if (diaSemanaAtual) {
+                const dadosAtualizados = {
+                    restaurante_id: idRestaurante,
+                    dia_semana_id: diaSemanaAtual,
+                    horario_inicio: data.inicio,
+                    horario_final: data.termino
+                };
 
-            console.log(dadosAtualizados);
+                try {
+                    const response = await axios.put(`http://localhost:3000/v1/saveeats/restaurante/dia-horario-funcionamento`, dadosAtualizados);
 
-            try {
-                const response = await axios.put(`http://localhost:3000/v1/saveeats/restaurante/dia-horario-funcionamento`, dadosAtualizados);
-
-                if (response.status === 200) {
-                    console.log("Editado com sucesso");
-                } else {
-                    console.log("Erro ao editar");
+                    if (response.status === 200) {
+                        console.log("Editado com sucesso");
+                        onSaveSuccess()
+                    } else {
+                        console.log("Erro ao editar");
+                    }
+                } catch (error) {
+                    console.error('Erro ao atualizar os dados:', error);
                 }
-            } catch (error) {
-                console.error('Erro ao atualizar os dados:', error);
+            } else {
+                console.log("Dia da semana não encontrado");
             }
-
-            console.log("edição");
-            console.log(modalData);
-
 
         } else {
             console.log("criar");
         }
     };
 
-    console.log(horariosFuncionamento);
 
     return (
         <div>
@@ -161,6 +190,7 @@ export function HorarioFuncionamentoPage() {
                     data={modalData}
                     onSave={handleSaveModal}
                     onClose={handleCloseModal}
+                    onSaveSuccess={onSaveSuccess}
                 />
             )}
         </div>
