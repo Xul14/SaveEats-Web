@@ -95,6 +95,19 @@ export function HorarioFuncionamentoPage() {
         return tipo === "inicio" ? horario.horario_inicio : horario.horario_final;
     };
 
+    // const getHorarioPorDia = (dia, tipo) => {
+    //     if (!horariosFuncionamento || horariosFuncionamento.length === 0) {
+    //         return "";
+    //     }
+    //     const horario = horariosFuncionamento.find((item) => item.dia_semana === dia);
+
+    //     if (!horario) {
+    //         return "";
+    //     }
+
+    //     return tipo === "inicio" ? horario.horario_inicio : horario.horario_final;
+    // };
+
     const handleEdit = ({ id, diaSemana, inicio, termino, isEditing }) => {
         setModalData({
             id,
@@ -115,6 +128,7 @@ export function HorarioFuncionamentoPage() {
     };
 
     const handleSaveModal = async (data) => {
+
         if (data.id) {
             const diaSemanaAtual = getDiaSemanaId(data.diaSemana);
 
@@ -143,7 +157,27 @@ export function HorarioFuncionamentoPage() {
             }
 
         } else {
-            console.log("criar");
+            const novoHorario = {
+                restaurante_id: idRestaurante,
+                horario_inicio: data.inicio,
+                horario_final: data.termino,
+                dias_semana: data.diaSemana
+            };
+
+            try {
+                const response = await axios.post(`http://localhost:3000/v1/saveeats/restaurante/dias-horario-funcionamento`, novoHorario);
+
+                if (response.status === 201) {
+                    console.log("Criado com sucesso");
+                    onSaveSuccess()
+                } else {
+                    console.log("Erro ao criar");
+                }
+            } catch (error) {
+                console.error('Erro ao criar horario:', error);
+            }
+
+            console.log(novoHorario);
         }
     };
 

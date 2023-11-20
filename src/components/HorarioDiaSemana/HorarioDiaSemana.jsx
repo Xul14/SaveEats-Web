@@ -18,7 +18,7 @@ export function HorarioDiaSemana({ id, diaSemana, inicio, termino, onEdit, onDel
       diaSemana,
       inicio: horarioExistente ? horarioExistente.horario_inicio : "",
       termino: horarioExistente ? horarioExistente.horario_final : "",
-      isEditing: !!horarioExistente
+      isEditing: true
     });
   };
 
