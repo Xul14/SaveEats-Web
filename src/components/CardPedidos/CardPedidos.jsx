@@ -8,8 +8,6 @@ import axios from 'axios'
 //Import css, imgs, components e outros
 import './CardPedidos.css'
 import relogio from './img/clock.png'
-import check_cinza from './img/check-cinza.png'
-import check_verde from './img/check-verde.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import linha from "../StatusPedido/img/linha.png";
@@ -17,18 +15,25 @@ import { ButtonDetalhesPedido } from "../ButtonDetalhesPedido/ButtonDetalhesPedi
 
 export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statusPedido, previsaoEntrega }) {
 
-    const statuses = [
-        "Pedido Confirmado",
-        "Preparando Pedido",
-        "Pedido a Caminho",
-        "Pedido Entregue"
-    ];
-
     const navigate = useNavigate()
     const allowedStatusSequence = [9, 2, 3, 5];
     const [enderecoFormatado, setEnderecoFormatado] = useState("");
     const [currentStatus, setCurrentStatus] = useState(statusPedido);
-    const [checkColor, setCheckColor] = useState(localStorage.getItem(`pedido_atualizado_${idPedido}`) ? "green" : "gray");
+    const [checkStates, setCheckStates] = useState([false, false, false, false]);
+
+    const statuses = [
+        "Pedido Confirmado",
+        "Pedido sendo preparado",
+        "Pedido a caminho",
+        "Pedido Entregue"
+    ];
+
+    useEffect(() => {
+        const savedCheckStates = localStorage.getItem(`pedido_atualizado_${idPedido}`);
+        if (savedCheckStates) {
+            setCheckStates(JSON.parse(savedCheckStates));
+        }
+    }, [idPedido]);
 
     const updateStatus = async () => {
         const currentIndex = allowedStatusSequence.indexOf(currentStatus);
@@ -43,12 +48,18 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
 
             if (response.status === 200) {
                 setCurrentStatus(newStatus);
-                setCheckColor("green");
-                localStorage.setItem(`pedido_atualizado_${idPedido}`, true);
+
+                const newCheckStates = checkStates.map((_, index) => {
+                    return index <= newStatus - 1 ? true : false;
+                });
+
+                setCheckStates(newCheckStates);
+                localStorage.setItem(`pedido_atualizado_${idPedido}`, JSON.stringify(newCheckStates));
 
             } else {
                 console.log("error");
             }
+
         } catch (error) {
             console.error("Erro ao atualizar o status: ", error);
         }
@@ -65,7 +76,6 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
                     const endereco = responseEndereco[0];
                     const enderecoFormatado = `Entrega em: ${endereco.logradouro_cliente} ${endereco.numero_endereco_cliente}, ${endereco.bairro_cliente}, ${endereco.localidade_cliente} - ${endereco.uf_cliente}`;
                     setEnderecoFormatado(enderecoFormatado);
-                    // console.log(enderecoFormatado);
                 }
 
             } catch (error) {
@@ -82,10 +92,6 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
         localStorage.setItem("statusPedido", statusPedido)
         localStorage.setItem("enderecoCliente", enderecoFormatado)
         navigate("/menu/detalhes/pedido")
-    }
-
-    const onclick = () => {
-        console.log("foi");
     }
 
     return (
@@ -117,12 +123,10 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
                     <div className="icons-line">
                         {allowedStatusSequence.map((status, index) => (
                             <React.Fragment key={index}>
-                                <FontAwesomeIcon icon={faCircleCheck} className="check-icon" style={{ color: index < currentStatus ? "green" : "gray" }} />
+                                <FontAwesomeIcon icon={faCircleCheck} className="check-icon" style={{ color: checkStates[index] ? "green" : "gray" }} />
                                 {index < allowedStatusSequence.length - 1 && <img className="linha-status" src={linha} />}
-                                {/* {index < allowedStatusSequence.length - 1 && <p className="linha">______________________________</p>}; */}
                             </React.Fragment>
                         ))}
-
                     </div>
 
                     <div className="status-hora">
@@ -137,8 +141,6 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
                 <div className="btns-card-pedido">
                     <button className="btn-detalhes" onClick={onClickDetalhesPedido}>Detalhes Pedido</button>
                     <button className="btn-att-status" onClick={updateStatus} >Atualizar status</button>
-                    {/* <button text={"Cancelar pedido"} background={"#FE9112"} onClick={onclick}></button> */}
-                    {/* <button className="btn-att-status" onClick={updateStatus} disabled={currentStatus === 4}>Atualizar status</button> */}
                 </div>
             </div>
 
