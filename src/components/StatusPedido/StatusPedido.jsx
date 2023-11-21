@@ -21,13 +21,32 @@ export function StatusPedido() {
                 const response = await axios.get(`http://localhost:3000/v1/saveeats/detalhes/pedido/id/${idPedido}`)
                 const responsePedido = response.data.detalhes_do_pedido;
                 setPedido(responsePedido);
-                console.log(responsePedido);
+                console.log(responsePedido.status_pedido);
             } catch (error) {
                 console.log('Erro ao pegar os dados:', error);
             }
         }
         getDetailsPedido()
     }, [idPedido])
+
+    const getCheckColor = (index) => {
+        const status = pedido.status_pedido;
+        console.log('Status do pedido:', pedido.status_pedido);
+        if (status === "Pedido Confirmado" && index === 0) {
+            return "green";
+        } else if (status === "Pedido sendo preparado" && index < 2) {
+            return "green";
+        } else if (status === "Pedido a caminho" && index < 3) {
+            return "green";
+        } else if (status === "Pedido entregue") {
+            return "green";
+        } else if (status === "Cancelado") {
+            return "red";
+        } else {
+            return "gray";
+        }
+    };
+
 
     return (
         <>
@@ -44,27 +63,18 @@ export function StatusPedido() {
 
                 <div className="container-icon-status">
 
-                    <div className="icon-status-primeiro">
-                        <FontAwesomeIcon icon={faCircleCheck} className="check-icon" />
-                    </div>
-
-                    <img src={teste} alt="" className="linha-status" />
-
-                    <div className="icon-status-segundo">
-                        <FontAwesomeIcon icon={faCircleCheck} className="check-icon" />
-                    </div>
-
-                    <img src={teste} alt="" className="linha-status" />
-
-                    <div className="icon-status-terceiro">
-                        <FontAwesomeIcon icon={faCircleCheck} className="check-icon" />
-                    </div>
-
-                    <img src={teste} alt="" className="linha-status" />
-
-                    <div className="icon-status-quarto">
-                        <FontAwesomeIcon icon={faCircleCheck} className="check-icon" />
-                    </div>
+                    {[...Array(4)].map((_, index) => (
+                        <React.Fragment key={index}>
+                            <div className={`icon-status-${index + 1}`}>
+                                <FontAwesomeIcon icon={faCircleCheck} className="check-icon" style={{ color: getCheckColor(index) }} />
+                            </div>
+                            {index !== 3 && (
+                                <>
+                                    <img src={teste} alt="" className="linha-status" />
+                                </>
+                            )}
+                        </React.Fragment>
+                    ))}
 
                 </div>
 
@@ -72,9 +82,7 @@ export function StatusPedido() {
 
                     <div className="container-passo-a-passo-status-pedido">
 
-                        <span className="text-passo-a-passo-status">Pedido realizado</span>
-
-                        {/* <span className="horario-pedido-realizado">18:25</span> */}
+                        <span className="text-passo-a-passo-status">Pedido Confirmado</span>
 
                     </div>
 
@@ -82,23 +90,17 @@ export function StatusPedido() {
 
                         <span className="text-passo-a-passo-status">Pedido sendo preparado</span>
 
-                        {/* <span className="horario-sendo-preparado">18:26</span> */}
-
                     </div>
 
                     <div className="container-passo-a-passo-status-pedido">
 
                         <span className="text-passo-a-passo-status">Saiu para entrega</span>
 
-                        {/* <span className="horario-saiu-para-entrega">18:40</span> */}
-
                     </div>
 
                     <div className="container-passo-a-passo-status-pedido">
 
                         <span className="text-passo-a-passo-status">Pedido entregue</span>
-
-                        {/* <span className="horario-saiu-para-entrega">19:00</span> */}
 
                     </div>
 

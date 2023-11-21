@@ -38,10 +38,8 @@ export function PedidosPage() {
         if (pedidos.length > previousPedidos.length) {
             setPlaySound(true);
             setTimeout(() => setPlaySound(false), 5000);
-            console.log("som");
         }
-        
-        console.log("sem som");
+
         setTimeout(checkForNewPedidos, 5000);
         setPlaySound(true); 
         setTimeout(() => setPlaySound(false), 5000);
