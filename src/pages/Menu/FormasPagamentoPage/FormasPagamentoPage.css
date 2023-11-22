@@ -30,10 +30,11 @@
     width: 72vw;
     height: 90%;
     display: grid;
-    grid-template-rows: 25% 75%;
-    background-color: #F5F8F3;
-    box-shadow: 2px 2px 10px#AFACAB;
     padding: 10px;
+    border-radius: 10px;
+    grid-template-rows: 25% 75%;
+    background-color: #fbfcfa;
+    box-shadow: 2px 2px 10px#c3c1c0;
 }
 
 .container-title-pagamento {

@@ -150,7 +150,7 @@
 }
 
 .btn-closed {
-    background-color: green; 
+    background-color: #276D15; 
 }
 
 .circle-icon {
@@ -158,7 +158,7 @@
 }
 
 .circle-icon.open {
-    color: green; 
+    color: #276D15; 
 }
 
 .circle-icon.closed {
