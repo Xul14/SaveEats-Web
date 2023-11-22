@@ -23,7 +23,7 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado, produtoEm
   const [descricaoProduto, setDescricaoProduto] = useState('');
   const [imagemProduto, setImagemProduto] = useState('');
   const [idProduto, setIdProduto] = useState('');
-  const [isEditing, setIsEditing] = useState(false); 
+  const [isEditing, setIsEditing] = useState(false);
   const [produtos, setProdutos] = useState([]);
 
   const resetForm = () => {
@@ -35,7 +35,7 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado, produtoEm
     setImagemProduto('');
     setIdProduto('');
     setIsEditing(false);
-};
+  };
 
   useEffect(() => {
     if (produtoEmEdicao) {
@@ -61,13 +61,22 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado, produtoEm
       console.error('Erro ao fazer upload da imagem:', error);
     }
   };
-  
+
+  const converterPrecoParaBackend = (preco) => {
+    if (preco && preco.includes(',')) {
+      return preco.replace(',', '.');
+    }
+    return preco;
+  };
+
+  const precoParaBackend = converterPrecoParaBackend(precoProduto);
+
   const novoProduto = {
     id: idProduto,
     nome: nomeProduto,
     descricao: descricaoProduto,
     imagem: imagemProduto,
-    preco: precoProduto,
+    preco: precoParaBackend,
     status_produto: statuselecionado,
     categoria_produto: categoriaSelecionada,
     nome_fantasia: nomeRestaurante,
@@ -116,7 +125,7 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado, produtoEm
       try {
         const response = await axios.put(`http://localhost:3000/v1/saveeats/produto/id/${idProduto}`, novoProduto);
         // const response = await axios.put(`https://save-eats.cyclic.cloud/v1/saveeats/produto/id/${idProduto}`, novoProduto);
-        
+
         if (response.status === 200) {
           console.log("Produto editado com sucesso!");
 
@@ -145,6 +154,7 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado, produtoEm
           console.log("Produto criado com sucesso!");
           onProdutoCriado(novoProduto);
           setModalOpen(false);
+
         } else {
           console.error("Falha ao criar o produto.");
           console.log(response);
@@ -239,7 +249,11 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado, produtoEm
 
               <div className="input-span">
                 <span className="span-input-item">Descrição do Produto</span>
-                <input type="text" className="input-modal-desc" value={descricaoProduto} onChange={(e) => setDescricaoProduto(e.target.value)} />
+                <textarea
+                  className="input-modal-desc"
+                  value={descricaoProduto}
+                  onChange={(e) => setDescricaoProduto(e.target.value)}
+                />
               </div>
 
               <button className="btn-criarItem" onClick={handleCreateProduto}>Confirmar</button>
