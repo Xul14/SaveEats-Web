@@ -95,19 +95,6 @@ export function HorarioFuncionamentoPage() {
         return tipo === "inicio" ? horario.horario_inicio : horario.horario_final;
     };
 
-    // const getHorarioPorDia = (dia, tipo) => {
-    //     if (!horariosFuncionamento || horariosFuncionamento.length === 0) {
-    //         return "";
-    //     }
-    //     const horario = horariosFuncionamento.find((item) => item.dia_semana === dia);
-
-    //     if (!horario) {
-    //         return "";
-    //     }
-
-    //     return tipo === "inicio" ? horario.horario_inicio : horario.horario_final;
-    // };
-
     const handleEdit = ({ id, diaSemana, inicio, termino, isEditing }) => {
         setModalData({
             id,

@@ -9,11 +9,13 @@ import axios from 'axios'
 //Import css e components
 import "./HomePage.css"
 import greenImg from "./img/verde.png"
-import { MenuNavigation } from "../../components/MenuNavigation/MenuNavigation";
 import { CardsInformativos } from "../../components/HomeComponents/CardsInformativos/CardsInformativos";
-import { Cards } from "../../components/HomeComponents/Cards/Cards";
 import { CardsDesempenho } from "../../components/CardsDesempenho/CardsDesempenho";
+import { MenuNavigation } from "../../components/MenuNavigation/MenuNavigation";
 import { CurrentDate } from '../../components/CurrentDate/CurrentDate';
+import { Cards } from "../../components/HomeComponents/Cards/Cards";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircle } from '@fortawesome/free-solid-svg-icons';
 
 export function HomePage() {
 
@@ -25,6 +27,11 @@ export function HomePage() {
     const [pedidosAtrasados, setPedidosAtrasados] = useState(0);
     const [produtosPausados, setProdutosPausados] = useState(0);
     const [desempenho, setDesempenho] = useState([])
+    const [lojaAberta, setLojaAberta] = useState(true);
+
+    const toggleLoja = () => {
+        setLojaAberta(!lojaAberta);
+    };
 
     useEffect(() => {
         const getProdutosPausados = async () => {
@@ -39,8 +46,8 @@ export function HomePage() {
             }
         };
 
-        getProdutosPausados(); 
-    }, [idRestaurante]); 
+        getProdutosPausados();
+    }, [idRestaurante]);
 
     useEffect(() => {
         const getPedidosCancelados = async () => {
@@ -50,13 +57,13 @@ export function HomePage() {
                 console.log(response);
                 console.log(responseData);
                 setPedidosCancelados(responseData);
-            } catch{
+            } catch {
                 console.log('Erro ao obter dados da API');
             }
         };
 
-        getPedidosCancelados(); 
-    }, [idRestaurante]); 
+        getPedidosCancelados();
+    }, [idRestaurante]);
 
 
     useEffect(() => {
@@ -67,13 +74,13 @@ export function HomePage() {
                 console.log(response);
                 console.log(responseData);
                 setPedidosAtrasados(responseData);
-            } catch{
+            } catch {
                 console.log('Erro ao obter dados da API');
             }
         };
 
-        getPedidosAtrasados(); 
-    }, [idRestaurante]); 
+        getPedidosAtrasados();
+    }, [idRestaurante]);
 
     useEffect(() => {
         async function fetchData() {
@@ -88,6 +95,29 @@ export function HomePage() {
         fetchData()
     }, [])
 
+    const [horarioFuncionamento, setHorarioFuncionamento] = useState(null);
+
+    useEffect(() => {
+        const getHorarioFuncionamento = async () => {
+            try {
+                const response = await axios.get(`http://localhost:3000/v1/saveeats/restaurante/dia-horario-funcionamento/idRestaurante/${idRestaurante}`);
+                const diasHorariosFuncionamento = response.data.dias_horarios_funcionamento;
+
+                const diasSemana = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"];
+                const hoje = new Date().getDay();
+                const diaSemanaAtual = diasSemana[hoje];
+
+                const horario = diasHorariosFuncionamento.find(item => item.dia_semana === diaSemanaAtual);
+                setHorarioFuncionamento(horario);
+            } catch (error) {
+                console.error('Erro ao obter dados da API:', error);
+            }
+        };
+
+        getHorarioFuncionamento();
+    }, []);
+
+
     return (
         <main className="main-menu">
 
@@ -96,21 +126,25 @@ export function HomePage() {
             </div>
 
             <div className="container-rigth-menu">
+                
                 <div className="header">
-
                     <div>
                         <h2 className="nome-estabelecimento">{nomeRestaurante}</h2>
 
                         <div className="loja">
-                            <img className="img-state-open" src={greenImg} alt="Circulo verde" />
-                            <span className="statusAbertura">Loja aberta</span>
+                            <FontAwesomeIcon
+                                icon={faCircle}
+                                className={`circle-icon ${lojaAberta ? "open" : "closed"}`}
+                            />
+                            <span className="statusAbertura">{lojaAberta ? "Loja aberta" : "Loja fechada"}</span>
                         </div>
                     </div>
 
                     <div className="container-button">
-                        <button className="btnHome">Fechar Loja</button>
+                        <button className={`btnHome ${lojaAberta ? "btn-open" : "btn-closed"}`} onClick={toggleLoja}>
+                            {lojaAberta ? "Fechar Loja" : "Abrir Loja"}
+                        </button>
                     </div>
-
                 </div>
 
                 <div className="container-cards-infos">
@@ -122,11 +156,13 @@ export function HomePage() {
                     <div className="containers horario-funcionamento">
 
                         <div className="horario">
-
                             <span className="title-funcionamento">Horário de funcionamento</span>
                             <CurrentDate></CurrentDate>
-                            <span className="text">18:00 - 23:00</span>
-
+                            {horarioFuncionamento ? (
+                                <span className="text">{`${horarioFuncionamento.horario_inicio} - ${horarioFuncionamento.horario_final}`}</span>
+                            ) : (
+                                <span className="text">Não abre</span>
+                            )}
                         </div>
 
                         <Link className="text-alterar-horario" to='/menu/horario-funcionamento'>Alterar horário</Link>
@@ -138,15 +174,15 @@ export function HomePage() {
                 </div>
 
                 <div className="container-desempenho">
-                <CardsDesempenho
-                            titleCard="Acompanhamento de desempenho"
-                            firstColumn="Pedidos hoje"
-                            firstData={desempenho.length > 0 ? desempenho[0].quantidade_pedidos_data_atual : 0}
-                            secondColumn="Valor vendido"
-                            secondData={`R$ ${desempenho.length > 0 ? desempenho[0].valor_total_pedidos_data_atual : "0,00"}`}
-                            thirdColumn="Pedidos concluídos"
-                            thirdData={desempenho.length > 0 ? desempenho[0].quantidade_pedidos_concluido_data_atual : 0}
-                        />
+                    <CardsDesempenho
+                        titleCard="Acompanhamento de desempenho"
+                        firstColumn="Pedidos hoje"
+                        firstData={desempenho.length > 0 ? desempenho[0].quantidade_pedidos_data_atual : 0}
+                        secondColumn="Valor vendido"
+                        secondData={`R$ ${desempenho.length > 0 ? desempenho[0].valor_total_pedidos_data_atual : "0,00"}`}
+                        thirdColumn="Pedidos concluídos"
+                        thirdData={desempenho.length > 0 ? desempenho[0].quantidade_pedidos_concluido_data_atual : 0}
+                    />
                 </div>
 
                 <div className="container-atrasos-pedidos">
