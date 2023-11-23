@@ -21,6 +21,7 @@ import { FormasPagamentoPage } from './pages/Menu/FormasPagamentoPage/FormasPaga
 import { HorarioFuncionamentoPage } from './pages/Menu/HorarioFuncionamentoPage/HorarioFuncionamentoPage'
 import { PerfilPage } from './pages/Menu/PerfilPage/PerfilPage'
 import { DetalhesPedidoPage } from './pages/Menu/PedidosPage/DetalhesPedidoPage/DetalhesPedidoPage'
+import {LoadingPage} from './pages/LoadingPage/LoadingPage'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -28,6 +29,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path='/' element={<App />} />
         <Route path='/cadastro' element={<RegisterPage />} />
+            <Route path='/loading' element={<LoadingPage />} />
             <Route path='/menu' element={<Menu />} />
             <Route path='/menu/cardapio' element={<CardapioPage />} />
             <Route path='/menu/home' element={<HomePage />} />

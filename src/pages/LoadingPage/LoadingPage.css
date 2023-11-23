@@ -1,0 +1,27 @@
+.loading-screen {
+    gap: 5rem;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #FFF;
+}
+
+.loading-texts {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.loading-bem-vindo{
+    font-size: 3rem;
+    font-weight: 600;  
+    padding-bottom: 1.5rem; 
+}
+
+.loading-text {
+    font-size: 2rem;
+    font-weight: 300;  
+}
