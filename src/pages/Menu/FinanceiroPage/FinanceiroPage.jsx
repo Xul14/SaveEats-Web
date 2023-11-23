@@ -9,15 +9,16 @@ import "./FinanceiroPage.css"
 import { MenuNavigation } from "../../../components/MenuNavigation/MenuNavigation";
 import { CardsDesempenho } from "../../../components/CardsDesempenho/CardsDesempenho";
 import { HeaderPages } from "../../../components/HeaderPages/Header";
-import { PieChart, Pie } from 'recharts';
+import { PieChart, Pie, Cell } from 'recharts';
 
 export function FinanceiroPage() {
 
     const idRestaurante = localStorage.getItem("id");
 
+    const [pedidos, setPedidos] = useState([]);
     const [financeiro, setFinanceiro] = useState([])
-    const [financeiroMensal, setFinanceiroMensal] = useState([])
     const [resumoValores, setResumoValores] = useState([])
+    const [financeiroMensal, setFinanceiroMensal] = useState([])
 
     //Resumo dos valores
     useEffect(() => {
@@ -61,12 +62,25 @@ export function FinanceiroPage() {
         fetchData()
     }, [])
 
-    const data = [
-        { name: 'Geeksforgeeks', students: 400, fill: '#B7CB9F' },
-        { name: 'Technical scripter', students: 700, fill: '#90AE6E' },
-        { name: 'Geek-i-knack', students: 200, fill: '#295F1B' },
-        { name: 'Geek-o-mania', students: 1000, fill: '#FE9112' }
-    ];
+    useEffect(() => {
+        async function fetchDataGrafico() {
+            try {
+                const response = await axios.get(`http://localhost:3000/v1/saveeats/pedidos-cancelados-entregues-mes-atual/restaurante/idRestaurante/${idRestaurante}`);
+                const responseData = response.data;
+
+                const pedidosEntregues = responseData.quantidade_pedidos_entregues || 0;
+                const pedidosCancelados = responseData.quantidade_pedidos_cancelados || 0;
+
+                setPedidos([
+                    { name: 'Entregues', value: pedidosEntregues, color: '#90AE6E' },
+                    { name: 'Cancelados', value: pedidosCancelados, color: '#295F1B' }
+                ]);
+            } catch (error) {
+                console.error('Erro ao obter dados da API:', error);
+            }
+        }
+        fetchDataGrafico();
+    }, [idRestaurante]);
 
     return (
         <div>
@@ -82,23 +96,42 @@ export function FinanceiroPage() {
                     <div className="container-resumo-valores">
 
                         <div className="grafico-financeiro">
-                            <PieChart width={380} height={380}>
-                                {data.map((entry, index) => (
-                                    <Pie
-                                        key={`pie-${index}`}
-                                        data={[entry]}
-                                        dataKey="students"
-                                        outerRadius={180}
-                                        fill={entry.fill}
-                                    />
-                                ))}
+                            <PieChart width={400} height={400} className="grafico-pizza">
+                                <Pie
+                                    data={pedidos}
+                                    dataKey="value"
+                                    cx={200}
+                                    cy={200}
+                                    outerRadius={170}
+                                    fill="#8884d8"
+                                    label={{ fontSize: 20, fontWeight: 600 }}
+                                    labelLine={false}
+                                >
+                                    {pedidos.map((entry, index) => (
+                                        <Cell key={`cell-${index}`} fill={entry.color} />
+                                    ))}
+                                </Pie>
                             </PieChart>
 
+                            <div className="legenda-grafico">
+
+                                <div className="legenda-line">
+                                    <p className="cor-legenda entregue"></p>
+                                    <span className="text-legenda">Entregue</span>
+                                </div>
+
+                                <div className="legenda-line">
+                                    <p className="cor-legenda cancelado"></p>
+                                    <span className="text-legenda">Cancelado</span>
+                                </div>
+
+                            </div>
                         </div>
 
                         <div className="resumo-valores-financeiro">
 
                             <span className="text-resumo-valores">Resumo dos valores</span>
+                            <div>
 
                                 <div className="linhas-custos">
                                     <span className="text-linha-custo">Total de vendas</span>
@@ -114,6 +147,7 @@ export function FinanceiroPage() {
                                     <span className="text-linha-custo">Total líquido</span>
                                     <span className="valor-custo total-mensal">{`R$ ${resumoValores.length > 0 ? resumoValores[0].valor_liquido : "0,00"}`}</span>
                                 </div>
+                            </div>
 
                         </div>
 

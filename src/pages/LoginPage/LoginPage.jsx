@@ -54,7 +54,7 @@ export function LoginPage() {
 
                 setTimeout(() => {
                     setLoading(false);
-                }, 20000);
+                }, 50000);
             })
             .catch(error => {
 
