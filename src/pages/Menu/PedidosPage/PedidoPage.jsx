@@ -1,6 +1,5 @@
 //Import React
 import React, { useState, useEffect } from "react";
-import io from 'socket.io-client';
 
 //Import Axios para integração
 import axios from 'axios'
