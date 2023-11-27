@@ -35,14 +35,30 @@ export function AvaliacaoPage() {
     }, [])
 
     function mediaEstrelas(media) {
-        const numeroEstrelas = Math.round(parseFloat(media));
+        const partes = media.toString().split(',');
+        const parteInteira = parseInt(partes[0], 10);
+        const parteDecimal = parseInt(partes[1], 10) || 0;
+
+        let estrelasArredondadas;
+
+        if (parteDecimal >= 5) {
+            estrelasArredondadas = parteInteira + 1;
+        } else {
+            estrelasArredondadas = parteInteira;
+        }
+
         const stars = [];
 
+        console.log(`Media ${media}`);
+        console.log(`Inteiro ${parteInteira}`);
+        console.log(`Decimal ${parteDecimal}`);
+        console.log(`Arredondado ${estrelasArredondadas}`);
+
         for (let i = 1; i <= 5; i++) {
-            if (i <= numeroEstrelas) {
-                stars.push(<FontAwesomeIcon icon={faStar} key={i} className="star-filled-avaliacao"/>);
+            if (i <= estrelasArredondadas) {
+                stars.push(<FontAwesomeIcon icon={faStar} key={i} className="star-filled-avaliacao" />);
             } else {
-                stars.push(<FontAwesomeIcon icon={faStar} key={i} className="star-empty-avaliacao"/>);
+                stars.push(<FontAwesomeIcon icon={faStar} key={i} className="star-empty-avaliacao" />);
             }
         }
 
@@ -70,7 +86,8 @@ export function AvaliacaoPage() {
                                 <p className="title_media_estrelas">{avaliacaoData.media_estrelas} </p>
 
                                 <div className="star-rating">
-                                    {mediaEstrelas(avaliacaoData.media_estrelas)}
+                                    {/* {mediaEstrelas(avaliacaoData.media_estrelas)} */}
+                                    {avaliacaoData.media_estrelas ? mediaEstrelas(avaliacaoData.media_estrelas) : <p>Avaliação não disponível</p>}
                                 </div>
 
                                 <p className="titdesc_media_estrelas">{avaliacaoData.quantidade_avaliacoes} avaliações</p>
