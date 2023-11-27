@@ -94,9 +94,27 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
         navigate("/menu/detalhes/pedido")
     }
 
+    const [isDelivered, setIsDelivered] = useState(false);
+
+    useEffect(() => {
+        if (currentStatus === 5 && !isDelivered) {
+            
+            setIsDelivered(true);
+            console.log("Entregue");
+
+            const timer = setTimeout(() => {
+                setIsDelivered(false);
+            }, 5000);
+
+            return () => {
+                clearTimeout(timer);
+            };
+        }
+    }, [currentStatus, isDelivered]);
+
     return (
         <>
-            <div className="card-pedido">
+            <div className={`card-pedido ${isDelivered ? 'delivered-animation' : ''}`}>
 
                 <div className="container-cliente-tempo-entrega">
                     <span className="nomeCliente">{nomeCliente}</span>

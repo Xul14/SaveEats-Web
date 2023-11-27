@@ -49,11 +49,6 @@ export function AvaliacaoPage() {
 
         const stars = [];
 
-        console.log(`Media ${media}`);
-        console.log(`Inteiro ${parteInteira}`);
-        console.log(`Decimal ${parteDecimal}`);
-        console.log(`Arredondado ${estrelasArredondadas}`);
-
         for (let i = 1; i <= 5; i++) {
             if (i <= estrelasArredondadas) {
                 stars.push(<FontAwesomeIcon icon={faStar} key={i} className="star-filled-avaliacao" />);
@@ -86,7 +81,6 @@ export function AvaliacaoPage() {
                                 <p className="title_media_estrelas">{avaliacaoData.media_estrelas} </p>
 
                                 <div className="star-rating">
-                                    {/* {mediaEstrelas(avaliacaoData.media_estrelas)} */}
                                     {avaliacaoData.media_estrelas ? mediaEstrelas(avaliacaoData.media_estrelas) : <p>Avaliação não disponível</p>}
                                 </div>
 
