@@ -39,17 +39,13 @@ export function PedidosPage() {
         audio.play();
     }
     
-    
-    // const previousPedidos = [...pedidos];
-    // localStorage.setItem("pedidos", JSON.stringify(previousPedidos))
-    
-    
     // Função para realizar a consulta periódica
     const checkForNewPedidos = async () => {
+
         const teste = JSON.parse(localStorage.getItem("pedidos"));
         const previousPedidos = await getDetailsPedido()
+
         localStorage.setItem("pedidos", JSON.stringify(previousPedidos))
-        // const teste = previousPedidos
         
         console.log(teste.length + '+' + previousPedidos.length);
         console.log(previousPedidos);
@@ -57,13 +53,10 @@ export function PedidosPage() {
         if (previousPedidos.length > teste.length && teste.length != undefined) {
             setPlaySound(true);
             setTimeout(() => setPlaySound(false), 5000);
-            console.log("if");
-            alert("soooooooommmmmmmmmmmmm")
             tocarSom()
         } else {
-            console.log("else");
-            setTimeout(checkForNewPedidos, 5000);
             setPlaySound(true);
+            setTimeout(checkForNewPedidos, 5000);
             setTimeout(() => setPlaySound(false), 5000);
         }
 
