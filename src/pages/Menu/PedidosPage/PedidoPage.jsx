@@ -18,36 +18,63 @@ export function PedidosPage() {
     const idRestaurante = localStorage.getItem("id");
     const [playSound, setPlaySound] = useState(false);
 
+
     const getDetailsPedido = async () => {
         try {
             const response = await axios.get(`http://localhost:3000/v1/saveeats/detalhes/pedido/idRestaurante/${idRestaurante}`)
             const responsePedidos = response.data.detalhes_do_pedido;
             setPedidos(responsePedidos);
             console.log(responsePedidos);
+            let testealgumacoisa = responsePedidos;
+            return testealgumacoisa
         } catch (error) {
             console.log('Erro ao pegar os dados:', error);
         }
     }
 
+    console.log(pedidos);
+
+    const tocarSom = () => {
+        const audio = new Audio(notificationSound);
+        audio.play();
+    }
+    
+    
+    // const previousPedidos = [...pedidos];
+    // localStorage.setItem("pedidos", JSON.stringify(previousPedidos))
+    
+    
     // Função para realizar a consulta periódica
     const checkForNewPedidos = async () => {
-        const previousPedidos = [...pedidos];
-        await getDetailsPedido();
-
-        if (pedidos.length > previousPedidos.length) {
+        const teste = JSON.parse(localStorage.getItem("pedidos"));
+        const previousPedidos = await getDetailsPedido()
+        localStorage.setItem("pedidos", JSON.stringify(previousPedidos))
+        // const teste = previousPedidos
+        
+        console.log(teste.length + '+' + previousPedidos.length);
+        console.log(previousPedidos);
+        
+        if (previousPedidos.length > teste.length && teste.length != undefined) {
+            setPlaySound(true);
+            setTimeout(() => setPlaySound(false), 5000);
+            console.log("if");
+            alert("soooooooommmmmmmmmmmmm")
+            tocarSom()
+        } else {
+            console.log("else");
+            setTimeout(checkForNewPedidos, 5000);
             setPlaySound(true);
             setTimeout(() => setPlaySound(false), 5000);
         }
 
-        setTimeout(checkForNewPedidos, 5000);
-        setPlaySound(true); 
-        setTimeout(() => setPlaySound(false), 5000);
     };
+
 
     useEffect(() => {
         checkForNewPedidos();
         console.log("Novo pedido");
         return () => clearTimeout(checkForNewPedidos);
+
     }, []);
 
 
