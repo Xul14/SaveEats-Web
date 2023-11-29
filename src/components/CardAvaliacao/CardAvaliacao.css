@@ -1,22 +1,23 @@
 .card-avaliacao-cliente {
     width: 90%;
-    height: 150px;
+    height: 180px;
     display: grid;
     grid-template-columns: 10% 1fr 10%;
     border-bottom: 3px solid #dedddc;
 }
 
 .img-cliente{
-    height: 90px;
+    height: 100px;
     display: flex;
     justify-self: center;
+    align-self: center;
     border-radius: 50%;
 }
 
 .avaliacao-cliente {
     display: grid;
     padding: 10px;
-    grid-template-rows: 35% 25% 1fr;
+    grid-template-rows: 30% 15% 1fr 20%;
 }
 
 .nome-cliente-av {
@@ -46,6 +47,25 @@
     font-size: 1.3rem;
     padding-top: 10px;
     color: #686868;
+    display: flex;
+}
+
+.recomendacao-container{
+    gap: 1.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.recomendacao-chips{
+    background-color: #488A27;
+    justify-content: center;
+    border-radius: 25px;
+    align-items: center;
+    font-size: 1.1rem;
+    min-width: 100px;
+    padding: 15px;
+    color: #FFF;
+    height: 35px;
     display: flex;
 }
 

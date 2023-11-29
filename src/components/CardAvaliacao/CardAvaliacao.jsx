@@ -6,8 +6,9 @@ import "./CardAvaliacao.css"
 import img from "../../pages/Menu/AvaliacaoPage/img/estrelas.png"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import axios from "axios";
 
-export function CardAvaliacao({ imgCliente, nomeCliente, avaliacaoCliente, dataAvaliacao, classificacao }) {
+export function CardAvaliacao({ imgCliente, nomeCliente, avaliacaoCliente, dataAvaliacao, classificacao, recomendacao }) {
 
     const estrelasPreenchidas = Array.from({ length: classificacao }).map((_, index) => (
         <FontAwesomeIcon
@@ -41,7 +42,13 @@ export function CardAvaliacao({ imgCliente, nomeCliente, avaliacaoCliente, dataA
 
                 </div>
 
-                <p className="resposta-av">{avaliacaoCliente}.</p>
+                <p className="resposta-av">{avaliacaoCliente}</p>
+
+                <div className="recomendacao-container">
+
+                    <div className="recomendacao-chips">{recomendacao}</div>
+
+                </div>
 
             </div>
 

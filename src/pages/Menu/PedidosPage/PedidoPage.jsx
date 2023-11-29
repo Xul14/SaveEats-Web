@@ -38,30 +38,46 @@ export function PedidosPage() {
         const audio = new Audio(notificationSound);
         audio.play();
     }
-    
-    // Função para realizar a consulta periódica
+
+    // // Função para realizar a consulta periódica com som
+    // const checkForNewPedidos = async () => {
+
+    //     const teste = JSON.parse(localStorage.getItem("pedidos"));
+    //     const previousPedidos = await getDetailsPedido()
+
+    //     localStorage.setItem("pedidos", JSON.stringify(previousPedidos))
+
+    //     // console.log(teste.length + '+' + previousPedidos.length);
+    //     // console.log(previousPedidos);
+
+    //     if (previousPedidos.length > teste.length && teste.length != undefined) {
+    //         setPlaySound(true);
+    //         setTimeout(() => setPlaySound(false), 5000);
+    //         tocarSom()
+    //     } 
+    //     // else {
+    //         setPlaySound(true);
+    //         setTimeout(checkForNewPedidos, 5000);
+    //         console.log("else");
+    //         setTimeout(() => setPlaySound(false), 5000);
+    //     // }
+
+    // };
+
+    // Função para realizar a consulta periódica sem som
     const checkForNewPedidos = async () => {
+        const previousPedidos = [...pedidos];
+        await getDetailsPedido();
 
-        const teste = JSON.parse(localStorage.getItem("pedidos"));
-        const previousPedidos = await getDetailsPedido()
-
-        localStorage.setItem("pedidos", JSON.stringify(previousPedidos))
-        
-        console.log(teste.length + '+' + previousPedidos.length);
-        console.log(previousPedidos);
-        
-        if (previousPedidos.length > teste.length && teste.length != undefined) {
+        if (pedidos.length > previousPedidos.length) {
             setPlaySound(true);
-            setTimeout(() => setPlaySound(false), 5000);
-            tocarSom()
-        } else {
-            setPlaySound(true);
-            setTimeout(checkForNewPedidos, 5000);
             setTimeout(() => setPlaySound(false), 5000);
         }
 
+        setTimeout(checkForNewPedidos, 5000);
+        setPlaySound(true);
+        setTimeout(() => setPlaySound(false), 5000);
     };
-
 
     useEffect(() => {
         checkForNewPedidos();

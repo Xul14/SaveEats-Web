@@ -107,6 +107,7 @@ export function AvaliacaoPage() {
                                 avaliacaoCliente={avaliacao.avaliacao_descricao}
                                 dataAvaliacao={avaliacao.data_avaliacao}
                                 classificacao={avaliacao.quantidade_estrela}
+                                recomendacao={avaliacao.recomendacao}
                             />
                         ))}
 
