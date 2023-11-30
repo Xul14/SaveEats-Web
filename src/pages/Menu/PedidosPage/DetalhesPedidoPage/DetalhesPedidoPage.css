@@ -35,21 +35,15 @@
     color: #143A0B;
 }
 
-.container-total-pedido {
-    display: flex;
-    gap: 42rem;
-    font-size: 1.5rem;
-    color: #3F3F3F
-}
-
+.container-total-pedido,
 .container-pagamento-entrega {
-    display: flex;
-    gap: 24rem;
+    display: grid;
+    color: #3F3F3F;
     font-size: 1.5rem;
-    color: #3F3F3F
+    grid-template-columns: 1fr 2fr;
 }
 
-.container-produto-pedido{
+.container-produto-pedido {
     width: 100%;
     height: 100%;
     display: flex;

@@ -1,9 +1,9 @@
 .card-avaliacao-cliente {
     width: 90%;
-    height: 180px;
+    height: 150px;
     display: grid;
     grid-template-columns: 10% 1fr 10%;
-    border-bottom: 3px solid #dedddc;
+    border-bottom: 2px solid #dedddc;
 }
 
 .img-cliente{
@@ -17,7 +17,7 @@
 .avaliacao-cliente {
     display: grid;
     padding: 10px;
-    grid-template-rows: 30% 15% 1fr 20%;
+    grid-template-rows: 25% 15% 1fr 30%;
 }
 
 .nome-cliente-av {
@@ -61,11 +61,11 @@
     justify-content: center;
     border-radius: 25px;
     align-items: center;
-    font-size: 1.1rem;
+    font-size: 1rem;
     min-width: 100px;
     padding: 15px;
     color: #FFF;
-    height: 35px;
+    height: 30px;
     display: flex;
 }
 

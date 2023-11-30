@@ -7,7 +7,7 @@ import axios from 'axios'
 //Import css
 import './ModalCardapio.css'
 import arrow from './img/arrow.png'
-import imageAdd from './img/addImage.png'
+import imageAdd from './img/add-image.png'
 import { uploadImageToFirebase } from "../../firebase";
 
 export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado, produtoEmEdicao, onUpdateProduto }) {
@@ -235,7 +235,12 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado, produtoEm
                   <span className="span-input-item-img center">Imagem do Produto</span>
                 </div>
 
-                <img src={imagemProduto} alt="Imagem do Produto" className="imagem-preview" />
+                {/* <img src={imagemProduto} alt="Imagem do Produto" className="imagem-preview" /> */}
+                <img
+                  src={imagemProduto || imageAdd} // imageAdd é o placeholder para quando não há imagem
+                  alt="Imagem do Produto"
+                  className={imagemProduto ? "imagem-preview" : "imagem-preview-empty"}
+                />
                 <label className="custom-file-input">
                   <input type="file" className="input-modal-img center" accept="image/*" onChange={(e) => handleImageChange(e)} />
                   Escolher Arquivo

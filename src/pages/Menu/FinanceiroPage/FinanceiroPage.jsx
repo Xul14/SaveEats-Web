@@ -10,6 +10,7 @@ import { MenuNavigation } from "../../../components/MenuNavigation/MenuNavigatio
 import { CardsDesempenho } from "../../../components/CardsDesempenho/CardsDesempenho";
 import { HeaderPages } from "../../../components/HeaderPages/Header";
 import { PieChart, Pie, Cell } from 'recharts';
+import { CSSTransition } from 'react-transition-group';
 
 export function FinanceiroPage() {
 
@@ -19,6 +20,7 @@ export function FinanceiroPage() {
     const [financeiro, setFinanceiro] = useState([])
     const [resumoValores, setResumoValores] = useState([])
     const [financeiroMensal, setFinanceiroMensal] = useState([])
+    const [showChart, setShowChart] = useState(false)
 
     //Resumo dos valores
     useEffect(() => {
@@ -61,26 +63,31 @@ export function FinanceiroPage() {
         }
         fetchData()
     }, [])
-
     useEffect(() => {
         async function fetchDataGrafico() {
             try {
                 const response = await axios.get(`http://localhost:3000/v1/saveeats/pedidos-cancelados-entregues-mes-atual/restaurante/idRestaurante/${idRestaurante}`);
                 const responseData = response.data;
-
+    
                 const pedidosEntregues = responseData.quantidade_pedidos_entregues || 0;
                 const pedidosCancelados = responseData.quantidade_pedidos_cancelados || 0;
-
+    
                 setPedidos([
                     { name: 'Entregues', value: pedidosEntregues, color: '#90AE6E' },
                     { name: 'Cancelados', value: pedidosCancelados, color: '#295F1B' }
                 ]);
+    
+                // Adicionando um pequeno atraso antes de exibir o gráfico
+                setTimeout(() => {
+                    setShowChart(true);
+                }, 300); // 300 milissegundos (ou ajuste conforme necessário)
             } catch (error) {
                 console.error('Erro ao obter dados da API:', error);
             }
         }
         fetchDataGrafico();
     }, [idRestaurante]);
+    
 
     return (
         <div>
@@ -96,22 +103,29 @@ export function FinanceiroPage() {
                     <div className="container-resumo-valores">
 
                         <div className="grafico-financeiro">
-                            <PieChart width={400} height={400} className="grafico-pizza">
-                                <Pie
-                                    data={pedidos}
-                                    dataKey="value"
-                                    cx={200}
-                                    cy={200}
-                                    outerRadius={170}
-                                    fill="#8884d8"
-                                    label={{ fontSize: 20, fontWeight: 600 }}
-                                    labelLine={false}
-                                >
-                                    {pedidos.map((entry, index) => (
-                                        <Cell key={`cell-${index}`} fill={entry.color} />
-                                    ))}
-                                </Pie>
-                            </PieChart>
+                            <CSSTransition
+                                in={showChart}
+                                timeout={500}
+                                classNames="chart"
+                                unmountOnExit
+                            >
+                                <PieChart width={400} height={400} className="grafico-pizza">
+                                    <Pie
+                                        data={pedidos}
+                                        dataKey="value"
+                                        cx={200}
+                                        cy={200}
+                                        outerRadius={170}
+                                        fill="#8884d8"
+                                        label={{ fontSize: 20, fontWeight: 600 }}
+                                        labelLine={false}
+                                    >
+                                        {pedidos.map((entry, index) => (
+                                            <Cell key={`cell-${index}`} fill={entry.color} />
+                                        ))}
+                                    </Pie>
+                                </PieChart>
+                            </CSSTransition>
 
                             <div className="legenda-grafico">
 

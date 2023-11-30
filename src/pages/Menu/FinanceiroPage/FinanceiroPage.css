@@ -117,3 +117,15 @@
     flex-direction: column;
     justify-content: center;
 }
+
+/* Outras definições de estilo... */
+
+/* Definição da animação para o gráfico */
+.chart-enter {
+    opacity: 0;
+}
+
+.chart-enter-active {
+    opacity: 1;
+    transition: opacity 500ms;
+}
