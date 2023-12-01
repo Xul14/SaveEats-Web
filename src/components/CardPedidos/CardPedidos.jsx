@@ -1,6 +1,7 @@
 //Import React
 import React, { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+import { DeliveryPage } from "../../pages/DeliveryPage/DeliveryPage";
 
 //Import Axios para integração
 import axios from 'axios'
@@ -98,12 +99,12 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
 
     useEffect(() => {
         if (currentStatus === 5 && !isDelivered) {
-            
-            setIsDelivered(true);
-            console.log("Entregue");
+            setIsDelivered(false);
+            console.log("entregue");
 
             const timer = setTimeout(() => {
-                setIsDelivered(false);
+                console.log("animation");
+                setIsDelivered(true);
             }, 5000);
 
             return () => {

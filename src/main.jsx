@@ -22,6 +22,7 @@ import { HorarioFuncionamentoPage } from './pages/Menu/HorarioFuncionamentoPage/
 import { PerfilPage } from './pages/Menu/PerfilPage/PerfilPage'
 import { DetalhesPedidoPage } from './pages/Menu/PedidosPage/DetalhesPedidoPage/DetalhesPedidoPage'
 import {LoadingPage} from './pages/LoadingPage/LoadingPage'
+import {DeliveryPage} from './pages/DeliveryPage/DeliveryPage'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -35,6 +36,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route path='/menu/home' element={<HomePage />} />
             <Route path='/menu/cardapio' element={<CardapioPage />} />
             <Route path='/menu/pedidos' element={<PedidosPage />} />
+            <Route path='/pedido-entregue' element={<DeliveryPage />} />
             <Route path='/menu/detalhes/pedido' element={<DetalhesPedidoPage />} />
             <Route path='/menu/avaliacao' element={<AvaliacaoPage />} />
             <Route path='/menu/financeiro' element={<FinanceiroPage />} />

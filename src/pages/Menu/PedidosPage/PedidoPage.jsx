@@ -1,5 +1,6 @@
 //Import React
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 
 //Import Axios para integração
 import axios from 'axios'
@@ -157,16 +158,16 @@ export function PedidosPage() {
 
                     <div className="container-cards-pedido">
                         {pedidos ? (
-                            pedidos.map((pedidos, index) => (
+                            pedidos.map((pedido, index) => (
 
                                 <CardPedidos
                                     key={index}
-                                    idPedido={pedidos.id_pedido}
-                                    idCliente={pedidos.id_cliente}
-                                    nomeCliente={pedidos.nome_cliente}
-                                    numPedido={pedidos.numero_pedido}
-                                    statusPedido={pedidos.status_pedido}
-                                    previsaoEntrega={pedidos.previsao_entrega}
+                                    idPedido={pedido.id_pedido}
+                                    idCliente={pedido.id_cliente}
+                                    nomeCliente={pedido.nome_cliente}
+                                    numPedido={pedido.numero_pedido}
+                                    statusPedido={pedido.status_pedido}
+                                    previsaoEntrega={pedido.previsao_entrega}
                                 />
                             ))
                         ) : (
