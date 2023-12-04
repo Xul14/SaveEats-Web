@@ -18,7 +18,7 @@ export function StatusPedido() {
     useEffect(() => {
         async function getDetailsPedido() {
             try {
-                const response = await axios.get(`http://localhost:3000/v1/saveeats/detalhes/pedido/id/${idPedido}`)
+                const response = await axios.get(`https://save-eats.azurewebsites.net/v1/saveeats/detalhes/pedido/id/${idPedido}`)
                 const responsePedido = response.data.detalhes_do_pedido;
                 setPedido(responsePedido);
                 console.log(responsePedido.status_pedido);

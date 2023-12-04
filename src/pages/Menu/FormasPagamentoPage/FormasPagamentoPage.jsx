@@ -18,7 +18,7 @@ export function FormasPagamentoPage() {
     // useEffect(() => {
     //     async function formaPagamentoData() {
     //         try {
-    //             const formasPagamento = await axios.get('http://localhost:3000/v1/saveeats/obter-dados-do-mercado-pago');
+    //             const formasPagamento = await axios.get('https://save-eats.azurewebsites.net/v1/saveeats/obter-dados-do-mercado-pago');
     //             const formaPagamentoData = formasPagamento.data;
     //             setFormaPagamento(formaPagamentoData);
     //             console.log(formasPagamento);
@@ -34,7 +34,7 @@ export function FormasPagamentoPage() {
     useEffect(() => {
         async function formaPagamentoData() {
             try {
-                const formasPagamento = await axios.get('http://localhost:3000/v1/saveeats/forma/pagamento');
+                const formasPagamento = await axios.get('https://save-eats.azurewebsites.net/v1/saveeats/forma/pagamento');
                 const formaPagamentoData = formasPagamento.data.formas_de_pagamento;
                 console.log(formaPagamentoData);
                 setFormaPagamento(formaPagamentoData);

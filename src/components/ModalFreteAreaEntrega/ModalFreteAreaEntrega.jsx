@@ -42,7 +42,7 @@ export function ModalFreteAreaEntrega({ isOpenModal, setModalOpenModalAreaEntreg
     // useEffect(() => {
     //     async function getRaioEntrega(idRestaurante) {
     //         try {
-    //             const response = await axios.get(`http://localhost:3000/v1/saveeats/restaurante/raio-entrega/idRestaurante/${idRestaurante}`)
+    //             const response = await axios.get(`https://save-eats.azurewebsites.net/v1/saveeats/restaurante/raio-entrega/idRestaurante/${idRestaurante}`)
     //             const responseData = response.data.raio_entrega_do_restaurante
     //             setRaioEntrega(responseData)
     //         } catch (error) {
@@ -55,7 +55,7 @@ export function ModalFreteAreaEntrega({ isOpenModal, setModalOpenModalAreaEntreg
     useEffect(() => {
         async function areaEntregaData() {
             try {
-                const areaEntregaResponse = await axios.get(`http://localhost:3000/v1/saveeats/restaurante/frete-area-entrega/idRestaurante/${idRestaurante}`);
+                const areaEntregaResponse = await axios.get(`https://save-eats.azurewebsites.net/v1/saveeats/restaurante/frete-area-entrega/idRestaurante/${idRestaurante}`);
                 const areaEntregaData = areaEntregaResponse.data.frete_area_entrega_do_restaurante;
                 
                 if (areaEntregaData[0] && areaEntregaData[0].raio_entrega) {
@@ -89,7 +89,7 @@ export function ModalFreteAreaEntrega({ isOpenModal, setModalOpenModalAreaEntreg
         if (isEditing) {
             try {
                 const response = await axios.put(
-                    `http://localhost:3000/v1/saveeats/frete/area/entrega/id/${idAreaEntrega}`,
+                    `https://save-eats.azurewebsites.net/v1/saveeats/frete/area/entrega/id/${idAreaEntrega}`,
                     novaAreaEntrega,
                     {
                         headers: {
@@ -109,13 +109,13 @@ export function ModalFreteAreaEntrega({ isOpenModal, setModalOpenModalAreaEntreg
                 }
 
             } catch (error) {
-                const response = await axios.put(`http://localhost:3000/v1/saveeats/frete/area/entrega/id/${idAreaEntrega}`)
+                const response = await axios.put(`https://save-eats.azurewebsites.net/v1/saveeats/frete/area/entrega/id/${idAreaEntrega}`)
                 console.log(response);
                 console.error("Erro ao editar:", error);
             }
         } else {
             try {
-                const response = await axios.post("http://localhost:3000/v1/saveeats/restaurante/frete-area-entrega", novaAreaEntrega)
+                const response = await axios.post("https://save-eats.azurewebsites.net/v1/saveeats/restaurante/frete-area-entrega", novaAreaEntrega)
 
                 if (response.status === 201) {
                     console.log("Criado com sucesso!");

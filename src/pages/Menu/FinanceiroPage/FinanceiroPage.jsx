@@ -26,7 +26,7 @@ export function FinanceiroPage() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await axios.get(`http://localhost:3000/v1/saveeats/valor-total-liquido-comissao/restaurante/idRestaurante/${idRestaurante}`);
+                const response = await axios.get(`https://save-eats.azurewebsites.net/v1/saveeats/valor-total-liquido-comissao/restaurante/idRestaurante/${idRestaurante}`);
                 const responseData = response.data.dados_financeiro
                 setResumoValores(responseData)
             } catch (error) {
@@ -40,7 +40,7 @@ export function FinanceiroPage() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await axios.get(`http://localhost:3000/v1/saveeats/acompanhamento-desempenho-data-atual/restaurante/idRestaurante/${idRestaurante}`);
+                const response = await axios.get(`https://save-eats.azurewebsites.net/v1/saveeats/acompanhamento-desempenho-data-atual/restaurante/idRestaurante/${idRestaurante}`);
                 const responseData = response.data.acompanhamento_desempenho_data_atual
                 setFinanceiro(responseData)
             } catch (error) {
@@ -54,7 +54,7 @@ export function FinanceiroPage() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await axios.get(`http://localhost:3000/v1/saveeats/acompanhamento-desempenho-mes-atual/restaurante/idRestaurante/${idRestaurante}`);
+                const response = await axios.get(`https://save-eats.azurewebsites.net/v1/saveeats/acompanhamento-desempenho-mes-atual/restaurante/idRestaurante/${idRestaurante}`);
                 const responseData = response.data.acompanhamento_desempenho_mes_atual
                 setFinanceiroMensal(responseData)
             } catch (error) {
@@ -66,7 +66,7 @@ export function FinanceiroPage() {
     useEffect(() => {
         async function fetchDataGrafico() {
             try {
-                const response = await axios.get(`http://localhost:3000/v1/saveeats/pedidos-cancelados-entregues-mes-atual/restaurante/idRestaurante/${idRestaurante}`);
+                const response = await axios.get(`https://save-eats.azurewebsites.net/v1/saveeats/pedidos-cancelados-entregues-mes-atual/restaurante/idRestaurante/${idRestaurante}`);
                 const responseData = response.data;
     
                 const pedidosEntregues = responseData.quantidade_pedidos_entregues || 0;

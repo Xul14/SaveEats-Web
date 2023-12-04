@@ -42,7 +42,7 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
 
         try {
 
-            const response = await axios.put('http://localhost:3000/v1/saveeats/status-pedido', {
+            const response = await axios.put('https://save-eats.azurewebsites.net/v1/saveeats/status-pedido', {
                 id_pedido: idPedido,
                 id_novo_status_pedido: newStatus,
             });
@@ -70,7 +70,7 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
     useEffect(() => {
         async function getEnderecoCliente() {
             try {
-                const response = await axios.get(`http://localhost:3000/v1/saveeats/endereco/cliente/idcliente/${idCliente}`)
+                const response = await axios.get(`https://save-eats.azurewebsites.net/v1/saveeats/endereco/cliente/idcliente/${idCliente}`)
                 const responseEndereco = response.data.endereco_cliente;
 
                 if (responseEndereco && responseEndereco.length > 0) {

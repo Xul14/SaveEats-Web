@@ -87,7 +87,7 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado, produtoEm
     async function fetchData() {
       try {
         // const response = await axios.get('https://save-eats.cyclic.cloud/v1/saveeats/categoria/produto');
-        const response = await axios.get('http://localhost:3000/v1/saveeats/categoria/produto');
+        const response = await axios.get('https://save-eats.azurewebsites.net/v1/saveeats/categoria/produto');
         const responseData = response.data.categoria_produto
         setCategorias(responseData)
       } catch (error) {
@@ -103,7 +103,7 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado, produtoEm
     async function fetchData() {
       try {
         // const responseStatus = await axios.get('https://save-eats.cyclic.cloud/v1/saveeats/status/produto');
-        const responseStatus = await axios.get('http://localhost:3000/v1/saveeats/status/produto');
+        const responseStatus = await axios.get('https://save-eats.azurewebsites.net/v1/saveeats/status/produto');
 
         const responseStatusData = responseStatus.data.status_produto
         setStatus(responseStatusData)
@@ -123,7 +123,7 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado, produtoEm
     if (isEditing) {
 
       try {
-        const response = await axios.put(`http://localhost:3000/v1/saveeats/produto/id/${idProduto}`, novoProduto);
+        const response = await axios.put(`https://save-eats.azurewebsites.net/v1/saveeats/produto/id/${idProduto}`, novoProduto);
         // const response = await axios.put(`https://save-eats.cyclic.cloud/v1/saveeats/produto/id/${idProduto}`, novoProduto);
 
         if (response.status === 200) {
@@ -139,7 +139,7 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado, produtoEm
           console.log(response);
         }
       } catch (error) {
-        const response = await axios.put(`http://localhost:3000/v1/saveeats/produto/id/${produtoEmEdicao.id}`, produtoEmEdicao);
+        const response = await axios.put(`https://save-eats.azurewebsites.net/v1/saveeats/produto/id/${produtoEmEdicao.id}`, produtoEmEdicao);
         // const response = await axios.put(`https://save-eats.cyclic.cloud/v1/saveeats/produto/id/${produtoEmEdicao.id}`, produtoEmEdicao);
         console.log(response);
         console.error("Erro ao editar o produto:", error);
@@ -147,7 +147,7 @@ export function ModalCardapio({ isOpen, setModalOpen, onProdutoCriado, produtoEm
     } else {
       // Criação de um novo produto
       try {
-        const response = await axios.post('http://localhost:3000/v1/saveeats/produto/', novoProduto);
+        const response = await axios.post('https://save-eats.azurewebsites.net/v1/saveeats/produto/', novoProduto);
         // const response = await axios.post('https://save-eats.cyclic.cloud/v1/saveeats/produto/', novoProduto);
 
         if (response.status === 201) {

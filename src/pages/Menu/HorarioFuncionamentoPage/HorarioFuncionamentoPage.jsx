@@ -46,7 +46,7 @@ export function HorarioFuncionamentoPage() {
 
     const fetchHorarios = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/v1/saveeats/restaurante/dia-horario-funcionamento/idRestaurante/${idRestaurante}`);
+            const response = await axios.get(`https://save-eats.azurewebsites.net/v1/saveeats/restaurante/dia-horario-funcionamento/idRestaurante/${idRestaurante}`);
             const responseData = response.data.dias_horarios_funcionamento;
             console.log(responseData);
             setHorariosFuncionamento(responseData);
@@ -58,7 +58,7 @@ export function HorarioFuncionamentoPage() {
     useEffect(() => {
         async function fetchDiasSemana() {
             try {
-                const response = await axios.get('http://localhost:3000/v1/saveeats/dia/semana');
+                const response = await axios.get('https://save-eats.azurewebsites.net/v1/saveeats/dia/semana');
                 const responseData = response.data.dia_semana;
                 setDiasSemana(responseData);
                 console.log(responseData);
@@ -69,7 +69,7 @@ export function HorarioFuncionamentoPage() {
 
         async function fetchHorariosFuncionamento() {
             try {
-                const response = await axios.get(`http://localhost:3000/v1/saveeats/restaurante/dia-horario-funcionamento/idRestaurante/${idRestaurante}`);
+                const response = await axios.get(`https://save-eats.azurewebsites.net/v1/saveeats/restaurante/dia-horario-funcionamento/idRestaurante/${idRestaurante}`);
                 const responseData = response.data.dias_horarios_funcionamento;
                 console.log(responseData);
                 setHorariosFuncionamento(responseData);
@@ -128,7 +128,7 @@ export function HorarioFuncionamentoPage() {
                 };
 
                 try {
-                    const response = await axios.put(`http://localhost:3000/v1/saveeats/restaurante/dia-horario-funcionamento`, dadosAtualizados);
+                    const response = await axios.put(`https://save-eats.azurewebsites.net/v1/saveeats/restaurante/dia-horario-funcionamento`, dadosAtualizados);
 
                     if (response.status === 200) {
                         console.log("Editado com sucesso");
@@ -152,7 +152,7 @@ export function HorarioFuncionamentoPage() {
             };
 
             try {
-                const response = await axios.post(`http://localhost:3000/v1/saveeats/restaurante/dias-horario-funcionamento`, novoHorario);
+                const response = await axios.post(`https://save-eats.azurewebsites.net/v1/saveeats/restaurante/dias-horario-funcionamento`, novoHorario);
 
                 if (response.status === 201) {
                     console.log("Criado com sucesso");

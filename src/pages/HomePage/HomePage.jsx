@@ -36,7 +36,7 @@ export function HomePage() {
     useEffect(() => {
         const getProdutosPausados = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/v1/saveeats/restaurante/produtos-pausados/idRestaurante/${idRestaurante}`);
+                const response = await axios.get(`https://save-eats.azurewebsites.net/v1/saveeats/restaurante/produtos-pausados/idRestaurante/${idRestaurante}`);
                 const responseData = response.data.produtos_pausado_do_restaurante;
                 console.log(response);
                 console.log(responseData);
@@ -52,7 +52,7 @@ export function HomePage() {
     useEffect(() => {
         const getPedidosCancelados = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/v1/saveeats/restaurante/pedidos-cancelados/idRestaurante/${idRestaurante}`);
+                const response = await axios.get(`https://save-eats.azurewebsites.net/v1/saveeats/restaurante/pedidos-cancelados/idRestaurante/${idRestaurante}`);
                 const responseData = response.data.quantidade_pedidos_cancelados;
                 console.log(response);
                 console.log(responseData);
@@ -69,7 +69,7 @@ export function HomePage() {
     useEffect(() => {
         const getPedidosAtrasados = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/v1/saveeats/restaurante/pedidos-atrasados/idRestaurante/${idRestaurante}`);
+                const response = await axios.get(`https://save-eats.azurewebsites.net/v1/saveeats/restaurante/pedidos-atrasados/idRestaurante/${idRestaurante}`);
                 const responseData = response.data.quantidade_pedidos_atrasados;
                 console.log(response);
                 console.log(responseData);
@@ -85,7 +85,7 @@ export function HomePage() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await axios.get(`http://localhost:3000/v1/saveeats/acompanhamento-desempenho-data-atual/restaurante/idRestaurante/${idRestaurante}`);
+                const response = await axios.get(`https://save-eats.azurewebsites.net/v1/saveeats/acompanhamento-desempenho-data-atual/restaurante/idRestaurante/${idRestaurante}`);
                 const responseData = response.data.acompanhamento_desempenho_data_atual
                 setDesempenho(responseData)
             } catch (error) {
@@ -100,7 +100,7 @@ export function HomePage() {
     useEffect(() => {
         const getHorarioFuncionamento = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/v1/saveeats/restaurante/dia-horario-funcionamento/idRestaurante/${idRestaurante}`);
+                const response = await axios.get(`https://save-eats.azurewebsites.net/v1/saveeats/restaurante/dia-horario-funcionamento/idRestaurante/${idRestaurante}`);
                 const diasHorariosFuncionamento = response.data.dias_horarios_funcionamento;
 
                 const diasSemana = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"];
