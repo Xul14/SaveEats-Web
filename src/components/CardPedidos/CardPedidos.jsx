@@ -21,6 +21,7 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
     const [enderecoFormatado, setEnderecoFormatado] = useState("");
     const [currentStatus, setCurrentStatus] = useState(statusPedido);
     const [checkStates, setCheckStates] = useState([false, false, false, false]);
+    const [isDeliveryAnimationVisible, setIsDeliveryAnimationVisible] = useState(false); 
 
     const statuses = [
         "Pedido Confirmado",
@@ -100,13 +101,13 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
     useEffect(() => {
         if (currentStatus === 5 && !isDelivered) {
             setIsDelivered(false);
-            console.log("entregue");
 
             const timer = setTimeout(() => {
-                console.log("animation");
                 setIsDelivered(true);
-            }, 5000);
+                setIsDeliveryAnimationVisible(true);
+            }, 9000);
 
+            console.log(timer);
             return () => {
                 clearTimeout(timer);
             };
@@ -163,6 +164,7 @@ export function CardPedidos({ idPedido, idCliente, nomeCliente, numPedido, statu
                 </div>
             </div>
 
+            {isDeliveryAnimationVisible && <DeliveryPage />}
         </>
     )
 }

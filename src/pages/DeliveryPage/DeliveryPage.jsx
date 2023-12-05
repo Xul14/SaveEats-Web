@@ -4,14 +4,19 @@ import animationData from "../../components/AnimationLoading/AnimationDelivery.j
 import './DeliveryPage.css'
 
 export function DeliveryPage() {
+
+    const animationOption = {
+        loop: false,
+        autoplay: true,
+        animationData: animationData,
+        rendererSettings: {
+            preserveAspectRatio: 'xMidYMid slice'
+        }
+    };
+
     return (
-        <div>
-            <Lottie
-                animationData={animationData}
-                loop={false}
-                autoplay={true}
-                style={{ width: 250, height: 250 }}
-            />
+        <div className="animatioMotoboy">
+            <Lottie options={animationOption} style={{ width: "100%", height: "250px"}} />
         </div>
     );
 }

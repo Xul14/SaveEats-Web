@@ -1,6 +1,6 @@
 //Import React
 import React, { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
+import { Lottie } from 'react-lottie';
 
 //Import Axios para integração
 import axios from 'axios'
@@ -11,6 +11,8 @@ import { MenuNavigation } from "../../../components/MenuNavigation/MenuNavigatio
 import { HeaderPages } from "../../../components/HeaderPages/Header";
 import { CardPedidos } from "../../../components/CardPedidos/CardPedidos";
 import notificationSound from "./Olha_A_Mensagem_www.toquesengracadosmp3.com.mp3";
+import { DeliveryPage } from "../../DeliveryPage/DeliveryPage";
+import animationData from "../../../components/AnimationLoading/AnimationDelivery.json"
 
 export function PedidosPage() {
 
@@ -18,7 +20,6 @@ export function PedidosPage() {
     const [termoPesquisa, setTermoPesquisa] = useState("");
     const idRestaurante = localStorage.getItem("id");
     const [playSound, setPlaySound] = useState(false);
-
 
     const getDetailsPedido = async () => {
         try {
@@ -113,6 +114,7 @@ export function PedidosPage() {
             getDetailsPedido();
         }
     }, [termoPesquisa]);
+
 
     return (
         <div>
