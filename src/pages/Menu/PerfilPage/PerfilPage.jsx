@@ -30,7 +30,7 @@ export function PerfilPage() {
     useEffect(() => {
         async function fetchCategoria() {
             try {
-                const response = await axios.get('https://save-eats.azurewebsites.net/v1/saveeats/categoria/restaurante');
+                const response = await axios.get('https://save-eats-backend.azurewebsites.net/v1/saveeats/categoria/restaurante');
                 const responseData = response.data.categorias
                 setCategorias(responseData)
                 // setCategoriaSelecionada(responseData.categoria);
@@ -46,7 +46,7 @@ export function PerfilPage() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await axios.get(`https://save-eats.azurewebsites.net/v1/saveeats/restaurante/id/${idRestaurante}`);
+                const response = await axios.get(`https://save-eats-backend.azurewebsites.net/v1/saveeats/restaurante/id/${idRestaurante}`);
                 const responseData = response.data.restaurantes
                 setDadosPerfil(responseData)
 
@@ -111,7 +111,7 @@ export function PerfilPage() {
         console.log(dadosAtualizados);
 
         try {
-            const response = await axios.put(`https://save-eats.azurewebsites.net/v1/saveeats/restaurante/id/${idRestaurante}`, dadosAtualizados);
+            const response = await axios.put(`https://save-eats-backend.azurewebsites.net/v1/saveeats/restaurante/id/${idRestaurante}`, dadosAtualizados);
 
             if (response.status === 200) {
                 console.log("Editado com sucesso");

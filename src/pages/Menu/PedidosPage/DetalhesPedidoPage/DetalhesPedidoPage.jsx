@@ -25,7 +25,7 @@ export function DetalhesPedidoPage() {
     useEffect(() => {
         async function getDetailsPedido() {
             try {
-                const response = await axios.get(`https://save-eats.azurewebsites.net/v1/saveeats/detalhes/pedido/id/${idPedido}`)
+                const response = await axios.get(`https://save-eats-backend.azurewebsites.net/v1/saveeats/detalhes/pedido/id/${idPedido}`)
                 const responsePedido = response.data.detalhes_do_pedido;
                 setPedido(responsePedido);
                 // console.log(responsePedido);
@@ -41,7 +41,7 @@ export function DetalhesPedidoPage() {
     useEffect(() => {
         async function getDetailsProduto() {
             try {
-                const response = await axios.get(`https://save-eats.azurewebsites.net/v1/saveeats/detalhes/pedido/id/${idPedido}`)
+                const response = await axios.get(`https://save-eats-backend.azurewebsites.net/v1/saveeats/detalhes/pedido/id/${idPedido}`)
                 const responsePedido = response.data.detalhes_do_pedido.produtos;
                 setProduto(responsePedido);
                 // console.log(responsePedido);
@@ -54,7 +54,7 @@ export function DetalhesPedidoPage() {
 
     const handleCancelClick = async () => {
         try {
-            const response = await axios.put('https://save-eats.azurewebsites.net/v1/saveeats/status-pedido', {
+            const response = await axios.put('https://save-eats-backend.azurewebsites.net/v1/saveeats/status-pedido', {
                 id_pedido: idPedido,
                 id_novo_status_pedido: 7,
             });

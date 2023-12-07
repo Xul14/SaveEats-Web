@@ -22,7 +22,7 @@ export function AvaliacaoPage() {
     useEffect(() => {
         async function getAvaliacoes() {
             try {
-                const response = await axios.get(`https://save-eats.azurewebsites.net/v1/saveeats/avaliacoes/restaurante/idRestaurante/${idRestaurante}`);
+                const response = await axios.get(`https://save-eats-backend.azurewebsites.net/v1/saveeats/avaliacoes/restaurante/idRestaurante/${idRestaurante}`);
                 const responseDataAvaliacao = response.data.avaliacoes_do_restaurante
                 const responseData = response.data
                 setAvaliacaoData(responseData)
